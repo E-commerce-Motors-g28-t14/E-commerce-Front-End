@@ -47,11 +47,13 @@ export const StyledGlobal = createGlobalStyle`
 	--font-size-6: 2.0rem;
 	--font-size-7: 1.6rem;
 	--font-size-8: 1.4rem;
+	--font-size-9: 1.2rem;
 
 	--border-size-1: 0.2rem;
 	--border-size-2: 0.15rem;
 	--border-size-3: 0.1rem;
 
+	--radius-1: 0.8rem;
 	--radius-1: 0.4rem;
 	--radius-2: 0.2rem;
 }
