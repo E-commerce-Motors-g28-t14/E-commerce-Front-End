@@ -39,6 +39,21 @@ export const StyledGlobal = createGlobalStyle`
 
     font-size: 60%; 
 
+	--font-size-1: 4.4rem;
+	--font-size-2: 3.6rem;
+	--font-size-3: 3.2rem;
+	--font-size-4: 2.8rem;
+	--font-size-5: 2.4rem;
+	--font-size-6: 2.0rem;
+	--font-size-7: 1.6rem;
+	--font-size-8: 1.4rem;
+
+	--border-size-1: 0.2rem;
+	--border-size-2: 0.15rem;
+	--border-size-3: 0.1rem;
+
+	--radius-1: 0.4rem;
+	--radius-2: 0.2rem;
 }
 
 @media (min-width: 700px) {

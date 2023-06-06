@@ -21,7 +21,7 @@ const InitialsName = ({
     const firstLetter = nameParts[0].charAt(0);
     const secondLetter = nameParts[nameParts.length - 1].charAt(0);
 
-    return [firstLetter, secondLetter];
+    return `${firstLetter}${secondLetter}`;
   };
 
   const randomColor = [

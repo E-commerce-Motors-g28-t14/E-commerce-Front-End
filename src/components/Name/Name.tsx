@@ -11,7 +11,7 @@ const Name = ({ fontSize, name }: INameProps) => {
     const firstName = nameParts[0];
     const secondName = nameParts[nameParts.length - 1];
 
-    return [`${firstName} ${secondName}`];
+    return `${firstName} ${secondName}`;
   };
 
   const userName = getUserName(name);
