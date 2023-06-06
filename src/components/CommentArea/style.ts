@@ -6,8 +6,8 @@ export const ContainerCommentArea = styled.div`
         width: 751px;
         left: 1px;
         top: 1469px;
-        border-radius: 4px;
-        background-color: red;
+        border-radius: 4px;       
+        background-color: var(--color-white-fixed);
         display: flex;
         align-items: center;
         align-content: center;
@@ -19,6 +19,7 @@ export const ContainerCommentArea = styled.div`
         width: 89.41%;
         align-items: flex-start;
         margin-top: 1em;
+        margin-bottom: 1em;
     }
 
     .container-input-comment{
@@ -43,6 +44,7 @@ export const ContainerCommentArea = styled.div`
         height: 80%;
         padding-left: 10px;
         padding-top: 10px;
+        color: var(--color-grey-3); 
     }
 
     .container-btn-comment-send{
