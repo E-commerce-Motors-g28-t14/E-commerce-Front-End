@@ -2,6 +2,7 @@ import { ContainerHeader } from "./style";
 import logo from "../../assets/img/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
+import Username from "../Username/Username";
 
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -28,7 +29,7 @@ const Header = () => {
             <GiHamburgerMenu />
           </button>
         ) : (
-          <div className="container-user">componente username</div>
+          <div className="container-user"><Username/></div>
         )}
       </div>
     </ContainerHeader>
