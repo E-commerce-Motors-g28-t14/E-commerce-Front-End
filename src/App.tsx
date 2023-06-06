@@ -1,5 +1,11 @@
+import Footer from "./components/Footer/Footer";
+
 const App = () => {
-  return <>  <h1>teste</h1></>;
+  return (
+    <>
+      <Footer />
+    </>
+  );
 };
 
 export default App;
