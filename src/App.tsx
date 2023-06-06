@@ -1,11 +1,13 @@
 import Footer from "./components/Footer/Footer";
+import PhotoGalery from "./components/PhotoGalery/PhotoGalery";
 
 const App = () => {
   return (
-    <>
-      <Footer />
+    <>  
+      <PhotoGalery/></>
+      <Footer />;
     </>
-  );
+  )
 };
 
 export default App;
