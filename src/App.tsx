@@ -2,7 +2,6 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import PhotoGalery from "./components/PhotoGalery/PhotoGalery";
 
-
 const App = () => {
   return (
     <>
@@ -11,7 +10,6 @@ const App = () => {
       <Footer />;
     </>
   );
-  }
-
+};
 
 export default App;
