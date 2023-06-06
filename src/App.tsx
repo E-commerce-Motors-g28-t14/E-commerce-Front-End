@@ -1,16 +1,14 @@
-import CommentArea from "./components/CommentArea/CommentArea";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import PhotoGalery from "./components/PhotoGalery/PhotoGalery";
+
 
 const App = () => {
   return (
-    <>
+    <div style={{display: "flex", flexDirection: "column", width: '100vw', height: '100vh', justifyContent: "space-between"}}>
       <Header />
-      <CommentArea/>
-      <PhotoGalery />
+     
       <Footer/>
-    </>
+    </div>
   );
 };
 
