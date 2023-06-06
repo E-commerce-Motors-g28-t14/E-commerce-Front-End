@@ -1,7 +1,13 @@
+import Footer from "./components/Footer/Footer";
 import PhotoGalery from "./components/PhotoGalery/PhotoGalery";
 
 const App = () => {
-  return <>  <h1>teste</h1>  <PhotoGalery/></>;
+  return (
+    <>  
+      <PhotoGalery/></>
+      <Footer />;
+    </>
+  )
 };
 
 export default App;
