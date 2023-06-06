@@ -28,4 +28,10 @@ export const ContainerHeader = styled.div`
         padding-left: 2em;
     }
 
+
+    .menu-hamburguer{
+        border: none;
+        background-color: transparent;
+        font-size: 2em;
+    }
 `
