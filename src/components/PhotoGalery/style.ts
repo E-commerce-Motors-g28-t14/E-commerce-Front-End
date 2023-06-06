@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ContainerPhotoGalery = styled.div`
+interface IContainerPhotoGaleryProps {
+    isMobile: boolean;
+  }
+  
+  export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
 
     height: 377px;
     width: 440px;
@@ -8,7 +12,14 @@ export const ContainerPhotoGalery = styled.div`
     top: 120px;
     border-radius: 4px;
     padding: 36px 44px 36px 44px;
-    background-color: var(--color-white-fixed);
+    background-color: var(--color-white-fixed);  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+.container-title-photo-galery{
+    width: 100%;
+}
 
     h2{      
    
@@ -17,17 +28,18 @@ export const ContainerPhotoGalery = styled.div`
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-    color:var(--color-grey-1)
+    color:var(--color-grey-1);
+    text-align: left;
     }
 
     .container-geral-photos{
     display: flex;
     width: 100%;
-    gap: 1em;       
+    gap: 10px;       
     list-style: none;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: center;   
     }
 
     .container-photos{
@@ -57,6 +69,26 @@ export const ContainerPhotoGalery = styled.div`
     max-height: 100%;
     }
 
+    ${({ isMobile  }) =>
+    isMobile &&
+    `
+    width: 351px;
+    height:359px;
+    left: 0;
+    padding: 36px, 44px, 36px, 44px;
+  
+
+    .container-geral-photos{
+        width: 300px; 
+        height: 100%;
+    }
+
+    .container-photos {
+      width: 90px;
+      height: 90px;
+      margin-top: 1em;
+    }
+  `}
 
 
 `
