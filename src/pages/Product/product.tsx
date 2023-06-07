@@ -9,13 +9,16 @@ import { CardAdvertiser } from "../../components/CardAdvertiser";
 import { StyledMain } from "./style";
 import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
+import Banner from "../../components/Banner/Banner";
 
 function Product() {
   return (
     <>
       <Header />
+      <Banner/>
       <StyledMain>
         <section>
+         
           <CoverImage />
           <Description />
           <CardCar />
