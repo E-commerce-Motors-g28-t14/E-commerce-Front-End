@@ -6,6 +6,7 @@ import Username from "../Username/Username";
 
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false) 
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -25,11 +26,44 @@ const Header = () => {
           <img src={logo} alt="Logo Motors Shop" />
         </div>
         {isMobile ? (
-          <button className="menu-hamburguer">
-            <GiHamburgerMenu />
-          </button>
+          <>
+            <div>
+              <button className="menu-hamburguer">
+                <GiHamburgerMenu onClick={() => setIsOpenMenu(!isOpenMenu)} />
+              </button>
+              </div>
+            {isOpenMenu && (
+              <ul className='container-list-menu'>
+                <li>
+                  <span>Editar Perfil</span>
+                </li>
+                <li>
+                  <span>Editar endereço</span>
+                </li>
+                <li>
+                  <span>Sair</span>
+                </li>
+              </ul>
+            )}
+          </>
         ) : (
-          <div className="container-user"><Username/></div>
+          <div onClick={() => setIsOpenMenu(!isOpenMenu)} className="container-user">
+            <Username/>
+            {isOpenMenu && (
+              <ul>
+                <li>
+                  <span>Editar Perfil</span>
+                </li>
+                <li>
+                  <span>Editar endereço</span>
+                </li>
+                <li>
+                  <span>Sair</span>
+                </li>
+              </ul>
+            )}
+
+          </div>
         )}
       </div>
     </ContainerHeader>
