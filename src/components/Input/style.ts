@@ -7,7 +7,7 @@ interface iInputStyledProps{
 export const InputStyled = styled.div<iInputStyledProps>`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     
     width: ${({ width }) => width};
     max-width: 100%;
@@ -49,6 +49,7 @@ export const InputStyled = styled.div<iInputStyledProps>`
             input:focus{
                 background-color: var(--color-grey-9);
                 border: 0.0938rem solid var(--color-grey-1);
+                outline: none;
             }
         }
 `
