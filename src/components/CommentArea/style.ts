@@ -41,8 +41,27 @@ export const ContainerCommentArea = styled.div`
     resize: none;
     height: 80%;
     padding-left: 10px;
+    padding-right: 10px;
     padding-top: 10px;
     color: var(--color-grey-3);
+    overflow-y: auto;
+  }
+
+  .container-input-comment textarea:focus {
+    outline: none;
+  }
+
+  textarea::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  textarea::-webkit-scrollbar-track {
+    background-color: var(--color-grey-8);
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    background-color: var(--color-grey-5);
+    border-radius: 20px;
   }
 
   .container-btn-comment-send {
