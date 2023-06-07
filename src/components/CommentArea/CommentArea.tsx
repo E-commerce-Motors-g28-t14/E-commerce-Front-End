@@ -12,7 +12,7 @@ const CommentArea = () => {
   };
 
   const handleCommentBtnClick = (text: string) => {
-    setCommentText(text);
+    setCommentText((prevCommentText) => prevCommentText + text);
   };
 
   return (
