@@ -8,6 +8,7 @@ import PhotoGalery from "../../components/PhotoGalery/PhotoGalery";
 import { CardAdvertiser } from "../../components/CardAdvertiser";
 import { StyledMain } from "./style";
 import CoverImage from "./CoverImage/coverImage";
+import Description from "./Description/Description";
 
 function Product() {
   return (
@@ -16,9 +17,10 @@ function Product() {
       <StyledMain>
         <section>
           <CoverImage />
+          <Description />
           <CardCar />
-          <CommentArea />
           <CommentCard />
+          <CommentArea />
         </section>
         <aside>
           <PhotoGalery />

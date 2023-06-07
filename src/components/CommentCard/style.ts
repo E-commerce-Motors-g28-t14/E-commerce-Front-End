@@ -1,14 +1,21 @@
 import styled from "styled-components";
 
 export const StyledContainerComments = styled.section`
-  width: clamp(280px, 100%, 660px);
+  display: flex;
+  flex-direction: column;
+  max-width: 751px;
+  width: 100%;
   height: clamp(560px, 100%, 845px);
   margin: 0 auto;
-  padding: 36px 44px;
-  gap: 20px;
+  gap: 10px;
+  text-align: left;
+  align-content: center;
+  align-items: flex-start;
 
   > h2 {
     margin-bottom: 26px;
+    align-items: center;
+    align-content: center;
   }
 
   ul {
@@ -17,10 +24,8 @@ export const StyledContainerComments = styled.section`
 
     gap: 44px;
 
-    overflow-y: scroll;
-
     @media (max-width: 768px) {
-      gap: 44px;
+      gap: 20px;
     }
 
     > h2 {
@@ -36,9 +41,10 @@ export const StyledContainerComments = styled.section`
     li {
       display: flex;
       flex-direction: column;
-
+      background-color: var(--color-white-fixed);
+      padding: 20px;
       width: 100%;
-      height: clamp(116px, 100%, 212px);
+      border-radius: 4px;
 
       > div:nth-child(1) {
         display: flex;
@@ -46,7 +52,6 @@ export const StyledContainerComments = styled.section`
 
         width: 100%;
         height: 32px;
-        margin-bottom: 12px;
 
         > div > h2 {
           font-size: 14px;
