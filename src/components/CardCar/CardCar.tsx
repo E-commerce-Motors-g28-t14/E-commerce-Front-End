@@ -9,7 +9,7 @@ const CardCar = () => {
     km: 0,
     color: "Branco",
     isPromo: true,
-    price: "22.000",
+    price: "22000",
     description: "é um carro",
     isActive: true,
     createdAt: "2023-06-04T16:17:49.041Z",
@@ -30,11 +30,12 @@ const CardCar = () => {
             <span>{car.km} KM</span>
             </div>
             
-            <h3>R$ {car.price}</h3>
+            <h3>R$ {Number(car.price).toFixed(2).replace('.', ',')}</h3>
           </li>      
         </ul>
       </div>
       <div className="container-btn-buy">
+
         <button className="btn-buy">
             Comprar
         </button>
