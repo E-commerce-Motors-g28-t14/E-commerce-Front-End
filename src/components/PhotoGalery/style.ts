@@ -41,6 +41,7 @@ export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
   }
 
   .container-photos {
+    cursor: pointer;
     background-color: var(--color-grey-7);
     height: 108px;
     width: 108px;

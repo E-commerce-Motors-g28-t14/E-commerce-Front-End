@@ -6,13 +6,27 @@ import { CommentCard } from "../../components/CommentCard";
 import CommentArea from "../../components/CommentArea/CommentArea";
 import PhotoGalery from "../../components/PhotoGalery/PhotoGalery";
 import { CardAdvertiser } from "../../components/CardAdvertiser";
-import { StyledMain } from "./style";
+import { StyledMain, StyledModalDiv } from "./style";
 import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
+import { useModalHook } from "../../hooks";
+import { ModalBody } from "../../components/ModalBody";
 
 function Product() {
+  const { isOpenModal, photoLink } = useModalHook();
+
   return (
     <>
+      {isOpenModal && (
+        <ModalBody>
+          <StyledModalDiv>
+            <h2>Imagem do veículo</h2>
+            <figure>
+              <img src={photoLink} alt="Carro imagem" />
+            </figure>
+          </StyledModalDiv>
+        </ModalBody>
+      )}
       <Header />
       <StyledMain>
         <section>
