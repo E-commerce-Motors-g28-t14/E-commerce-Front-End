@@ -11,6 +11,7 @@ import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
+import Banner from "../../components/Banner/Banner";
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
@@ -28,8 +29,10 @@ function Product() {
         </ModalBody>
       )}
       <Header />
+      <Banner/>
       <StyledMain>
         <section>
+         
           <CoverImage />
           <Description />
           <CardCar />
