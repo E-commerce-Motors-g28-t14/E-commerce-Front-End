@@ -5,6 +5,7 @@ import Banner from "../../components/Banner/Banner";
 import { StyledMain } from "./style";
 import Car from "../../components/Car/Car";
 import { HomeListCardsCar } from "../../components/HomeListCardsCar";
+import { CarPagination } from "../../components/CarPagination/CarPagination";
 const Home = () => {
   const data = [
     <Car />,
@@ -88,6 +89,7 @@ const Home = () => {
             <HomeListCardsCar />
           </ul>
         </div>
+        <CarPagination />
       </StyledMain>
       <Footer />
     </>
