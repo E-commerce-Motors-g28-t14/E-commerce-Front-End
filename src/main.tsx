@@ -4,13 +4,16 @@ import App from "./App.tsx";
 import { StyledGlobal } from "./styles";
 import { BrowserRouter } from "react-router-dom";
 import { ModalProvider } from "./contexts";
+import { CarsProvider } from "./contexts/carsContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <React.StrictMode>
       <StyledGlobal />
       <ModalProvider>
-        <App />
+        <CarsProvider>
+          <App />
+        </CarsProvider>
       </ModalProvider>
     </React.StrictMode>
   </BrowserRouter>
