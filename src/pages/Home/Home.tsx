@@ -1,42 +1,29 @@
-import React from "react";
+import { useContext } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
 import { StyledMain } from "./style";
-import Car from "../../components/Car/Car";
 import { HomeListCardsCar } from "../../components/HomeListCardsCar";
-import { CarPagination } from "../../components/CarPagination/CarPagination";
-import { HomeFilters } from "../../components/HomeFilters/HomeFilters";
+import { FilterHome } from '../../components/FilterHome';
+import { StyledButton } from '../../styles/buttons';
+import { ModalContext } from '../../contexts/modalContext';
+import { CarPagination } from '../../components/CarPagination/CarPagination';
+
 const Home = () => {
-  const data = [
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-  ];
+  const {toggleModal} = useContext(ModalContext)
+
   return (
     <>
       <Header />
+      <Banner />
       <StyledMain>
-        <Banner />
-        <div>
-          <HomeFilters />
-          <ul>
-            {/*  {data.map((item) => (
-              <>{item}</>
-            ))} */}
-            <HomeListCardsCar />
-          </ul>
-        </div>
-        <CarPagination />
+
+        <section className='container-section'>
+          <FilterHome />
+          <HomeListCardsCar />
+          <StyledButton className='brand1 big' onClick={toggleModal}>Filtros</StyledButton>
+        </section>
+        <CarPagination/>
       </StyledMain>
       <Footer />
     </>

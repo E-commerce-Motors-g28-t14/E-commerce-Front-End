@@ -7,7 +7,8 @@ export const ContainerBanner = styled.div`
     width: 100%;
     height: 537.41px;
     overflow: hidden;
-
+    z-index: 0;
+    
     @media screen and (max-width: 400px) { 
       height: 625px;
     

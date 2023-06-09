@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const CarPaginationStyled = styled.div`
     display: flex;
     align-items: center;
-    width: fit-content;
-    max-width: 100%;
+    justify-content: center;
+    /* width: fit-content; */
+    width: 100%;
     margin: 5rem 0;
 
     button{

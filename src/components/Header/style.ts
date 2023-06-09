@@ -47,6 +47,7 @@ export const ContainerHeader = styled.div`
             max-width: 100%;
             padding: 21px 22px;
             gap: 1rem;
+            z-index: 1;
 
             border-radius: var(--radius-2);
             background-color: var(--color-grey-9);
@@ -60,9 +61,8 @@ export const ContainerHeader = styled.div`
             }
         }
         
-        .test-list {
+        .container-list-menu {
             display: flex;
-
             width: 100vw;
             position: relative;
         }
@@ -83,16 +83,18 @@ export const ContainerHeader = styled.div`
         }
 
         .container-list-menu{
-            width: 100%;
+            min-width: 110%;
             position: absolute;
             top: 80px;
+            left: -5%;
             gap: 1rem;
             padding: 21px 22px;
+            
+            z-index: 1;
 
             border-radius: var(--radius-2);
-            background-color: var(--color-grey-9);
+            background-color: var(--color-white-fixed);
             box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
-
             >li > span{
                 cursor: pointer;
                 font-size: 16px;

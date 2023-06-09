@@ -1,23 +1,33 @@
 import styled from "styled-components";
 
 export const StyledMain = styled.main`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
 
-  > div {
+  max-width: 1600px;
+  margin: 0 auto;
+
+  > .container-section {
     display: flex;
-    width: 100%;
-    gap: 10px;
-    justify-content: center;
 
-    > ul {
+    width: 100%;
+    padding: 80px 20px;
+  }
+
+  .big{
+    display: none;
+  }
+
+  @media(max-width: 1080px){
+
+    > .container-section{
       display: flex;
-      flex-wrap: wrap;
-      margin-top: 20px;
-      gap: 10px;
+      flex-direction: column;
     }
+
+    .big {
+      display: block;
+
+      margin-top: 80px;
+    }
+
   }
 `;
