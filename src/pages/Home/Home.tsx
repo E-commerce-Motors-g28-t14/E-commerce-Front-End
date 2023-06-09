@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
 import { StyledMain } from "./style";
 import Car from "../../components/Car/Car";
+import { HomeListCardsCar } from "../../components/HomeListCardsCar";
 const Home = () => {
   const data = [
     <Car />,
@@ -81,9 +82,10 @@ const Home = () => {
             </ul>
           </nav>
           <ul>
-            {data.map((item) => (
+            {/*  {data.map((item) => (
               <>{item}</>
-            ))}
+            ))} */}
+            <HomeListCardsCar />
           </ul>
         </div>
       </StyledMain>
