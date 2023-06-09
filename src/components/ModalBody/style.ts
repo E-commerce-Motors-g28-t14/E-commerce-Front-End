@@ -13,7 +13,7 @@ export const StyledDiv = styled.div`
 
   main {
     width: clamp(30rem, 100%, 50rem);
-    height: 200px;
+    height: max-content;
     padding: 1.8rem 2.4rem;
     position: relative;
     background-color: #ffffff;

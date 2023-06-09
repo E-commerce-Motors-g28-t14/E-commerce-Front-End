@@ -1,3 +1,4 @@
+import { useModalHook } from "../../hooks";
 import { StyledDiv } from "./style";
 
 interface IModalBody {
@@ -5,10 +6,12 @@ interface IModalBody {
 }
 
 export const ModalBody = ({ children }: IModalBody) => {
+  const { toggleModal } = useModalHook();
+
   return (
     <StyledDiv>
       <main>
-        <button>X</button>
+        <button onClick={() => toggleModal()}>X</button>
         {children}
       </main>
     </StyledDiv>
