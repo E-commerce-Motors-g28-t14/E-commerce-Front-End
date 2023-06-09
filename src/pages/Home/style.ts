@@ -13,29 +13,6 @@ export const StyledMain = styled.main`
     gap: 10px;
     justify-content: center;
 
-    > nav {
-      max-width: 454px;
-      width: 100%;
-      align-items: flex-start;
-      padding-left: 19px;
-
-      > ul {
-        margin-top: 20px;
-        padding-left: 11px;
-        padding-top: 19px;
-        display: flex;
-        flex-direction: column;
-
-        > li {
-          padding-left: 21px;
-          padding-top: 11px;
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-        }
-      }
-    }
-
     > ul {
       display: flex;
       flex-wrap: wrap;
