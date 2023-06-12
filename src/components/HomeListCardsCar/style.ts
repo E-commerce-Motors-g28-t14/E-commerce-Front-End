@@ -1,18 +1,25 @@
 import styled from 'styled-components'
 
 export const StyledListCardsCar = styled.ul`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 48px;
-    grid-row-gap: 86px;
-    width: clamp(375px, 100%);
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+
+    min-width: 300px;
+
+    gap: 28px;
 
     @media(max-width: 1080px){
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: scroll;
-        width: clamp(375px, 100%, 100%);
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
 
+        max-width: 100%;
+
+        overflow-x: scroll;
     }
 `
 
@@ -21,7 +28,7 @@ export const StyledHomeCardCar = styled.li`
     flex-direction: column;
     position: relative;
     
-    width: 320px;
+    width: clamp(320px, 100%, 320px);
     height: 350px;
     gap: 1rem;
     
