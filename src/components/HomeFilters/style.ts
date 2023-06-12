@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HomeFiltersStyled = styled.nav`
     width: 28.375rem;
-    max-width: 100%;
+    max-width: 30%;
     align-items: flex-start;
 
     ul{

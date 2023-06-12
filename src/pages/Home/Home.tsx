@@ -4,10 +4,10 @@ import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
 import { StyledMain } from "./style";
 import { HomeListCardsCar } from "../../components/HomeListCardsCar";
-import { FilterHome } from '../../components/FilterHome';
 import { StyledButton } from '../../styles/buttons';
 import { ModalContext } from '../../contexts/modalContext';
 import { CarPagination } from '../../components/CarPagination/CarPagination';
+import { HomeFilters } from "../../components/HomeFilters/HomeFilters";
 
 const Home = () => {
   const {toggleModal} = useContext(ModalContext)
@@ -19,7 +19,7 @@ const Home = () => {
       <StyledMain>
 
         <section className='container-section'>
-          <FilterHome />
+          <HomeFilters />
           <HomeListCardsCar />
           <StyledButton className='brand1 big' onClick={toggleModal}>Filtros</StyledButton>
         </section>
