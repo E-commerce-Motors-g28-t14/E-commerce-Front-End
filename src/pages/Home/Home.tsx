@@ -1,25 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Banner from "../../components/Banner/Banner";
 import { StyledMain } from "./style";
-import Car from "../../components/Car/Car";
 import { HomeListCardsCar } from "../../components/HomeListCardsCar";
+import { FilterContext } from "../../contexts/filterContext";
 const Home = () => {
-  const data = [
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-    <Car />,
-  ];
+  const { brands, colors, fuelTypes, models, years, actualFilter } =
+    useContext(FilterContext);
+
   return (
     <>
       <Header />
@@ -29,22 +18,17 @@ const Home = () => {
           <nav>
             <ul>
               <h2>Marca</h2>
-              <li>
-                <a href="#">General Motors</a>
-                <a href="#">Fiat</a>
-                <a href="#">Ford</a>
-                <a href="#">Honda</a>
-                <a href="#">Volswagen</a>
-              </li>
+              {brands?.map((brand: string) => (
+                <li>
+                  <a href="#">{brand}</a>
+                </li>
+              ))}
               <h2>Modelo</h2>
-              <li>
-                <a href="#">Civic</a>
-                <a href="#">Corolla</a>
-                <a href="#">Cruze</a>
-                <a href="#">Fit</a>
-                <a href="#">Sedan</a>
-                <a href="#">Gol</a>
-              </li>
+              {models?.map((model) => (
+                <li>
+                  <a href="#">{model}</a>
+                </li>
+              ))}
               <h2>Cor</h2>
               <li>
                 <a href="#">Branco</a>
