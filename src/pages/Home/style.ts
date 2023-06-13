@@ -1,33 +1,32 @@
 import styled from "styled-components";
 
 export const StyledMain = styled.main`
-
   max-width: 1600px;
   margin: 0 auto;
+  padding: 80px 20px;
 
   > .container-section {
     display: flex;
-
-    width: 100%;
-    padding: 80px 20px;
+    flex-direction: column;
   }
 
-  .big{
-    display: none;
+  .big {
+    display: block;
+
+    margin-top: 80px;
   }
 
-  @media(max-width: 1080px){
+  @media (min-width: 720px) {
+    > .container-section {
+      flex-direction: row;
+      gap: 1.2rem;
 
-    > .container-section{
-      display: flex;
-      flex-direction: column;
+      width: 100%;
+      padding: 80px 20px;
     }
 
     .big {
-      display: block;
-
-      margin-top: 80px;
+      display: none;
     }
-
   }
 `;
