@@ -19,6 +19,11 @@ export const StyledMain = styled.main`
     margin-top: 50px;
     border-radius: 4px;
 
+    @media (max-width: 320px) {
+      max-width: 320px;
+      width: 95%;
+    }
+
     form {
       display: flex;
       align-items: flex-start;
@@ -64,26 +69,9 @@ export const StyledMain = styled.main`
         height: 48px;
         width: 100%;
       }
-      .container {
-        display: flex;
-        padding: 0;
-        margin-top: 0;
-        margin: 0 auto;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-        height: 100%;
-        gap: 5px;
-        > label {
-          > input {
-            width: 100%;
-          }
-        }
-      }
 
-      button {
+      .btn--final {
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
         padding: 12px 28px;
@@ -95,23 +83,64 @@ export const StyledMain = styled.main`
         border: 1.5px solid var(--color-brand-1);
         background: var(--color-brand-1);
       }
-
-      .button--anounciment {
+      .container {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 12px 28px;
-        border-radius: 4px;
+        padding: 0;
+        margin-top: 0;
+        margin: 0 auto;
+        flex-direction: row;
+        justify-content: space-between;
         width: 100%;
-        gap: 10px;
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
+        height: 100%;
+        gap: 5px;
         box-sizing: border-box;
-        color: var(--color-grey-0);
-        border: 1.5px solid var(--color-grey-4);
-        background: var(--color-grey-8);
+
+        > label {
+          > input {
+            width: 100%;
+          }
+        }
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 12px 28px;
+          border-radius: 4px;
+          width: 100%;
+          gap: 10px;
+          box-sizing: border-box;
+          color: var(--color-white-fixed);
+          border: 1.5px solid var(--color-brand-1);
+          background: var(--color-brand-1);
+          @media (max-width: 400px) {
+            padding: 10px 18px;
+            font-size: 100%;
+          }
+        }
+
+        .button--anounciment {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 12px 28px;
+          border-radius: 4px;
+          width: 100%;
+          gap: 10px;
+          font-family: "Inter";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          box-sizing: border-box;
+          color: var(--color-grey-0);
+          border: 1.5px solid var(--color-grey-4);
+          background: var(--color-grey-8);
+
+          @media (max-width: 400px) {
+            padding: 10px 18px;
+            font-size: 100%;
+          }
+        }
       }
     }
   }
