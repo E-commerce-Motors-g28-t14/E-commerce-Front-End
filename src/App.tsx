@@ -6,6 +6,7 @@ import { StyledGlobal } from "./styles";
 import { Route, Routes } from "react-router-dom";
 import Product from "./pages/Product/product";
 import Home from "./pages/Home/Home";
+import Register from "./pages/Register/Register";
 import SellerPage from "./pages/SellerPage/SellerPage";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/product" element={<Product />} />
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/seller" element={<SellerPage />} />
       </Routes>
       <StyledGlobal />
