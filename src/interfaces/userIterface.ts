@@ -16,3 +16,8 @@ export interface IUserRequest {
   complement: string;
   number: string;
 }
+
+export interface IUserLoginRequest {
+  email: string;
+  password: string;
+}

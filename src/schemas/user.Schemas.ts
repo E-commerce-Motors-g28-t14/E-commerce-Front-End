@@ -20,3 +20,11 @@ export const UserSchema = z.object({
   complement: z.string(),
   number: z.string(),
 });
+
+export const UserSchemaLogin = z.object({
+  email: z.string().nonempty({ message: "O email é obrigatório" }),
+  password: z
+    .string()
+    .nonempty({ message: "A senha é obrigatório" })
+    .min(8, "Mínimo 8 Caracteres"),
+});

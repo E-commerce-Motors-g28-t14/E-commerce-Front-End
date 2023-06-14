@@ -7,15 +7,9 @@ import {
   useState,
   useEffect,
 } from "react";
-import { IUserRequest } from "../interfaces/userIterface";
+import { IUserLoginRequest, IUserRequest } from "../interfaces/userIterface";
 import { apiCepService, apiKmotorsService } from "../services";
-import {
-  Router,
-  useRoutes,
-  Params,
-  useParams,
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -46,6 +40,9 @@ interface IUserProvider {
   setCep: Dispatch<SetStateAction<string>>;
   isPassword: string;
   setIsPassword: Dispatch<SetStateAction<string>>;
+  LoginUser: (data: IUserLoginRequest) => void;
+  setTokenUser: Dispatch<SetStateAction<string>>;
+  tokenUser: string;
 }
 
 export const UserContext = createContext({} as IUserProvider);
@@ -56,6 +53,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
   const [isPassword, setIsPassword] = useState<string>("");
+  const [tokenUser, setTokenUser] = useState<string>("");
   const route = useNavigate();
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
@@ -87,6 +85,20 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       });
   };
 
+  const LoginUser = async (data: IUserLoginRequest) => {
+    const token = await apiKmotorsService
+      .post(`/login`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setTokenUser(res.data);
+        route(`/`);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -102,6 +114,9 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         isPassword,
         setIsPassword,
         setCep,
+        LoginUser,
+        tokenUser,
+        setTokenUser,
       }}
     >
       {children}
