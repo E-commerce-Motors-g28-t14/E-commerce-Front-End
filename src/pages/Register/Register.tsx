@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
@@ -6,9 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserSchema } from "../../schemas/user.Schemas";
 import { StyledMain } from "./style";
 import { IUserRequest } from "../../interfaces/userIterface";
+import { UserContext } from "../../contexts/userContext";
 
 const Register = () => {
-  const [isSeller, setSeller] = useState<boolean>(false);
+  const { CreateUser, isSeller, setSeller, adress, GetAdressInZipCode } =
+    useContext(UserContext);
+  const [cep, setCep] = useState("");
+  console.log(cep);
   const {
     register,
     handleSubmit,
@@ -18,14 +22,14 @@ const Register = () => {
   });
 
   const dataUser = (data: IUserRequest) => {
-    const dataform = data;
-
-    const CreateUser = (data: IUserRequest) => {
-      const form = { ...data, isSeller: isSeller };
-      console.log(form);
-    };
-    CreateUser(dataform);
+    CreateUser(data);
   };
+
+  const controle = cep.split(" ");
+
+  if (controle.length == 8) {
+    GetAdressInZipCode(controle.join(" "));
+  }
 
   return (
     <>
@@ -91,7 +95,7 @@ const Register = () => {
               type="string"
               id="zipCode"
               placeholder="Insira seu CEP"
-              {...register("zipCode")}
+              onChange={(event) => setCep(event.currentTarget.value)}
             />
             {errors.zipCode && <p>{errors.zipCode?.message}</p>}
             <label htmlFor="district">Bairro</label>
