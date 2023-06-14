@@ -10,7 +10,7 @@ import carTouareg from "../../assets/banco de exemplos/CARRO1 (6).png";
 import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
 
-interface imockListCars {
+export interface imockListCars {
   brand: string;
   model: string;
   year: number;
@@ -21,109 +21,111 @@ interface imockListCars {
   photos: string;
 }
 
-export const HomeListCardsCar = (): JSX.Element => {
-  const sellers: string[] = [
-    "Samuel Leão",
-    "Evelin Camila",
-    "Camila",
-    "Jonas Figueiredo",
-    "Eduarda Cunha",
-    "Ana Maria",
-    "Luis Eduardo",
-    "Julia Bittencourt",
-    "Rafael Machado",
-  ];
+export const sellers: string[] = [
+  "Samuel Leão",
+  "Evelin Camila",
+  "Camila",
+  "Jonas Figueiredo",
+  "Eduarda Cunha",
+  "Ana Maria",
+  "Luis Eduardo",
+  "Julia Bittencourt",
+  "Rafael Machado",
+];
 
-  const mockListCars: imockListCars[] = [
-    {
-      brand: "Kia",
-      model: "Sportage",
-      year: 2019,
-      km: "144.000",
-      price: "133.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[0],
-      photos: carSportage,
-    },
-    {
-      brand: "Audi",
-      model: "R8",
-      year: 2020,
-      km: "12.000",
-      price: "843.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[1],
-      photos: carAudi,
-    },
-    {
-      brand: "Ford",
-      model: "Fusion",
-      year: 2015,
-      km: "244.000",
-      price: "88.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[3],
-      photos: carFusion,
-    },
-    {
-      brand: "Volkswagem",
-      model: "Tiguan",
-      year: 2016,
-      km: "322.000",
-      price: "94.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[3],
-      photos: carTiguan,
-    },
-    {
-      brand: "Volkswagem",
-      model: "Touareg",
-      year: 2014,
-      km: "222.000",
-      price: "65.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[4],
-      photos: carTouareg,
-    },
-    {
-      brand: "Chevrolet",
-      model: "Camaro",
-      year: 2016,
-      km: "66.000",
-      price: "129.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[5],
-      photos: carCamaro,
-    },
-    {
-      brand: "Volkswagem",
-      model: "Fusca",
-      year: 1979,
-      km: "999.000",
-      price: "45.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[6],
-      photos: carFusca,
-    },
-    {
-      brand: "Volkswagem",
-      model: "Fusca",
-      year: 1979,
-      km: "999.000",
-      price: "45.900,00",
-      description:
-        "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
-      seller: sellers[6],
-      photos: carFusca,
-    },
-  ];
+export const mockListCars: imockListCars[] = [
+  {
+    brand: "Kia",
+    model: "Sportage",
+    year: 2019,
+    km: "144.000",
+    price: "133.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[0],
+    photos: carSportage,
+  },
+  {
+    brand: "Audi",
+    model: "R8",
+    year: 2020,
+    km: "12.000",
+    price: "843.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[1],
+    photos: carAudi,
+  },
+  {
+    brand: "Ford",
+    model: "Fusion",
+    year: 2015,
+    km: "244.000",
+    price: "88.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[3],
+    photos: carFusion,
+  },
+  {
+    brand: "Volkswagem",
+    model: "Tiguan",
+    year: 2016,
+    km: "322.000",
+    price: "94.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[3],
+    photos: carTiguan,
+  },
+  {
+    brand: "Volkswagem",
+    model: "Touareg",
+    year: 2014,
+    km: "222.000",
+    price: "65.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[4],
+    photos: carTouareg,
+  },
+  {
+    brand: "Chevrolet",
+    model: "Camaro",
+    year: 2016,
+    km: "66.000",
+    price: "129.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[5],
+    photos: carCamaro,
+  },
+  {
+    brand: "Volkswagem",
+    model: "Fusca",
+    year: 1979,
+    km: "999.000",
+    price: "45.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[6],
+    photos: carFusca,
+  },
+  {
+    brand: "Volkswagem",
+    model: "Fusca",
+    year: 1979,
+    km: "999.000",
+    price: "45.900,00",
+    description:
+      "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
+    seller: sellers[6],
+    photos: carFusca,
+  },
+];
+
+export const HomeListCardsCar = (): JSX.Element => {
+
 
   return (
     <StyledListCardsCar>
