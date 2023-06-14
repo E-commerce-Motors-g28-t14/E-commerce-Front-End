@@ -2,6 +2,8 @@
  import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import carSportage from "../../assets/banco de exemplos/CARRO1 (1).png"
+import { UserContext } from "../../contexts/userContext";
+import { useContext } from "react";
 
 
 interface ICar {
@@ -58,7 +60,9 @@ const cars = [{
     photos: carSportage,
   },]
 
-const CarStandardCard = () => {  
+const SellerListCar = () => {  
+
+  const {user} = useContext(UserContext)
 
   return (
     <ListCarContainer>
@@ -78,12 +82,12 @@ const CarStandardCard = () => {
             </div>
             <div>
               <InitialsName              
-                name={car.name}
+                name={user.name}
                 fontSize="16px"
                 height="32"
                 width="32"
               />
-              <Name fontSize="14px" name={car.name} />
+              <Name fontSize="14px" name={user.name} />
             </div>
             <div>
               <div>
@@ -105,4 +109,4 @@ const CarStandardCard = () => {
  
 };
 
-export default CarStandardCard;
+export default SellerListCar;

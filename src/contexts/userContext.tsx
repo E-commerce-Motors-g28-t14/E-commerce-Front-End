@@ -41,6 +41,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [user, setUser] = useState<IUserRequest>({} as IUserRequest);
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
+  
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
     const newUser = await apiKmotorsService

@@ -44,6 +44,7 @@ justify-content: space-between; */
 export const SectionSellerPage = styled.section`
 
 display: flex;
+margin-top: 2em;
 flex-direction: column;
 align-items: flex-start;
 width: 95%;
