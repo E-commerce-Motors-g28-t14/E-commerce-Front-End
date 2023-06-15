@@ -18,7 +18,17 @@ export const MainContainer = styled.div`
     @media (max-width: 1080px) {
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-start;
+      align-items: center;
+      background: linear-gradient(
+        180deg,
+        #4529e6 21.25%,
+        #f1f3f5 0.26%,
+        #f1f3f5 100%
+      )};
+       @media (max-width: 400px) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
       background: linear-gradient(
         180deg,
         #4529e6 21.25%,
@@ -34,11 +44,11 @@ export const MainContainer = styled.div`
 
 
 export const ContainerPageSeller = styled.div`
-/* display: flex;
+display: flex;
 flex-direction: column;
-width: 100vw;
-height: 100vh;
-justify-content: space-between; */
+/* width: 100%;
+height: 100vh; */
+justify-content: space-between;
 `
 
 export const SectionSellerPage = styled.section`

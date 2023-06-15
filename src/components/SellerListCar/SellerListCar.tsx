@@ -60,51 +60,55 @@ const cars = [{
     photos: carSportage,
   },]
 
+
+
 const SellerListCar = () => {  
 
   const {user} = useContext(UserContext)
 
   return (
     <ListCarContainer>
-      {cars.map((car, key) => {
-        return (
-          <ListCar key={key}>
+    {cars && cars.length > 0 ? (
+      cars.map((car, key) => (
+        <ListCar key={key}>
+          <div>
+            <img src={car.photos} alt={`Foto do carro ${car.model}`} />
+          </div>
+          <div>
+            <span>{car.brand}</span>
+            <span>-</span>
+            <span>{car.model}</span>
+          </div>
+          <div>
+            <p>{car.description}</p>
+          </div>
+          <div>
+            <InitialsName
+              name={car.name}
+              fontSize="16px"
+              height="32"
+              width="32"
+            />
+            <Name fontSize="14px" name={car.name} />
+          </div>
+          <div>
             <div>
-              <img src={car.photos} alt={`Foto do carro ${car.model}`} />
+              <span>{car.km} KM</span>
+              <span>{car.year}</span>
             </div>
             <div>
-              <span>{car.brand}</span>
-              <span>-</span>
-              <span>{car.model}</span>
+              <span>R$ {car.price}</span>
             </div>
-            <div>
-              <p>{car.description}</p>
+            <div className="promo">
+              <span>$</span>
             </div>
-            <div>
-              <InitialsName              
-                name={user.name}
-                fontSize="16px"
-                height="32"
-                width="32"
-              />
-              <Name fontSize="14px" name={user.name} />
-            </div>
-            <div>
-              <div>
-                <span>{car.km} KM</span>
-                <span>{car.year}</span>
-              </div>
-              <div>
-                <span>R$ {car.price}</span>
-              </div>
-              <div className="promo">
-                <span>$</span>
-              </div>
-            </div>
-          </ListCar>
-        );
-      })}
-    </ListCarContainer>
+          </div>
+        </ListCar>
+      ))
+    ) : (
+      <h4 className="info-message">Você não possui nenhum anúncio.</h4>
+    )}
+  </ListCarContainer>
   ); 
  
 };

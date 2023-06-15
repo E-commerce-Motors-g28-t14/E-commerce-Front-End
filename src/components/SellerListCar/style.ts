@@ -9,6 +9,7 @@ export const ListCarContainer = styled.ul`
   width: 100%;
   overflow-x: scroll;
   gap: 28px;
+  margin-top: 2em;
 
   @media (min-width: 720px) {
     display: grid;
@@ -25,6 +26,11 @@ export const ListCarContainer = styled.ul`
   @media (min-width: 1380px) {
     grid-template-columns: repeat(3, 33%);
   }
+
+  .info-message{
+  margin-top: 2em;
+ font-size: var(--font-size-9);
+ }
 `
 
 export const ListCar = styled.li`
@@ -160,4 +166,6 @@ export const ListCar = styled.li`
       color: var(--color-white-fixed);
     }
   }
+
+ 
 `;
