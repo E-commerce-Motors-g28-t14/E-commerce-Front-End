@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
@@ -7,12 +7,28 @@ import { UserSchema } from "../../schemas/user.Schemas";
 import { StyledMain } from "./style";
 import { IUserRequest } from "../../interfaces/userIterface";
 import { UserContext } from "../../contexts/userContext";
-
 const Register = () => {
-  const { CreateUser, isSeller, setSeller, adress, GetAdressInZipCode } =
-    useContext(UserContext);
-  const [cep, setCep] = useState("");
-  console.log(cep);
+  const {
+    CreateUser,
+    isSeller,
+    isPassword,
+    setIsPassword,
+    adress,
+    setSeller,
+    GetAdressInZipCode,
+  } = useContext(UserContext);
+  const [isEqual, setIsEqual] = useState(false);
+
+  const verifyAndConfirmPassword = (password: string) => {
+    const pass = password;
+    if (pass === isPassword && pass.length > 0) {
+      setIsEqual(true);
+      setIsPassword("");
+    } else {
+      setIsEqual(false);
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -25,18 +41,12 @@ const Register = () => {
     CreateUser(data);
   };
 
-  const controle = cep.split(" ");
-
-  if (controle.length == 8) {
-    GetAdressInZipCode(controle.join(" "));
-  }
-
   return (
     <>
       <Header />
       <StyledMain>
         <div>
-          <form onSubmit={handleSubmit(dataUser)}>
+          <form onSubmit={handleSubmit(dataUser)} noValidate>
             <h2>Cadastro</h2>
             <p>Informações pessoais</p>
             <label htmlFor="name">Nome</label>
@@ -95,7 +105,12 @@ const Register = () => {
               type="string"
               id="zipCode"
               placeholder="Insira seu CEP"
-              onChange={(event) => setCep(event.currentTarget.value)}
+              {...register("zipCode")}
+              onChange={(event) => {
+                event.target.value.length == 8
+                  ? GetAdressInZipCode(event.target.value)
+                  : event.target.value;
+              }}
             />
             {errors.zipCode && <p>{errors.zipCode?.message}</p>}
             <label htmlFor="district">Bairro</label>
@@ -104,6 +119,8 @@ const Register = () => {
               id="district"
               placeholder="Bairro"
               {...register("district")}
+              value={adress?.bairro}
+              readOnly
             />
             {errors.district && <p>{errors.district?.message}</p>}
             <div className="container">
@@ -114,6 +131,8 @@ const Register = () => {
                   id="state"
                   placeholder="Estado"
                   {...register("state")}
+                  value={adress?.uf}
+                  readOnly
                 />
               </label>
               {errors.state && <p>{errors.state?.message}</p>}
@@ -124,6 +143,8 @@ const Register = () => {
                   id="city"
                   placeholder="Cidade"
                   {...register("city")}
+                  value={adress.localidade}
+                  readOnly
                 />
               </label>
               {errors.city && <p>{errors.city?.message}</p>}
@@ -142,6 +163,8 @@ const Register = () => {
               id="street"
               placeholder="rua"
               {...register("street")}
+              value={adress.logradouro}
+              readOnly
             />
             {errors.street && <p>{errors.street?.message}</p>}
             <label htmlFor="complement">Complemento</label>
@@ -181,6 +204,7 @@ const Register = () => {
               id="password"
               placeholder="Ex: Informe uma senha segura, contendo caractéres especiais e números"
               {...register("password")}
+              onChange={(value) => setIsPassword(value.target.value)}
             />
             {errors.password && <p>{errors.password?.message}</p>}
             <label htmlFor="confirmPassword">Confirme a senha</label>
@@ -189,9 +213,17 @@ const Register = () => {
               id="confirmPassword"
               placeholder="Insira novamente a senha"
               {...register("confirmPassword")}
+              onChange={(event) => verifyAndConfirmPassword(event.target.value)}
             />
             {errors.confirmPassword && <p>{errors.confirmPassword?.message}</p>}
-            <button type="submit">Finalizar cadastro</button>
+            {isEqual === true ? (
+              <p style={{ color: "green" }}>As senhas conferem</p>
+            ) : (
+              <p style={{ color: "red" }}>'Confirme a senha novamente'</p>
+            )}
+            <button className="btn--final" type="submit">
+              Finalizar cadastro
+            </button>
           </form>
         </div>
       </StyledMain>
