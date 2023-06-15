@@ -5,10 +5,19 @@ export const HomeFiltersStyled = styled.nav`
   /* width: 28.375rem; */
   width: 30%;
   min-width: 30rem;
+
   align-items: flex-start;
 
   @media (min-width: 720px) {
     display: block;
+  }
+
+  &.mobile {
+    display: block;
+    overflow-y: auto;
+    width: 100%;
+    max-height: 75vh;
+    margin-top: 4rem;
   }
 
   ul {

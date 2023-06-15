@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useModalHook } from "../../hooks";
 import { StyledDiv } from "./style";
 
@@ -11,7 +12,9 @@ export const ModalBody = ({ children }: IModalBody) => {
   return (
     <StyledDiv>
       <main>
-        <button onClick={() => toggleModal()}>X</button>
+        <button onClick={() => toggleModal()} className="close">
+          X
+        </button>
         {children}
       </main>
     </StyledDiv>
