@@ -31,6 +31,8 @@ interface IUserProvider {
   CreateUser: (data: IUserRequest) => void;
   isSeller: boolean;
   setSeller: Dispatch<SetStateAction<boolean>>;
+  isLogin: boolean;
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
   user: IUserRequest;
   setUser: Dispatch<SetStateAction<IUserRequest>>;
   GetAdressInZipCode: (cep: string) => void;
@@ -56,6 +58,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
 =======
   const [cep, setCep] = useState("");
   const [isPassword, setIsPassword] = useState<string>("");
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
   const route = useNavigate();
 >>>>>>> aa9db89a5972046192d654df919f5ac396f03ab6
@@ -98,6 +101,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       })
       .then((res) => {
         setTokenUser(res.data);
+        setIsLogin(true)
         route(`/`);
       })
       .catch((err) => console.log(err));
@@ -106,6 +110,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   return (
     <UserContext.Provider
       value={{
+        isLogin, setIsLogin,
         CreateUser,
         user,
         setUser,
