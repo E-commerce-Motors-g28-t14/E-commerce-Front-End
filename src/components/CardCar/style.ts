@@ -8,6 +8,8 @@ export const ContainerCardCar = styled.div`
   border-radius: 4px;
   padding: 28px 44px 28px 44px;
   background-color: var(--color-white-fixed);
+  display: flex;
+  flex-direction: column;
 
   .container-car-name,
   .container-btn-buy,
@@ -73,7 +75,6 @@ export const ContainerCardCar = styled.div`
     letter-spacing: 0em;
     text-align: left;
   }
-
   .btn-buy {
     height: 38px;
     width: 100px;
@@ -84,5 +85,6 @@ export const ContainerCardCar = styled.div`
     border: none;
     background-color: var(--color-brand-1);
     color: var(--color-white-fixed);
+    
   }
 `;

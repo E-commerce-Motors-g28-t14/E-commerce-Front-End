@@ -28,14 +28,13 @@ function Product() {
           </StyledModalDiv>
         </ModalBody>
       )}
-      <Header />
-      <Banner/>
+      <Header />     
       <StyledMain>
-        <section>
-         
+        <section>         
           <CoverImage />
-          <Description />
+      
           <CardCar />
+          <Description />
           <CommentCard />
           <CommentArea />
         </section>
