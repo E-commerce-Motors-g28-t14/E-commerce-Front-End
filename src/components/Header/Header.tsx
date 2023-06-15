@@ -8,6 +8,7 @@ const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false) 
 
+
   useEffect(() => {
     const checkIsMobile = () => {
       const mobileWidth = 768;
