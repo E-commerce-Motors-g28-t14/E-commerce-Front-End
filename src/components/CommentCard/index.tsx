@@ -43,7 +43,7 @@ export const CommentCard = (): JSX.Element => {
     const months: number = Math.floor(days / 30);
     const years: number = Math.floor(months / 12);
 
-    let commentedAt: string = "";
+    let commentedAt = "";
 
     years > 1
       ? (commentedAt = `há ${years} anos`)
@@ -66,7 +66,8 @@ export const CommentCard = (): JSX.Element => {
 
   return (
     <StyledContainerComments>
-      <h2>Comentários</h2>
+      <div className="container-comment-title"><h2 className="comment-title">Comentários</h2></div>
+      
 
       <ul>
         {mockClients.map((client, key) => {
