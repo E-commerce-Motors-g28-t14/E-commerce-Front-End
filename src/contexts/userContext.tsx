@@ -51,10 +51,14 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [user, setUser] = useState<IUserRequest>({} as IUserRequest);
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
+<<<<<<< HEAD
+  
+=======
   const [cep, setCep] = useState("");
   const [isPassword, setIsPassword] = useState<string>("");
   const [tokenUser, setTokenUser] = useState<string>("");
   const route = useNavigate();
+>>>>>>> aa9db89a5972046192d654df919f5ac396f03ab6
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
     const newUser = await apiKmotorsService
