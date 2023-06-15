@@ -5,12 +5,12 @@ export const StyledButton = styled.button`
   border-radius: var(--radius-2);
 
   &.big {
-    height: 4.8rem;
+    min-height: 4.8rem;
     padding: 0 2.8rem;
   }
 
   &.medium {
-    height: 3.8rem;
+    min-height: 3.8rem;
     padding: 0 2rem;
   }
 
@@ -46,7 +46,7 @@ export const StyledButton = styled.button`
   &.brand1 {
     border: var(--border-size-2) solid var(--color-brand-1);
     color: var(--color-white-fixed);
-    background-color: var(--color-grey-6);
+    background-color: var(--color-brand-1);
 
     &:hover {
       background-color: var(--color-brand-2);

@@ -102,44 +102,48 @@ export const StyledMain = styled.main`
         }
 
         button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 12px 28px;
-          border-radius: 4px;
-          width: 100%;
-          gap: 10px;
-          box-sizing: border-box;
-          color: var(--color-white-fixed);
-          border: 1.5px solid var(--color-brand-1);
-          background: var(--color-brand-1);
-          @media (max-width: 400px) {
-            padding: 10px 18px;
-            font-size: 100%;
-          }
+          width: 50%;
         }
+      }
 
-        .button--anounciment {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 12px 28px;
-          border-radius: 4px;
-          width: 100%;
-          gap: 10px;
-          font-family: "Inter";
-          font-style: normal;
-          font-weight: 600;
-          font-size: 16px;
-          box-sizing: border-box;
-          color: var(--color-grey-0);
-          border: 1.5px solid var(--color-grey-4);
-          background: var(--color-grey-8);
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 28px;
+        border-radius: 4px;
+        width: 100%;
+        gap: 10px;
+        box-sizing: border-box;
+        color: var(--color-white-fixed);
+        border: 1.5px solid var(--color-brand-1);
+        background: var(--color-brand-1);
+        @media (max-width: 400px) {
+          padding: 10px 18px;
+          font-size: 100%;
+        }
+      }
 
-          @media (max-width: 400px) {
-            padding: 10px 18px;
-            font-size: 100%;
-          }
+      .button--anounciment {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 28px;
+        border-radius: 4px;
+        width: 100%;
+        gap: 10px;
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        box-sizing: border-box;
+        color: var(--color-grey-0);
+        border: 1.5px solid var(--color-grey-4);
+        background: var(--color-grey-8);
+
+        @media (max-width: 400px) {
+          padding: 10px 18px;
+          font-size: 100%;
         }
       }
     }
