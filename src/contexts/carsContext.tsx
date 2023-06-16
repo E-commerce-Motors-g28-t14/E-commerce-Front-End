@@ -17,6 +17,8 @@ interface iCarsProviderChildren {
 interface iCarsProvider {
   brands: string[];
   page: number;
+  selectCarID: string;
+  setSelectCarID:Dispatch<SetStateAction<string>> 
   setPage: Dispatch<SetStateAction<number>>;
   carsQuantity: number;
   searchCarsByBrand: (data: string) => void;
@@ -64,7 +66,7 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-
+  const [selectCarID, setSelectCarID] = useState<string>("")
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
@@ -184,6 +186,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   return (
     <CarsContext.Provider
       value={{
+        selectCarID, setSelectCarID,
         page,
         setPage,
         carsQuantity,

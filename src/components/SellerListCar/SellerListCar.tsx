@@ -3,9 +3,12 @@ import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import carSportage from "../../assets/banco de exemplos/CARRO1 (1).png";
 import { UserContext } from "../../contexts/userContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { CarsContext } from "../../contexts/carsContext";
+import { useNavigate } from "react-router-dom";
 
 interface ICar {
+  id: string
   brand: string;
   model: string;
   year: number;
@@ -17,8 +20,9 @@ interface ICar {
   isActive: boolean;
 }
 
-const cars = [
-  {
+
+const cars = [{
+    id:"24613546845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -31,6 +35,7 @@ const cars = [
     isActive: true,
   },
   {
+    id:"2461346845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -43,6 +48,7 @@ const cars = [
     photos: carSportage,
   },
   {
+    id:"2461346845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -55,6 +61,7 @@ const cars = [
     photos: carSportage,
   },
   {
+    id:"24616845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -70,6 +77,16 @@ const cars = [
 
 const SellerListCar = () => {
   const { user } = useContext(UserContext);
+
+  const [selectCarID, setSelectCarID] = useState(CarsContext)
+  const navigate = useNavigate(); 
+    
+  
+    const handleClick = (carID: any) => {
+      
+      setSelectCarID(carID);
+      navigate('/product');
+    }; 
 
   return (
     <ListCarContainer>
@@ -87,7 +104,6 @@ const SellerListCar = () => {
             <div>
               <p>{car.description}</p>
             </div>
-
             <div className="info-car">
               <div className="info-car-tags">
                 <span className="tag-car-info">{car.km} KM</span>
