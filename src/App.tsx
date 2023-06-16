@@ -23,9 +23,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/product" element={<Product />} />
 
-        <Route element={<ProtectedRoutes />}>
+        {/* <Route element={<ProtectedRoutes />}> */}
           <Route path="/seller" element={<SellerPage />} />
-        </Route>
+        {/* </Route> */}
       </Routes>
       <StyledGlobal />
     </div>
