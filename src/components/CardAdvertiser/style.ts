@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const ContainerCardAdvertiser = styled.div`
   width: 100%;
   height: 398px;
+  max-height: 450px;
   max-height: 426px;
-  padding: 36px 44px;
+  padding: 2em;
   border-radius: 4px;
 
   display: flex;
@@ -16,6 +17,7 @@ export const ContainerCardAdvertiser = styled.div`
   border-radius: var(--radius-2);
 
   .container-description {
+    margin-bottom: 1em;
     span {
       font-size: var(--font-size-9);
       color: var(--color-grey-2);
@@ -34,6 +36,9 @@ export const ContainerCardAdvertiser = styled.div`
     }
   }
 
+  button{
+    margin-top: 2em;
+  }
   .container-name {
     display: flex;
     align-items: center;

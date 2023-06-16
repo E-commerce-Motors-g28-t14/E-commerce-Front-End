@@ -55,6 +55,7 @@ export const StyledMain = styled.main`
       width: 100%;
       gap: 20px;
       display: flex;
+
     }
   }
 `;

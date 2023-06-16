@@ -8,7 +8,7 @@ export const StyledContainerComments = styled.section`
 
   max-width: 751px;
   width: 100%;
-  padding: 3em;
+  padding: 2em;
   border-radius: 4px;
   height: clamp(560px, 100%, 845px);
   gap: 10px;
@@ -36,7 +36,7 @@ export const StyledContainerComments = styled.section`
 
     gap: 44px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1080px) {
       gap: 20px;
     }
 
@@ -50,7 +50,7 @@ export const StyledContainerComments = styled.section`
     li {
       display: flex;
       flex-direction: column;    
-      
+      gap: 14px;
       width: 100%;
       
 

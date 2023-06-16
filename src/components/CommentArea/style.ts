@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const ContainerCommentArea = styled.div`
-  height: 289px;
+  height: 400px;
   width: 100%;
   left: 1px;
   top: 1469px;
+  padding: 2em;
   border-radius: 4px;
   background-color: var(--color-white-fixed);
   display: flex;
@@ -15,7 +16,7 @@ export const ContainerCommentArea = styled.div`
 
   .container-username {
     display: flex;
-    width: 89.41%;
+    width: 100%;
     align-items: flex-start;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -23,7 +24,7 @@ export const ContainerCommentArea = styled.div`
 
   .container-input-comment {
     height: 44.29%;
-    width: 89.41%;
+    width: 100%;
     left: 44px;
     top: 83px;
     border-radius: 4px;
@@ -35,7 +36,7 @@ export const ContainerCommentArea = styled.div`
   }
 
   .container-input-comment textarea {
-    width: 90%;
+    width: 100%;
     border: none;
     margin-top: 1em;
     resize: none;
@@ -66,18 +67,28 @@ export const ContainerCommentArea = styled.div`
 
   .container-btn-comment-send {
     display: flex;
-    width: 90%;
+    width: 100%;
     align-items: flex-end;
     justify-content: flex-end;
+    margin: 2em 2em 0em 0em;
   }
 
-  .container-btn-comment-send button {
+  .container-btn-comment-send-mobile {
+    display: flex;
+    width: 100%;
+    -webkit-box-pack: end;
+    justify-content: flex-start;
+
+    margin: 2em 2em 0em 2em;
+  }
+
+  .container-btn-comment-send > button, .container-btn-comment-send-mobile > button {
     height: 38px;
     width: 108px;
-    left: 597px;
-    top: 160px;
+    /* left: 597px;
+    top: 160px; */
     border-radius: 4px;
-    padding: 12px 20px 12px 20px;
+    /* padding: 12px 20px 12px 20px; */
     border: none;
     margin-bottom: 10px;
     background-color: var(--color-brand-1);
@@ -86,10 +97,14 @@ export const ContainerCommentArea = styled.div`
 
   .container-comment-btn {
     display: flex;
-    width: 89.41%;
+    width: 100%;
     flex-direction: row;
+    flex-wrap: nowrap;
     gap: 10px;
     margin-top: 1em;
+    @media(max-width: 1080px){
+      flex-wrap: wrap;
+    }
   }
 
   .comment-btn {

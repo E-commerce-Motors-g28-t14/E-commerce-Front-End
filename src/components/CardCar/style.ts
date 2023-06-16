@@ -6,17 +6,19 @@ export const ContainerCardCar = styled.div`
   left: 1px;
   top: 371px;
   border-radius: 4px;
-  padding: 28px 44px 28px 44px;
+  padding: 2em;
   background-color: var(--color-white-fixed);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   .container-car-name,
   .container-btn-buy,
   .container-car-info {
     display: flex;
     height: 44.29%;
-    width: 89.41%;
+    width: 100%;
+    justify-content: space-between;
   }
 
   .container-car-name h1 {
@@ -30,6 +32,7 @@ export const ContainerCardCar = styled.div`
   .container-car-info ul {
     list-style: none;
     width: 100%;
+
   }
 
   .container-car-info ul li {
@@ -37,9 +40,22 @@ export const ContainerCardCar = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+
+    @media(max-width: 1080px){
+      width: 100%;
+      justify-content: flex-start;
+      flex-direction: column;
+      gap: 2rem;
+
+      > div, h3{
+        width: 100%;
+      }
+    }
   }
 
+  .container-btn-buy{
+    align-items: flex-end;
+  }
   .car-tag {
     flex-direction: row;
     display: flex;
