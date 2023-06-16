@@ -42,7 +42,7 @@ export const ContainerHeader = styled.div`
             position: absolute;
             top: 49px;
 
-            max-height: 160px;
+            max-height: 180px;
             width: 100%;
             max-width: 100%;
             padding: 21px 22px;
