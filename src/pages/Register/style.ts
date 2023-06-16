@@ -70,6 +70,16 @@ export const StyledMain = styled.main`
         width: 100%;
       }
 
+      textarea {
+        resize: none;
+        padding: 8px 16px 0 16px;
+        gap: 10px;
+        border: 1.5px solid #e9ecef;
+        border-radius: 4px;
+        height: 8rem;
+        width: 100%;
+      }
+
       .btn--final {
         display: flex;
         justify-content: center;

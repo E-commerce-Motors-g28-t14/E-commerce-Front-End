@@ -73,6 +73,8 @@ export const StyledGlobal = createGlobalStyle`
 
 a{
 	text-decoration: none;
+	&:hover {
+      color: var(--color-grey-10);}
 }
 
 button {
