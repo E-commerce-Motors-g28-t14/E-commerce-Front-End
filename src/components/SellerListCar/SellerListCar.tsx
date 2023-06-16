@@ -91,7 +91,7 @@ const SellerListCar = () => {
               <span className="tag-car-info">{car.year}</span> 
             </div>     
                         
-              <span className="tag-car-info price">R$ {car.price}</span>
+              <span className="tag-car-info price">R$ {Number(car.price).toFixed(2).replace('.', ',')}</span>
           
             {car.isActive ==true ? (
                <div className="isActive" style={{backgroundColor:"var(--color-brand-1)"}}>
