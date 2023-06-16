@@ -1,29 +1,31 @@
-
-import Footer from "../../components/Footer/Footer"
-import Header from "../../components/Header/Header"
-import SellerCard from "../../components/SellerCard/SellerCard"
-import { MainContainer, ContainerPageSeller, SectionSellerPage } from "./style"
-
-const SellerPage = () => {
+import Footer from "../../components/Footer/Footer";
+import Header from "../../components/Header/Header";
+import SellerCard from "../../components/SellerCard/SellerCard";
+import SellerListCar from "../../components/SellerListCar/SellerListCar";
+import { MainContainer, ContainerPageSeller, SectionSellerPage } from "./style";
 
 
-    return (<>
-    <ContainerPageSeller>
-     <Header />
-     <MainContainer>
-        <SellerCard/>
-        <SectionSellerPage>
+
+const SellerPage = () => {   
+
+  return (
+    <>
+      <ContainerPageSeller>
+        <Header />
+        <MainContainer>
+          <SellerCard />
+          <SectionSellerPage>
             <h2>Anúncios</h2>
             <div className="container-lista-car-seller">
-        
+              <SellerListCar />
             </div>
+          </SectionSellerPage>
+        </MainContainer>
 
-        </SectionSellerPage>
-     </MainContainer>
+        <Footer />
+      </ContainerPageSeller>
+    </>
+  );
+};
 
-     <Footer />  
-     </ContainerPageSeller>
-    </>)
-}
-
-export default SellerPage
+export default SellerPage;

@@ -3,19 +3,31 @@ import styled from "styled-components";
 export const StyledContainerComments = styled.section`
   display: flex;
   flex-direction: column;
-  max-width: 751px;
-  width: 100%;
-  height: clamp(560px, 100%, 845px);
-  margin: 0 auto;
-  gap: 10px;
-  text-align: left;
-  align-content: center;
+  align-content: flex-start; 
   align-items: flex-start;
 
-  > h2 {
-    margin-bottom: 26px;
-    align-items: center;
+  max-width: 751px;
+  width: 100%;
+  padding: 3em;
+  border-radius: 4px;
+  height: clamp(560px, 100%, 845px);
+  gap: 10px;
+  text-align: left; 
+  background-color: var(--color-white-fixed);
+
+  .container-comment-title{
+    display: flex;
+    width: 100%;
+    align-content: flex-start; 
+    align-items: flex-start;
+  }
+
+  .comment-title {    
+    align-items: left;
+    font-size: 20px;
     align-content: center;
+    text-align: left;
+    color: var(--color-grey-1); 
   }
 
   ul {
@@ -28,23 +40,19 @@ export const StyledContainerComments = styled.section`
       gap: 20px;
     }
 
-    > h2 {
-      font-family: "Lexend", sans-serif;
+    > h2 {      
       font-size: 20px;
       line-height: 25px;
-
-      color: var(--color-grey-1);
-
-      margin-bottom: 500px;
+      color: var(--color-grey-1);    
+      text-align: left;
     }
 
     li {
       display: flex;
-      flex-direction: column;
-      background-color: var(--color-white-fixed);
-      padding: 20px;
+      flex-direction: column;    
+      
       width: 100%;
-      border-radius: 4px;
+      
 
       > div:nth-child(1) {
         display: flex;

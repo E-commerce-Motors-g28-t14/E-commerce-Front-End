@@ -37,7 +37,7 @@ export const sellers: string[] = [
   "Rafael Machado",
 ];
 
-export const mockListCars: imockListCars[] = [
+export const mockListCars = [
   {
     id:"24613546845",
     brand: "Kia",
@@ -144,12 +144,11 @@ export const HomeListCardsCar = (): JSX.Element => {
     
   
     const handleClick = (carID: any) => {
+      
       setSelectCarID(carID);
       navigate('/product');
     }; 
-   
-  
- 
+     
 
 
   return (

@@ -17,6 +17,7 @@ export const ContainerSellerCard = styled.div`
 
   @media screen and (max-width: 400px) { 
       height: 397px;
+      width: 340px;
     
     }
 

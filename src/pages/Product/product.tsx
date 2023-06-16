@@ -11,23 +11,12 @@ import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
-import Banner from "../../components/Banner/Banner";
 import { CarsContext } from "../../contexts/carsContext";
-import { imockListCars, mockListCars } from "../../components/HomeListCardsCar";
+
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
   const [selectCarID, setSelectCarID] = useState(CarsContext)
-  const [selectedCar, setSelectedCar] = useState({} as imockListCars)
-
-  const getSelectCar = () =>{
-    
-    const selectCar = mockListCars.find((car) => car.id === selectCarID);
-    if(selectCar){
-      setSelectedCar(selectCar)
-    }
-   
-  }
 
   return (
     <>
@@ -41,14 +30,13 @@ function Product() {
           </StyledModalDiv>
         </ModalBody>
       )}
-      <Header />
-      <Banner/>
+      <Header />     
       <StyledMain>
-        <section>
-         
+        <section>         
           <CoverImage />
-          <Description />
+      
           <CardCar />
+          <Description />
           <CommentCard />
           <CommentArea />
         </section>
