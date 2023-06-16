@@ -7,6 +7,9 @@ import { UserSchema, UserSchemaLogin } from "../../schemas/user.Schemas";
 import { StyledMain } from "./style";
 import { IUserLoginRequest, IUserRequest } from "../../interfaces/userIterface";
 import { UserContext } from "../../contexts/userContext";
+import { StyledButton } from "../../styles/buttons";
+import { Link } from "react-router-dom";
+
 const Login = () => {
   const { LoginUser } = useContext(UserContext);
 
@@ -28,8 +31,7 @@ const Login = () => {
       <StyledMain>
         <div>
           <form onSubmit={handleSubmit(dataUser)} noValidate>
-            <h2>Cadastro</h2>
-            <p>Informações de Logins</p>
+            <h2>Login</h2>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -46,10 +48,18 @@ const Login = () => {
               {...register("password")}
             />
             {errors.password && <p>{errors.password?.message}</p>}
+            <button type="button" className="forget">
+              Esqueci minha senha
+            </button>
             <button className="btn--final" type="submit">
-              Fazer Login
+              Entrar
             </button>
           </form>
+          <span>Ainda não possui conta?</span>
+
+          <Link to={"/register"} className="register">
+            Cadastrar
+          </Link>
         </div>
       </StyledMain>
       <Footer />
