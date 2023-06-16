@@ -1,5 +1,5 @@
 import { StyledHomeCardCar, StyledListCardsCar } from "./style";
-import InitialsName from "../InicialsName/InicialsName";
+import InitialsName from "../InicialsName/InicialsName"; 
 import Name from "../Name/Name";
 
 import carAudi from "../../assets/banco de exemplos/audi_PNG1762.png";
@@ -9,8 +9,12 @@ import carSportage from "../../assets/banco de exemplos/CARRO1 (3).png";
 import carTouareg from "../../assets/banco de exemplos/CARRO1 (6).png";
 import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
+import { useState } from "react";
+import { CarsContext } from "../../contexts/carsContext";
+import { useNavigate } from "react-router-dom";
 
 export interface imockListCars {
+  id: string;
   brand: string;
   model: string;
   year: number;
@@ -35,6 +39,7 @@ export const sellers: string[] = [
 
 export const mockListCars: imockListCars[] = [
   {
+    id:"24613546845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -46,6 +51,7 @@ export const mockListCars: imockListCars[] = [
     photos: carSportage,
   },
   {
+    id:"21654654312",
     brand: "Audi",
     model: "R8",
     year: 2020,
@@ -57,6 +63,7 @@ export const mockListCars: imockListCars[] = [
     photos: carAudi,
   },
   {
+    id:"34545315",
     brand: "Ford",
     model: "Fusion",
     year: 2015,
@@ -68,6 +75,7 @@ export const mockListCars: imockListCars[] = [
     photos: carFusion,
   },
   {
+    id:"26645",
     brand: "Volkswagem",
     model: "Tiguan",
     year: 2016,
@@ -79,6 +87,7 @@ export const mockListCars: imockListCars[] = [
     photos: carTiguan,
   },
   {
+    id:"662",
     brand: "Volkswagem",
     model: "Touareg",
     year: 2014,
@@ -89,7 +98,9 @@ export const mockListCars: imockListCars[] = [
     seller: sellers[4],
     photos: carTouareg,
   },
+
   {
+    id:"442",
     brand: "Chevrolet",
     model: "Camaro",
     year: 2016,
@@ -101,6 +112,7 @@ export const mockListCars: imockListCars[] = [
     photos: carCamaro,
   },
   {
+    id:"33",
     brand: "Volkswagem",
     model: "Fusca",
     year: 1979,
@@ -112,6 +124,7 @@ export const mockListCars: imockListCars[] = [
     photos: carFusca,
   },
   {
+    id:"2",
     brand: "Volkswagem",
     model: "Fusca",
     year: 1979,
@@ -126,12 +139,24 @@ export const mockListCars: imockListCars[] = [
 
 export const HomeListCardsCar = (): JSX.Element => {
 
+  const [selectCarID, setSelectCarID] = useState(CarsContext)
+  const navigate = useNavigate(); 
+    
+  
+    const handleClick = (carID: any) => {
+      setSelectCarID(carID);
+      navigate('/product');
+    }; 
+   
+  
+ 
+
 
   return (
     <StyledListCardsCar>
       {mockListCars.map((car, key) => {
         return (
-          <StyledHomeCardCar key={key}>
+          <StyledHomeCardCar key={car.id} onClick={() => handleClick(car.id)}>
             <div>
               <img src={car.photos} alt={`Foto do carro ${car.model}`} />
             </div>

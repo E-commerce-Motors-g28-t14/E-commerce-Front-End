@@ -1,6 +1,8 @@
 import React from "react";
 import fusca from "../../../assets/banco de exemplos/fusca.png";
 import { StyledCoverImage } from "./style";
+
+
 function CoverImage() {
   return (
     <StyledCoverImage>

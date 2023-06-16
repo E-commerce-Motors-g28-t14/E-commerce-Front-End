@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { apiFipeService } from '../services';
 import { AxiosResponse } from 'axios';
+import { string } from "zod";
 
 interface iCarsProviderChildren{
     children: React.ReactNode
@@ -10,7 +11,9 @@ interface iCarsProvider{
     page: number,
     setPage: Dispatch<SetStateAction<number>>,
     carsQuantity: number,
-    searchCarsByBrand: (data:string) => iCarInfos[]
+    searchCarsByBrand: (data:string) => iCarInfos[]  
+    selectCarID: string; 
+    setSelectCarID: Dispatch<SetStateAction<string>>
 }
 
 interface iCarInfos{
@@ -30,6 +33,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
     const [brands, setBrands] = useState<string[]>([])
     const [cars, setCars] = useState<iCarInfos[]>([] as iCarInfos[])
+    const [selectCarID, setSelectCarID] = useState<string>('')
 
     // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
     // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
@@ -51,14 +55,13 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
             const listCars: iCarInfos[] = []
 
-            for(let keys in brands){
-                const res: AxiosResponse = await apiFipeService.get(`/cars?brand=${brands[keys]}`)
+            for(const key in brands){
+                const res: AxiosResponse = await apiFipeService.get(`/cars?brand=${brands[key]}`)
                 const payload = await res.data
 
                 payload.forEach((car: iCarInfos, index: number, array: []) => {
                     array[index] !== undefined ? listCars.push(array[index]) : listCars})
                 }
-
                 setCars(listCars)
         })()
     },[brands])
@@ -72,7 +75,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     }
 
     return (
-        <CarsContext.Provider value={{ page, setPage, carsQuantity, searchCarsByBrand }} >
+        <CarsContext.Provider value={{ page, setPage, carsQuantity, searchCarsByBrand, selectCarID, setSelectCarID }} >
             {children}
         </CarsContext.Provider>
     )

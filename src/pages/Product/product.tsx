@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import CardCar from "../../components/CardCar/CardCar";
 import Header from "../../components/Header/Header";
@@ -12,9 +12,22 @@ import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
 import Banner from "../../components/Banner/Banner";
+import { CarsContext } from "../../contexts/carsContext";
+import { imockListCars, mockListCars } from "../../components/HomeListCardsCar";
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
+  const [selectCarID, setSelectCarID] = useState(CarsContext)
+  const [selectedCar, setSelectedCar] = useState({} as imockListCars)
+
+  const getSelectCar = () =>{
+    
+    const selectCar = mockListCars.find((car) => car.id === selectCarID);
+    if(selectCar){
+      setSelectedCar(selectCar)
+    }
+   
+  }
 
   return (
     <>
