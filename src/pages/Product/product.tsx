@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import CardCar from "../../components/CardCar/CardCar";
 import Header from "../../components/Header/Header";
@@ -11,10 +11,12 @@ import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
-import Banner from "../../components/Banner/Banner";
+import { CarsContext } from "../../contexts/carsContext";
+
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
+  const [selectCarID, setSelectCarID] = useState(CarsContext)
 
   return (
     <>
