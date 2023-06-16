@@ -11,6 +11,7 @@ export const StyledMain = styled.main`
     align-items: center;
     align-content: center;
     flex-direction: column;
+    gap: 2.4rem;
     max-width: 411px;
     width: 100%;
     height: 100%;
@@ -22,6 +23,29 @@ export const StyledMain = styled.main`
     @media (max-width: 320px) {
       max-width: 320px;
       width: 95%;
+    }
+
+    a {
+      width: 100%;
+      border-radius: var(--radius-2);
+      min-height: 4.8rem;
+      padding: 1.4rem 2.8rem 0 2.8rem;
+      border: var(--border-size-2) solid var(--color-grey-4);
+      color: var(--color-grey-0);
+      font-size: var(--font-size-7);
+      text-align: center;
+
+      &:hover {
+        background-color: var(--color-grey-1);
+        color: var(--color-grey-10);
+        border: var(--border-size-2) solid var(--color-grey-1);
+      }
+    }
+
+    span {
+      font-size: var(--font-size-8);
+      font-weight: 400;
+      color: var(--color-grey-2);
     }
 
     form {
@@ -68,6 +92,15 @@ export const StyledMain = styled.main`
         border-radius: 4px;
         height: 48px;
         width: 100%;
+      }
+
+      .forget {
+        width: 100%;
+        text-align: end;
+        background-color: transparent;
+        border: none;
+        font-size: var(--font-size-8);
+        font-weight: 500;
       }
 
       .btn--final {

@@ -92,8 +92,7 @@ const Register = () => {
             />
             {errors.birthdate && <p>{errors.birthdate?.message}</p>}
             <label htmlFor="description">Descrição</label>
-            <input
-              type="text"
+            <textarea
               id="description"
               placeholder="Ex: Empresário"
               {...register("description")}
@@ -149,32 +148,42 @@ const Register = () => {
               </label>
               {errors.city && <p>{errors.city?.message}</p>}
             </div>
-            <label htmlFor="number">Nº</label>
-            <input
-              type="string"
-              id="number"
-              placeholder="Nº da Casa"
-              {...register("number")}
-            />
-            {errors.number && <p>{errors.number?.message}</p>}
+
             <label htmlFor="street">Rua</label>
             <input
               type="string"
               id="street"
-              placeholder="rua"
+              placeholder="Rua"
               {...register("street")}
               value={adress.logradouro}
               readOnly
             />
             {errors.street && <p>{errors.street?.message}</p>}
-            <label htmlFor="complement">Complemento</label>
-            <input
-              type="string"
-              id="complement"
-              placeholder="Ex: Apart 307"
-              {...register("complement")}
-            />
-            {errors.complement && <p>{errors.complement?.message}</p>}
+            <div className="container">
+              <label htmlFor="number">
+                Nº
+                <input
+                  type="string"
+                  id="number"
+                  placeholder="Nº da Casa"
+                  {...register("number")}
+                />
+              </label>
+
+              {errors.number && <p>{errors.number?.message}</p>}
+              <label htmlFor="complement">
+                Complemento
+                <input
+                  type="string"
+                  id="complement"
+                  placeholder="Ex: Apart 307"
+                  {...register("complement")}
+                />
+              </label>
+
+              {errors.complement && <p>{errors.complement?.message}</p>}
+            </div>
+
             <p>Tipo de conta</p>
             <div className="container">
               <button
