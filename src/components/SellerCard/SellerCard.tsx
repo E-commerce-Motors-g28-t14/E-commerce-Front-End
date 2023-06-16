@@ -18,6 +18,7 @@ const SellerCard = () => {
           <span className="tag-seller">Anunciante</span>
         </div>
         <p>{mockUser.description}</p>
+        <button className="btn-new-ad">Criar anuncio</button>
       </div>
     </ContainerSellerCard>
   );

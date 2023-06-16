@@ -18,6 +18,7 @@ interface ICar {
     description: string;  
     photos: string;
     name: string
+    isActive: boolean
   }
 
 const cars = [{
@@ -30,6 +31,7 @@ const cars = [{
     description: "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
     name: "Samuel ALmeida",
     photos: carSportage,
+    isActive: true
   },
   {
     id:"2461346845",
@@ -40,7 +42,7 @@ const cars = [{
     price: "133.900,00",
     name: "Samuel ALmeida",
     description:"Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
- 
+    isActive: true,
     photos: carSportage,
   },{
     id:"2461346845",
@@ -51,7 +53,7 @@ const cars = [{
     price: "133.900,00",
     name: "Samuel ALmeida",
     description:"Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
- 
+    isActive: false,
     photos: carSportage,
   },
   {
@@ -63,7 +65,7 @@ const cars = [{
     price: "133.900,00",
     name: "Samuel ALmeida",
     description:"Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
- 
+    isActive: true,
     photos: carSportage,
   },]
 
@@ -99,27 +101,29 @@ const SellerListCar = () => {
           <div>
             <p>{car.description}</p>
           </div>
-          <div>
-            <InitialsName
-              name={car.name}
-              fontSize="16px"
-              height="32"
-              width="32"
-            />
-            <Name fontSize="14px" name={car.name} />
+
+          <div className="info-car">      
+          <div className="info-car-tags">
+          <span className="tag-car-info">{car.km} KM</span>
+              <span className="tag-car-info">{car.year}</span> 
+            </div>     
+                        
+              <span className="tag-car-info price">R$ {car.price}</span>
+          
+            {car.isActive ==true ? (
+               <div className="isActive" style={{backgroundColor:"var(--color-brand-1)"}}>
+              <span>Ativo</span>
+            </div>
+            ):
+            <div className="isActive" style={{backgroundColor:"var(--color-grey-4)"}}>
+            <span>Inativo</span>
+          </div>}
+                 
           </div>
-          <div>
-            <div>
-              <span>{car.km} KM</span>
-              <span>{car.year}</span>
-            </div>
-            <div>
-              <span>R$ {car.price}</span>
-            </div>
-            <div className="promo">
-              <span>$</span>
-            </div>
-          </div>
+          <div className="btn-update-ad">
+            <button>Editar</button>
+            <button>Ver detalhes</button>
+            </div>  
         </ListCar>
       ))
     ) : (

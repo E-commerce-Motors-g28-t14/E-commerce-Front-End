@@ -14,8 +14,7 @@ const SellerPage = () => {
         <Header />
         <MainContainer>
           <SellerCard />
-          <SectionSellerPage>
-            <h2>Anúncios</h2>
+          <SectionSellerPage>          
             <div className="container-lista-car-seller">
               <SellerListCar />
             </div>
