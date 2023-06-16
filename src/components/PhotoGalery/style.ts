@@ -5,12 +5,12 @@ interface IContainerPhotoGaleryProps {
 }
 
 export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
-  height: 377px;
+
   width: 100%;
   left: 979px;
   top: 120px;
   border-radius: 4px;
-  padding: 36px 44px 36px 44px;
+  padding: 2em;
   background-color: var(--color-white-fixed);
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
 
   .container-geral-photos {
     display: flex;
-    width: 100%;
+
     gap: 10px;
     list-style: none;
     flex-wrap: wrap;
@@ -72,14 +72,17 @@ export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
     isMobile &&
     `
     width: 100%;
-    height:359px;
+
     left: 0;
     padding: 36px, 44px, 36px, 44px;
-  
-
+    align-content: center;
+    justify-content: flex-start;
+    justify-content: space-around;
+    
+    
     .container-geral-photos{
-        width: 300px; 
-        height: 100%;
+      margin: 0 auto;
+      // place-content: start;
     }
 
     .container-photos {

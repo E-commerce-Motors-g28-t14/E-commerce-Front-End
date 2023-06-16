@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import CardCar from "../../components/CardCar/CardCar";
 import Header from "../../components/Header/Header";
@@ -11,12 +11,22 @@ import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
-import { CarsContext } from "../../contexts/carsContext";
-
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
-  const [selectCarID, setSelectCarID] = useState(CarsContext)
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      const mobileWidth = 1080;
+      setIsMobile(window.innerWidth < mobileWidth);
+    };
+
+    window.addEventListener("resize", checkIsMobile);
+    checkIsMobile();
+
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   return (
     <>
@@ -32,18 +42,35 @@ function Product() {
       )}
       <Header />     
       <StyledMain>
-        <section>         
-          <CoverImage />
-      
-          <CardCar />
-          <Description />
-          <CommentCard />
-          <CommentArea />
-        </section>
-        <aside>
-          <PhotoGalery />
-          <CardAdvertiser />
-        </aside>
+        {isMobile ? (
+          <>
+            <section>         
+              <CoverImage />
+              <CardCar />
+              <Description />
+              <PhotoGalery />
+              <CardAdvertiser />
+              <CommentCard />
+              <CommentArea />
+            </section>
+            <aside>
+            </aside>
+          </>
+        ) : (
+          <>
+            <section>         
+              <CoverImage />
+              <CardCar />
+              <Description />
+              <CommentCard />
+              <CommentArea />
+            </section>
+            <aside>
+              <PhotoGalery />
+              <CardAdvertiser />
+            </aside>
+        </>
+        )}
       </StyledMain>
       <Footer />
     </>
