@@ -79,6 +79,7 @@ export const StyledButton = styled.button`
   &.outline1 {
     border: var(--border-size-2) solid var(--color-grey-0);
     color: var(--color-grey-0);
+    background-color: transparent;
 
     &:hover {
       background-color: var(--color-grey-1);
@@ -90,6 +91,7 @@ export const StyledButton = styled.button`
   &.outline2 {
     border: var(--border-size-2) solid var(--color-grey-4);
     color: var(--color-grey-0);
+    background-color: transparent;
 
     &:hover {
       background-color: var(--color-grey-1);
@@ -101,6 +103,7 @@ export const StyledButton = styled.button`
   &.outlineBrand1 {
     color: var(--color-brand-1);
     border: var(--border-size-2) solid var(--color-brand-1);
+    background-color: transparent;
     &:hover {
       background-color: var(--color-brand-4);
     }

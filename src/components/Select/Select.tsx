@@ -1,6 +1,8 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import { SelectStyled } from "./style";
 import arrowDown from "../../assets/arrowDown.svg";
+import { useState } from "react";
+import { boolean } from "zod";
 
 interface iSelectProps {
   register: UseFormRegisterReturn;

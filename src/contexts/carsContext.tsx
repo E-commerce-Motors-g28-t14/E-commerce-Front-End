@@ -8,7 +8,8 @@ import {
 import { apiFipeService, apiKmotorsService } from "../services";
 import { AxiosResponse } from "axios";
 import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
-import { useUserHook } from "../hooks";
+import { useModalHook, useUserHook } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
 interface iCarsProviderChildren {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ interface iCarsProvider {
   brands: string[];
   page: number;
   selectCarID: string;
-  setSelectCarID:Dispatch<SetStateAction<string>> 
+  setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
   carsQuantity: number;
   searchCarsByBrand: (data: string) => void;
@@ -39,7 +40,7 @@ interface iCarInfos {
 }
 
 interface iSearchCar {
-  fuel: number;
+  fuel: string;
   fipe: number;
   year: string;
 }
@@ -66,13 +67,16 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-  const [selectCarID, setSelectCarID] = useState<string>("")
+  const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
 
   const { tokenUser } = useUserHook();
+  const { isOpenModal } = useModalHook();
+
+  const navigate = useNavigate();
 
   // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
   // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
@@ -108,11 +112,22 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     })();
   }, [brands]);
 
+  useEffect(() => {
+    const clearModels = () => {
+      if (!isOpenModal) {
+        setSearchCar({} as iSearchCar);
+        return;
+      }
+    };
+    clearModels();
+  }, [isOpenModal]);
+
   const searchCarsByName = (carName: string): iCarInfos[] | [] => {
     return cars?.filter((car) => car.name.includes(carName));
   };
 
   const searchCarsByBrand = (brandCar: string): void => {
+    setSearchCar({} as iSearchCar);
     const newCars: iCarInfos[] = cars?.filter((car) =>
       car.brand.includes(brandCar)
     );
@@ -130,7 +145,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     )[0];
 
     const carData = {
-      fuel: fuel,
+      fuel: getFuel(fuel),
       fipe: value,
       year: year,
     };
@@ -146,6 +161,13 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const createCar = async (data: iRegisterCar) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    // if (!token) {
+    //   navigate("/", { replace: true });
+    //   return;
+    // }
+
     const photos: iPhoto[] = [];
 
     const dataKeys: string[] = Object.keys(data);
@@ -170,23 +192,26 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
     resp.fuel = fuelBase.indexOf(resp.fuel as string) + 1;
 
-    await apiKmotorsService
-      .post(`/cars`, resp, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenUser}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    console.log(resp);
+
+    // await apiKmotorsService
+    //   .post(`/cars`, resp, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${JSON.parse(token)}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   return (
     <CarsContext.Provider
       value={{
-        selectCarID, setSelectCarID,
+        selectCarID,
+        setSelectCarID,
         page,
         setPage,
         carsQuantity,

@@ -1,9 +1,13 @@
+import { useModalHook } from "../../hooks";
+import { StyledButton } from "../../styles/buttons";
 import { mockUser } from "../CardAdvertiser";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
 
 const SellerCard = () => {
+  const { toggleModal } = useModalHook();
+
   return (
     <ContainerSellerCard>
       <div className="container-data-seller">
@@ -18,7 +22,12 @@ const SellerCard = () => {
           <span className="tag-seller">Anunciante</span>
         </div>
         <p>{mockUser.description}</p>
-        <button className="btn-new-ad">Criar anuncio</button>
+        <StyledButton
+          className="big outlineBrand1 btn-new-ad"
+          onClick={toggleModal}
+        >
+          Criar anuncio
+        </StyledButton>
       </div>
     </ContainerSellerCard>
   );
