@@ -10,6 +10,7 @@ import {
 import { IUserLoginRequest, IUserRequest } from "../interfaces/userIterface";
 import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
+import { useModalHook } from "../hooks";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -57,7 +58,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
+
   const route = useNavigate();
+  const { toggleModal } = useModalHook();
+
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
     const newUser = await apiKmotorsService
@@ -67,8 +71,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
-        setUser(res.data);
-        route(`/login`);
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
@@ -96,8 +99,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
-        setTokenUser(res.data);
-        setIsLogin(true)
+        localStorage.setItem("@kmotors-g28", JSON.stringify(res.data.token));
+        setTokenUser(JSON.stringify(res.data.token));
+        setIsLogin(true);
+        setUser(res.data.user);
         route(`/`);
       })
       .catch((err) => console.log(err));
@@ -106,7 +111,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   return (
     <UserContext.Provider
       value={{
-        isLogin, setIsLogin,
+        isLogin,
+        setIsLogin,
         CreateUser,
         user,
         setUser,
