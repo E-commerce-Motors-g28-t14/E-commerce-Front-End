@@ -1,9 +1,14 @@
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
 import { mockUser } from "../CardAdvertiser";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
 
 const SellerCard = () => {
+
+const {user} = useContext(UserContext);
+ 
   return (
     <ContainerSellerCard>
       <div className="container-data-seller">

@@ -7,7 +7,11 @@ import {
   useState,
   useEffect,
 } from "react";
-import { IUserLoginRequest, IUserRequest } from "../interfaces/userIterface";
+import {
+  IUserLoginRequest,
+  IUserRequest,
+  IUserResponse,
+} from "../interfaces/userIterface";
 import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
 interface IUserProviderChildren {
@@ -29,12 +33,13 @@ interface CepResponse {
 
 interface IUserProvider {
   CreateUser: (data: IUserRequest) => void;
+  getUserById: (data:string) =>void;
   isSeller: boolean;
   setSeller: Dispatch<SetStateAction<boolean>>;
   isLogin: boolean;
   setIsLogin: Dispatch<SetStateAction<boolean>>;
-  user: IUserRequest;
-  setUser: Dispatch<SetStateAction<IUserRequest>>;
+  user: IUserResponse;
+  setUser: Dispatch<SetStateAction<IUserResponse>>;
   GetAdressInZipCode: (cep: string) => void;
   adress: CepResponse;
   setAdress: Dispatch<SetStateAction<CepResponse>>;
@@ -45,19 +50,28 @@ interface IUserProvider {
   LoginUser: (data: IUserLoginRequest) => void;
   setTokenUser: Dispatch<SetStateAction<string>>;
   tokenUser: string;
+  selectedSellerAdID: string;
+  setSelectedSellerAdID: Dispatch<SetStateAction<string>>;
+  selectedUserSeller: IUserResponse;
+  setSelectedUserSeller: Dispatch<SetStateAction<IUserResponse>>;
 }
 
 export const UserContext = createContext({} as IUserProvider);
 
 export const UserProvider = ({ children }: IUserProviderChildren) => {
-  const [user, setUser] = useState<IUserRequest>({} as IUserRequest);
+  const [user, setUser] = useState<IUserResponse>({} as IUserResponse);
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
+  const [selectedSellerAdID, setSelectedSellerAdID] = useState<string>("");
+  const [selectedUserSeller, setSelectedUserSeller] = useState<IUserResponse>(
+    {} as IUserResponse
+  );
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
   const route = useNavigate();
+
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
     const newUser = await apiKmotorsService
@@ -69,6 +83,20 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then((res) => {
         setUser(res.data);
         route(`/login`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getUserById = async (id: string) => {
+    await apiKmotorsService.get(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      })
+      .then((res) => {
+        setSelectedUserSeller(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -89,15 +117,16 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const LoginUser = async (data: IUserLoginRequest) => {
-    const token = await apiKmotorsService
-      .post(`/login`, data, {
+    const token = await apiKmotorsService.post(`/login`, data, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        setTokenUser(res.data);
-        setIsLogin(true)
+        localStorage.setItem("@kmotors-g28", JSON.stringify(res.data.token));
+        setTokenUser(JSON.stringify(res.data.token));
+        setIsLogin(true);
+        setUser(res.data.user);
         route(`/`);
       })
       .catch((err) => console.log(err));
@@ -106,7 +135,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   return (
     <UserContext.Provider
       value={{
-        isLogin, setIsLogin,
+        isLogin,
+        setIsLogin,
         CreateUser,
         user,
         setUser,
@@ -122,6 +152,11 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         LoginUser,
         tokenUser,
         setTokenUser,
+        selectedSellerAdID,
+        setSelectedSellerAdID,
+        selectedUserSeller,
+        setSelectedUserSeller,
+        getUserById
       }}
     >
       {children}
