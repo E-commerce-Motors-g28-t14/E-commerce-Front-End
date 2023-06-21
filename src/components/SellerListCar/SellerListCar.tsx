@@ -6,9 +6,10 @@ import { UserContext } from "../../contexts/userContext";
 import { useContext, useState } from "react";
 import { CarsContext } from "../../contexts/carsContext";
 import { useNavigate } from "react-router-dom";
+import { StyledButton } from "../../styles/buttons";
 
 interface ICar {
-  id: string
+  id: string;
   brand: string;
   model: string;
   year: number;
@@ -20,14 +21,14 @@ interface ICar {
   isActive: boolean;
 }
 
-
-const cars = [{
-    id:"24613546845",
+const cars = [
+  {
+    id: "24613546845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
     km: "144.000",
-    price: "133.900,00",
+    price: "133900,00",
     description:
       "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
     name: "Samuel ALmeida",
@@ -35,12 +36,12 @@ const cars = [{
     isActive: true,
   },
   {
-    id:"2461346845",
+    id: "2461346845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
     km: "144.000",
-    price: "133.900,00",
+    price: "133900,00",
     name: "Samuel ALmeida",
     description:
       "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
@@ -48,12 +49,12 @@ const cars = [{
     photos: carSportage,
   },
   {
-    id:"2461346845",
+    id: "2461346845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
     km: "144.000",
-    price: "133.900,00",
+    price: "133900,00",
     name: "Samuel ALmeida",
     description:
       "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
@@ -61,12 +62,12 @@ const cars = [{
     photos: carSportage,
   },
   {
-    id:"24616845",
+    id: "24616845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
     km: "144.000",
-    price: "133.900,00",
+    price: "133900,00",
     name: "Samuel ALmeida",
     description:
       "Itens de série: ar-condicionado digital, bancos de couro, chave presencial com partida do motor por botão, airbags laterais e de cortina e controles de estabilidade e tração. Ainda fazem parte da lista de itens de série volante esportivo “D-Cut”, com paddle shift e piloto automático, rodas de liga leve aro 19″ e pneus 245/45.",
@@ -78,15 +79,13 @@ const cars = [{
 const SellerListCar = () => {
   const { user } = useContext(UserContext);
 
-  const [selectCarID, setSelectCarID] = useState(CarsContext)
-  const navigate = useNavigate(); 
-    
-  
-    const handleClick = (carID: any) => {
-      
-      setSelectCarID(carID);
-      navigate('/product');
-    }; 
+  const [selectCarID, setSelectCarID] = useState(CarsContext);
+  const navigate = useNavigate();
+
+  const handleClick = (carID: any) => {
+    setSelectCarID(carID);
+    navigate("/product");
+  };
 
   return (
     <ListCarContainer>
@@ -111,7 +110,7 @@ const SellerListCar = () => {
               </div>
 
               <span className="tag-car-info price">
-                R$ {Number(car.price).toFixed(2).replace(".", ",")}
+                R$ {parseInt(car.price).toFixed(2).replace(".", ",")}
               </span>
 
               <div
@@ -126,8 +125,10 @@ const SellerListCar = () => {
               </div>
             </div>
             <div className="btn-update-ad">
-              <button>Editar</button>
-              <button>Ver detalhes</button>
+              <StyledButton className="medium outline1">Editar</StyledButton>
+              <StyledButton className="medium outline1">
+                Ver detalhes
+              </StyledButton>
             </div>
           </ListCar>
         ))

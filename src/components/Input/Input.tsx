@@ -21,7 +21,7 @@ export const Input = ({
   type = "text",
   disabled,
   width = "19.6875rem",
-  value = "",
+  value,
 }: iInputProps) => {
   return (
     <InputStyled width={width}>

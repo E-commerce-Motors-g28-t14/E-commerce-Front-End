@@ -1,14 +1,16 @@
 import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
+import { useModalHook } from "../../hooks";
+import { StyledButton } from "../../styles/buttons";
 import { mockUser } from "../CardAdvertiser";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
 
 const SellerCard = () => {
+  const {user} = useContext(UserContext);
+  const { toggleModal } = useModalHook();
 
-const {user} = useContext(UserContext);
- 
   return (
     <ContainerSellerCard>
       <div className="container-data-seller">
@@ -23,7 +25,12 @@ const {user} = useContext(UserContext);
           <span className="tag-seller">Anunciante</span>
         </div>
         <p>{mockUser.description}</p>
-        <button className="btn-new-ad">Criar anuncio</button>
+        <StyledButton
+          className="big outlineBrand1 btn-new-ad"
+          onClick={toggleModal}
+        >
+          Criar anuncio
+        </StyledButton>
       </div>
     </ContainerSellerCard>
   );

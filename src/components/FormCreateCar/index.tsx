@@ -61,8 +61,11 @@ export const FormCreateCar = () => {
           disabled={false}
           width="100%"
           options={[...brandsForm]}
-          change={(event) => searchCarsByBrand(event.target.value)}
+          change={(event) => {
+            searchCarsByBrand(event.target.value);
+          }}
         />
+
         <Select
           register={register("model")}
           label="Modelo"
@@ -70,8 +73,11 @@ export const FormCreateCar = () => {
           disabled={false}
           width="100%"
           options={[...modelsForm]}
-          change={(event) => findCar(event.target.value)}
+          change={(event) => {
+            findCar(event.target.value);
+          }}
         />
+
         <div className="doubleInput">
           <Input
             errors={errors.year}
@@ -81,8 +87,9 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
-            value={searchCar.year}
+            value={searchCar?.year || ""}
           />
+
           <Input
             errors={errors.fuel}
             register={register("fuel")}
@@ -91,7 +98,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={true}
             width="45%"
-            value={searchCar.fuel ? getFuel(searchCar.fuel) : ""}
+            value={searchCar?.fuel || ""}
           />
         </div>
         <div className="doubleInput">
@@ -123,7 +130,7 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
-            value={searchCar.fipe}
+            value={searchCar?.fipe}
           />
           <Input
             errors={errors.price}

@@ -46,6 +46,10 @@ export const StyledMain = styled.main`
         font-weight: 500;
         font-size: 14px;
         line-height: 24px;
+
+        &.error {
+          color: var(--color-alert-1);
+        }
       }
 
       label {
@@ -157,5 +161,35 @@ export const StyledMain = styled.main`
         }
       }
     }
+  }
+`;
+
+export const StyledMainModal = styled.main`
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  h2 {
+    font-size: var(--font-size-7);
+    font-weight: 500;
+    color: var(--color-grey-1);
+    margin-bottom: 4.4rem;
+  }
+  h3 {
+    font-size: var(--font-size-7);
+    font-weight: 500;
+    color: var(--color-grey-1);
+    margin-bottom: 0.4rem;
+  }
+  p {
+    font-size: var(--font-size-7);
+    font-weight: 400;
+    color: var(--color-grey-2);
+  }
+
+  button {
+    width: max-content;
   }
 `;

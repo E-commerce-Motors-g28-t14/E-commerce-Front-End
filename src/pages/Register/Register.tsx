@@ -1,33 +1,29 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserSchema } from "../../schemas/user.Schemas";
-import { StyledMain } from "./style";
+import { StyledMain, StyledMainModal } from "./style";
 import { IUserRequest } from "../../interfaces/userIterface";
 import { UserContext } from "../../contexts/userContext";
+import { useModalHook } from "../../hooks";
+import { ModalBody } from "../../components/ModalBody";
+import { StyledButton } from "../../styles/buttons";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   const {
     CreateUser,
     isSeller,
-    isPassword,
     setIsPassword,
     adress,
     setSeller,
     GetAdressInZipCode,
   } = useContext(UserContext);
-  const [isEqual, setIsEqual] = useState(false);
 
-  const verifyAndConfirmPassword = (password: string) => {
-    const pass = password;
-    if (pass === isPassword && pass.length > 0) {
-      setIsEqual(true);
-      setIsPassword("");
-    } else {
-      setIsEqual(false);
-    }
-  };
+  const { isOpenModal } = useModalHook();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -37,16 +33,29 @@ const Register = () => {
     resolver: zodResolver(UserSchema),
   });
 
-  const dataUser = (data: IUserRequest) => {
-    CreateUser(data);
-  };
-
   return (
     <>
+      {isOpenModal && (
+        <ModalBody>
+          <StyledMainModal className="createSuccess">
+            <h2>Sucesso!</h2>
+            <h3>Sua conta foi criada com sucesso!</h3>
+            <p>
+              Agora você poderá ver seus negócios crescendo em grande escala
+            </p>
+            <StyledButton
+              className="medium brand1"
+              onClick={() => navigate("/login", { replace: true })}
+            >
+              Ir para o login
+            </StyledButton>
+          </StyledMainModal>
+        </ModalBody>
+      )}
       <Header />
       <StyledMain>
         <div>
-          <form onSubmit={handleSubmit(dataUser)} noValidate>
+          <form onSubmit={handleSubmit(CreateUser)} noValidate>
             <h2>Cadastro</h2>
             <p>Informações pessoais</p>
             <label htmlFor="name">Nome</label>
@@ -56,7 +65,7 @@ const Register = () => {
               placeholder="Ex: Samuel leão"
               {...register("name")}
             />
-            {errors.name && <p>{errors.name?.message}</p>}
+            {errors.name && <p className="error">{errors.name?.message}</p>}
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -64,7 +73,7 @@ const Register = () => {
               placeholder="Ex: samuel@email.com"
               {...register("email")}
             />
-            {errors.email && <p>{errors.email?.message}</p>}
+            {errors.email && <p className="error">{errors.email?.message}</p>}
             <label htmlFor="cpf">Cpf</label>
             <input
               type="text"
@@ -72,7 +81,7 @@ const Register = () => {
               placeholder="Ex: 01234556789"
               {...register("cpf")}
             />
-            {errors.cpf && <p>{errors.cpf?.message}</p>}
+            {errors.cpf && <p className="error">{errors.cpf?.message}</p>}
 
             <label htmlFor="phone">Celular</label>
             <input
@@ -81,7 +90,7 @@ const Register = () => {
               placeholder="Ex: 71932456789"
               {...register("phone")}
             />
-            {errors.phone && <p>{errors.phone?.message}</p>}
+            {errors.phone && <p className="error">{errors.phone?.message}</p>}
 
             <label htmlFor="birthdate">Data da Nascimento</label>
             <input
@@ -90,14 +99,18 @@ const Register = () => {
               placeholder="00/00/0000"
               {...register("birthdate")}
             />
-            {errors.birthdate && <p>{errors.birthdate?.message}</p>}
+            {errors.birthdate && (
+              <p className="error">{errors.birthdate?.message}</p>
+            )}
             <label htmlFor="description">Descrição</label>
             <textarea
               id="description"
               placeholder="Ex: Empresário"
               {...register("description")}
             />
-            {errors.description && <p>{errors.description?.message}</p>}
+            {errors.description && (
+              <p className="error">{errors.description?.message}</p>
+            )}
             <p>Informações de Endereço</p>
             <label htmlFor="zipCode">Cep</label>
             <input
@@ -111,7 +124,9 @@ const Register = () => {
                   : event.target.value;
               }}
             />
-            {errors.zipCode && <p>{errors.zipCode?.message}</p>}
+            {errors.zipCode && (
+              <p className="error">{errors.zipCode?.message}</p>
+            )}
             <label htmlFor="district">Bairro</label>
             <input
               type="string"
@@ -121,7 +136,9 @@ const Register = () => {
               value={adress?.bairro}
               readOnly
             />
-            {errors.district && <p>{errors.district?.message}</p>}
+            {errors.district && (
+              <p className="error">{errors.district?.message}</p>
+            )}
             <div className="container">
               <label htmlFor="state">
                 Estado
@@ -134,7 +151,7 @@ const Register = () => {
                   readOnly
                 />
               </label>
-              {errors.state && <p>{errors.state?.message}</p>}
+              {errors.state && <p className="error">{errors.state?.message}</p>}
               <label htmlFor="city">
                 Cidade
                 <input
@@ -146,7 +163,7 @@ const Register = () => {
                   readOnly
                 />
               </label>
-              {errors.city && <p>{errors.city?.message}</p>}
+              {errors.city && <p className="error">{errors.city?.message}</p>}
             </div>
 
             <label htmlFor="street">Rua</label>
@@ -158,7 +175,7 @@ const Register = () => {
               value={adress.logradouro}
               readOnly
             />
-            {errors.street && <p>{errors.street?.message}</p>}
+            {errors.street && <p> className="error"{errors.street?.message}</p>}
             <div className="container">
               <label htmlFor="number">
                 Nº
@@ -168,9 +185,11 @@ const Register = () => {
                   placeholder="Nº da Casa"
                   {...register("number")}
                 />
+                {errors.number && (
+                  <p className="error">{errors.number?.message}</p>
+                )}
               </label>
 
-              {errors.number && <p>{errors.number?.message}</p>}
               <label htmlFor="complement">
                 Complemento
                 <input
@@ -179,9 +198,10 @@ const Register = () => {
                   placeholder="Ex: Apart 307"
                   {...register("complement")}
                 />
+                {errors.complement && (
+                  <p className="error">{errors.complement?.message}</p>
+                )}
               </label>
-
-              {errors.complement && <p>{errors.complement?.message}</p>}
             </div>
 
             <p>Tipo de conta</p>
@@ -213,23 +233,21 @@ const Register = () => {
               id="password"
               placeholder="Ex: Informe uma senha segura, contendo caractéres especiais e números"
               {...register("password")}
-              onChange={(value) => setIsPassword(value.target.value)}
             />
-            {errors.password && <p>{errors.password?.message}</p>}
+            {errors.password && (
+              <p className="error">{errors.password?.message}</p>
+            )}
             <label htmlFor="confirmPassword">Confirme a senha</label>
             <input
               type="password"
               id="confirmPassword"
               placeholder="Insira novamente a senha"
               {...register("confirmPassword")}
-              onChange={(event) => verifyAndConfirmPassword(event.target.value)}
             />
-            {errors.confirmPassword && <p>{errors.confirmPassword?.message}</p>}
-            {isEqual === true ? (
-              <p style={{ color: "green" }}>As senhas conferem</p>
-            ) : (
-              <p style={{ color: "red" }}>'Confirme a senha novamente'</p>
+            {errors.confirmPassword && (
+              <p className="error">{errors.confirmPassword?.message}</p>
             )}
+
             <button className="btn--final" type="submit">
               Finalizar cadastro
             </button>

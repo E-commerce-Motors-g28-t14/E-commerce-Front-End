@@ -14,6 +14,7 @@ import {
 } from "../interfaces/userIterface";
 import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
+import { useModalHook } from "../hooks";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -70,7 +71,9 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
+
   const route = useNavigate();
+  const { toggleModal } = useModalHook();
 
   const CreateUser = async (data: IUserRequest) => {
     const form = { ...data, isSeller: isSeller };
@@ -81,8 +84,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
-        setUser(res.data);
-        route(`/login`);
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
