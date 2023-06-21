@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Username from "../Username/Username";
 import { useUserHook } from "../../hooks";
 import { Unlogged } from "../Unlogged/Unlogged";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -26,10 +27,9 @@ const Header = () => {
     <ContainerHeader>
       <div className="container-header">
         <div className="container-logo">
-          <img src={logo} alt="Logo Motors Shop" />
-        </div>
-        {isLogin &&
-          (isMobile ? (
+        <Link to={`/`}>   <img src={logo} alt="Logo Motors Shop" /></Link></div>
+        {isLogin && (
+          isMobile ? (
             <>
               <div>
                 <button className="menu-hamburguer">

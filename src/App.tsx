@@ -7,6 +7,7 @@ import SellerPage from "./pages/SellerPage/SellerPage";
 import Login from "./pages/Login/Login";
 import { useContext } from "react";
 import { UserContext } from "./contexts/userContext";
+import GeneralSellerPage from "./pages/GeneralSellerPage/GeneralSellerPage";
 
 const App = () => {
   const { tokenUser } = useContext(UserContext);
@@ -22,7 +23,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product" element={<Product />} />
-
+        <Route path="/seller/:name" element={<GeneralSellerPage />} />
         {/* <Route element={<ProtectedRoutes />}> */}
           <Route path="/seller" element={<SellerPage />} />
         {/* </Route> */}

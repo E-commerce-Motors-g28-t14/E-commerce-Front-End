@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import CardCar from "../../components/CardCar/CardCar";
 import Header from "../../components/Header/Header";
@@ -11,15 +11,18 @@ import CoverImage from "./CoverImage/coverImage";
 import Description from "./Description/Description";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
+import { CarsContext } from "../../contexts/carsContext";
 
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
   const [isMobile, setIsMobile] = useState(false);
+  const {selectCarID,  selectCar, getCarById} = useContext(CarsContext)  
 
   useEffect(() => {
     const checkIsMobile = () => {
       const mobileWidth = 1080;
       setIsMobile(window.innerWidth < mobileWidth);
+      getCarById(selectCarID)
     };
 
     window.addEventListener("resize", checkIsMobile);
@@ -45,11 +48,11 @@ function Product() {
         {isMobile ? (
           <>
             <section>         
-              <CoverImage />
-              <CardCar />
-              <Description />
-              <PhotoGalery />
-              <CardAdvertiser />
+              <CoverImage images={selectCar.photos}/>
+              <CardCar car={selectCar}/>
+              <Description car={selectCar}/>
+              <PhotoGalery gallery={selectCar.photos}/>
+              <CardAdvertiser user={selectCar.user}/>
               <CommentCard />
               <CommentArea />
             </section>
@@ -59,15 +62,15 @@ function Product() {
         ) : (
           <>
             <section>         
-              <CoverImage />
-              <CardCar />
-              <Description />
+              <CoverImage images={selectCar.photos}/>
+              <CardCar car={selectCar}/>
+              <Description car={selectCar}/>
               <CommentCard />
               <CommentArea />
             </section>
             <aside>
-              <PhotoGalery />
-              <CardAdvertiser />
+              <PhotoGalery gallery={selectCar.photos}/>
+              <CardAdvertiser user={selectCar.user}/>
             </aside>
         </>
         )}

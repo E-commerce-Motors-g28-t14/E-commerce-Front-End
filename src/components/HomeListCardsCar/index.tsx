@@ -143,10 +143,10 @@ export const HomeListCardsCar = (): JSX.Element => {
   const navigate = useNavigate(); 
     
   
-    const handleClick = (carID: any) => {
-      
+    const handleClick = (carID: any) => {      
       setSelectCarID(carID);
       navigate('/product');
+      
     }; 
      
 
