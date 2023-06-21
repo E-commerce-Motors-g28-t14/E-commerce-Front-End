@@ -17,6 +17,32 @@ export interface IUserRequest {
   number: string;
 }
 
+export interface iAdress {
+  district: string;
+  zipCode: string;
+  state: string;
+  city: string;
+  street: string;
+  complement: string;
+  number: string;
+  id: string;
+}
+
+export interface IUserResponse {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  color: string;
+  phone: string;
+  birthdate: string;
+  description: string;
+  isSeller: boolean;
+  createdAt: string;
+  updatedAt: string;
+  address: iAdress;
+}
+
 export interface IUserLoginRequest {
   email: string;
   password: string;

@@ -7,10 +7,15 @@ import {
   useState,
   useEffect,
 } from "react";
-import { IUserLoginRequest, IUserRequest } from "../interfaces/userIterface";
+import {
+  IUserLoginRequest,
+  IUserRequest,
+  IUserResponse,
+} from "../interfaces/userIterface";
 import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
 import { useModalHook } from "../hooks";
+import { iRecoveryPassword } from "../pages/Recovery/Recovery";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -34,8 +39,8 @@ interface IUserProvider {
   setSeller: Dispatch<SetStateAction<boolean>>;
   isLogin: boolean;
   setIsLogin: Dispatch<SetStateAction<boolean>>;
-  user: IUserRequest;
-  setUser: Dispatch<SetStateAction<IUserRequest>>;
+  user: IUserResponse;
+  setUser: Dispatch<SetStateAction<IUserResponse>>;
   GetAdressInZipCode: (cep: string) => void;
   adress: CepResponse;
   setAdress: Dispatch<SetStateAction<CepResponse>>;
@@ -46,18 +51,24 @@ interface IUserProvider {
   LoginUser: (data: IUserLoginRequest) => void;
   setTokenUser: Dispatch<SetStateAction<string>>;
   tokenUser: string;
+  SendEmailRecover: (data: iRecoveryPassword) => void;
+  setMessage: Dispatch<SetStateAction<string>>;
+  message: string;
+  GetUserById: (id: string) => void;
+  ChangePassword: (data: iRecoveryPassword) => void;
 }
 
 export const UserContext = createContext({} as IUserProvider);
 
 export const UserProvider = ({ children }: IUserProviderChildren) => {
-  const [user, setUser] = useState<IUserRequest>({} as IUserRequest);
+  const [user, setUser] = useState<IUserResponse>({} as IUserResponse);
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
+  const [message, setMessage] = useState("");
 
   const route = useNavigate();
   const { toggleModal } = useModalHook();
@@ -71,6 +82,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
+        setUser(res.data);
         toggleModal();
       })
       .catch((err) => {
@@ -108,6 +120,48 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .catch((err) => console.log(err));
   };
 
+  const SendEmailRecover = async (data: iRecoveryPassword) => {
+    console.log(data);
+    /* await apiKmotorsService
+      .post(`/recovery`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setMessage(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      }); */
+  };
+
+  const ChangePassword = async (data: iRecoveryPassword) => {
+    await apiKmotorsService
+      .patch(`users/recovery/${user.id}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setMessage(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const GetUserById = (id: string) => {
+    apiKmotorsService
+      .get(`/users/${id}`)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -128,6 +182,11 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         LoginUser,
         tokenUser,
         setTokenUser,
+        SendEmailRecover,
+        message,
+        setMessage,
+        GetUserById,
+        ChangePassword,
       }}
     >
       {children}

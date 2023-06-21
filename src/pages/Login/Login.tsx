@@ -9,9 +9,11 @@ import { IUserLoginRequest, IUserRequest } from "../../interfaces/userIterface";
 import { UserContext } from "../../contexts/userContext";
 import { StyledButton } from "../../styles/buttons";
 import { Link } from "react-router-dom";
+import { ModalBody } from "../../components/ModalBody";
 
 const Login = () => {
   const { LoginUser } = useContext(UserContext);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const {
     register,
@@ -48,9 +50,22 @@ const Login = () => {
               {...register("password")}
             />
             {errors.password && <p>{errors.password?.message}</p>}
-            <button type="button" className="forget">
+            <button
+              type="button"
+              className="forget"
+              onClick={() => setShowModal(true)}
+            >
               Esqueci minha senha
             </button>
+            {showModal ? (
+              <ModalBody
+                children={
+                  <>
+                    <p>Alterar senha</p>
+                  </>
+                }
+              />
+            ) : null}
             <button className="btn--final" type="submit">
               Entrar
             </button>
