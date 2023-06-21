@@ -8,6 +8,8 @@ import {
 import { apiFipeService, apiKmotorsService } from "../services";
 import { AxiosResponse } from "axios";
 import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
+import { useUserHook } from "../hooks";
+import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -21,13 +23,19 @@ interface iCarsProvider {
   selectCarID: string;
   setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
+  selectCar: ICar;
+  setSelectCar:Dispatch<SetStateAction<ICar>> 
   carsQuantity: number;
-  searchCarsByBrand: (data: string) => void;
   modelsAvaliable: iCarInfos[];
   searchCar: iSearchCar;
+  searchCarsByBrand: (data: string) => void;
   findCar: (data: string) => void;
   getFuel: (data: number) => string;
   createCar: (data: iRegisterCar) => void;
+  showSelectCarPage: (data:string) => void  
+  getCarById: (data: string) => void;
+  
+
 }
 
 interface iCarInfos {
@@ -67,6 +75,8 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
+  const [selectCarID, setSelectCarID] = useState<string>("")
+  const [selectCar, setSelectCar] = useState<ICar>({} as ICar);
   const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
@@ -206,10 +216,31 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     //   })
     //   .catch((err) => console.log(err));
   };
+  const navigate = useNavigate(); 
+
+  const showSelectCarPage = (carID: string) => {      
+    setSelectCarID(carID);
+    navigate('/product');
+  }; 
+
+  const getCarById = async (id: string) => {
+    await apiKmotorsService.get(`/cars/${id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      })
+      .then((res) => {
+        setSelectCar(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <CarsContext.Provider
       value={{
+        showSelectCarPage,
         selectCarID,
         setSelectCarID,
         page,
@@ -222,6 +253,8 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         findCar,
         getFuel,
         createCar,
+        getCarById,
+        selectCar, setSelectCar
       }}
     >
       {children}

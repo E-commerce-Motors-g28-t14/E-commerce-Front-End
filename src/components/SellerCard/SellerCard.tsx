@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
 import { useModalHook } from "../../hooks";
 import { StyledButton } from "../../styles/buttons";
 import { mockUser } from "../CardAdvertiser";
@@ -6,6 +8,7 @@ import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
 
 const SellerCard = () => {
+  const {user} = useContext(UserContext);
   const { toggleModal } = useModalHook();
 
   return (

@@ -1,3 +1,5 @@
+import { IUserResponse } from "./userIterface";
+
 export interface ICar {
     brand: string;
     model: string;
@@ -11,4 +13,12 @@ export interface ICar {
     createdAt: string;
     updatedAt: string;
     id: string;
+    photos: ICarPhotos[]
+    user: IUserResponse
+}
+
+export interface ICarPhotos{
+    id: string
+    isCover: boolean
+    imageLink: string
 }

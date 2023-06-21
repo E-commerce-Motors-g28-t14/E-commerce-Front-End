@@ -35,6 +35,7 @@ interface CepResponse {
 
 interface IUserProvider {
   CreateUser: (data: IUserRequest) => void;
+  getUserById: (data: string) => void;
   isSeller: boolean;
   setSeller: Dispatch<SetStateAction<boolean>>;
   isLogin: boolean;
@@ -56,6 +57,10 @@ interface IUserProvider {
   message: string;
   GetUserById: (id: string) => void;
   ChangePassword: (data: iRecoveryPassword) => void;
+  selectedSellerAdID: string;
+  setSelectedSellerAdID: Dispatch<SetStateAction<string>>;
+  selectedUserSeller: IUserResponse;
+  setSelectedUserSeller: Dispatch<SetStateAction<IUserResponse>>;
 }
 
 export const UserContext = createContext({} as IUserProvider);
@@ -65,6 +70,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
+  const [selectedSellerAdID, setSelectedSellerAdID] = useState<string>("");
+  const [selectedUserSeller, setSelectedUserSeller] = useState<IUserResponse>(
+    {} as IUserResponse
+  );
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
@@ -84,6 +93,21 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then((res) => {
         setUser(res.data);
         toggleModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getUserById = async (id: string) => {
+    await apiKmotorsService
+      .get(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      })
+      .then((res) => {
+        setSelectedUserSeller(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -187,6 +211,11 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         setMessage,
         GetUserById,
         ChangePassword,
+        selectedSellerAdID,
+        setSelectedSellerAdID,
+        selectedUserSeller,
+        setSelectedUserSeller,
+        getUserById,
       }}
     >
       {children}
