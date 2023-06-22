@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { useModalHook } from "../../hooks";
 import { StyledButton } from "../../styles/buttons";
-import { mockUser } from "../CardAdvertiser";
+//import { mockUser } from "../CardAdvertiser";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
 
 const SellerCard = () => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { toggleModal } = useModalHook();
 
   return (
@@ -17,14 +17,14 @@ const SellerCard = () => {
         <InitialsName
           width={"104"}
           height={"104"}
-          name={mockUser.name}
+          name={user.name}
           fontSize={"36px"}
         />
         <div className="container-seller-Name">
-          <Name fontSize={"20px"} name={mockUser.name} />
+          <Name fontSize={"20px"} name={user.name} />
           <span className="tag-seller">Anunciante</span>
         </div>
-        <p>{mockUser.description}</p>
+        <p>{user.description}</p>
         <StyledButton
           className="big outlineBrand1 btn-new-ad"
           onClick={toggleModal}
