@@ -15,6 +15,7 @@ import {
 import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
 import { useModalHook } from "../hooks";
+import { iRecoveryPassword } from "../pages/Recovery/Recovery";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -34,7 +35,7 @@ interface CepResponse {
 
 interface IUserProvider {
   CreateUser: (data: IUserRequest) => void;
-  getUserById: (data:string) =>void;
+  getUserById: (data: string) => void;
   isSeller: boolean;
   setSeller: Dispatch<SetStateAction<boolean>>;
   isLogin: boolean;
@@ -51,6 +52,11 @@ interface IUserProvider {
   LoginUser: (data: IUserLoginRequest) => void;
   setTokenUser: Dispatch<SetStateAction<string>>;
   tokenUser: string;
+  SendEmailRecover: (data: iRecoveryPassword) => void;
+  setMessage: Dispatch<SetStateAction<string>>;
+  message: string;
+  GetUserById: (id: string) => void;
+  ChangePassword: (data: iRecoveryPassword) => void;
   selectedSellerAdID: string;
   setSelectedSellerAdID: Dispatch<SetStateAction<string>>;
   selectedUserSeller: IUserResponse;
@@ -71,6 +77,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [tokenUser, setTokenUser] = useState<string>("");
+  const [message, setMessage] = useState("");
 
   const route = useNavigate();
   const { toggleModal } = useModalHook();
@@ -84,6 +91,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
+        setUser(res.data);
         toggleModal();
       })
       .catch((err) => {
@@ -92,7 +100,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const getUserById = async (id: string) => {
-    await apiKmotorsService.get(`/users/${id}`, {
+    await apiKmotorsService
+      .get(`/users/${id}`, {
         headers: {
           Authorization: `Bearer ${tokenUser}`,
         },
@@ -119,7 +128,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const LoginUser = async (data: IUserLoginRequest) => {
-    const token = await apiKmotorsService.post(`/login`, data, {
+    const token = await apiKmotorsService
+      .post(`/login`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -132,6 +142,48 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         route(`/`);
       })
       .catch((err) => console.log(err));
+  };
+
+  const SendEmailRecover = async (data: iRecoveryPassword) => {
+    console.log(data);
+    /* await apiKmotorsService
+      .post(`/recovery`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setMessage(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      }); */
+  };
+
+  const ChangePassword = async (data: iRecoveryPassword) => {
+    await apiKmotorsService
+      .patch(`users/recovery/${user.id}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setMessage(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const GetUserById = (id: string) => {
+    apiKmotorsService
+      .get(`/users/${id}`)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -154,11 +206,16 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         LoginUser,
         tokenUser,
         setTokenUser,
+        SendEmailRecover,
+        message,
+        setMessage,
+        GetUserById,
+        ChangePassword,
         selectedSellerAdID,
         setSelectedSellerAdID,
         selectedUserSeller,
         setSelectedUserSeller,
-        getUserById
+        getUserById,
       }}
     >
       {children}
