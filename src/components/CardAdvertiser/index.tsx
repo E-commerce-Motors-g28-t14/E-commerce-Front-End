@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import { IUserResponse } from "../../interfaces/userIterface";
 import { useContext, useEffect } from "react";
 import { CarsContext } from "../../contexts/carsContext";
+import { useUserHook } from "../../hooks";
 
 /* interface IMockUser {
+
+interface IMockUser {
   name: string;
   isSeller: boolean;
   description: string;
@@ -19,16 +22,15 @@ export const mockUser: IMockUser = {
   description:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
 }; */
+// };
 
 export const CardAdvertiser = ({
   user,
 }: {
   user: IUserResponse;
 }): JSX.Element => {
-  const { getCarById } = useContext(CarsContext);
-  useEffect(() => {
-    getCarById;
-  }, []);
+  const { getUserById } = useUserHook();
+
   return (
     <ContainerCardAdvertiser>
       <InitialsName width="104" height="104" fontSize="36px" name={user.name} />
@@ -36,13 +38,13 @@ export const CardAdvertiser = ({
       <div className="container-description">
         <span>{user.description}</span>
       </div>
-      <Link to={`/seller/${user.name}`}>
-        {" "}
-        <StyledButton className="big grey1">
-          {user.name}
-          Ver todos anúncios
-        </StyledButton>
-      </Link>
+      {/* <Link to={`/seller/${user.name}`}>
+        {" "} */}
+      <StyledButton className="big grey1" onClick={() => getUserById(user.id)}>
+        {user.name}
+        Ver todos anúncios
+      </StyledButton>
+      {/* </Link> */}
     </ContainerCardAdvertiser>
   );
 };

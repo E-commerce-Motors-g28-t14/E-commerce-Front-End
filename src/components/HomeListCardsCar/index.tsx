@@ -1,5 +1,5 @@
 import { StyledHomeCardCar, StyledListCardsCar } from "./style";
-import InitialsName from "../InicialsName/InicialsName"; 
+import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 
 import carAudi from "../../assets/banco de exemplos/audi_PNG1762.png";
@@ -9,9 +9,7 @@ import carSportage from "../../assets/banco de exemplos/CARRO1 (3).png";
 import carTouareg from "../../assets/banco de exemplos/CARRO1 (6).png";
 import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
-import { useState } from "react";
-import { CarsContext } from "../../contexts/carsContext";
-import { useNavigate } from "react-router-dom";
+import { useCarsHook } from "../../hooks/carsHook";
 
 export interface imockListCars {
   id: string;
@@ -39,7 +37,7 @@ export const sellers: string[] = [
 
 export const mockListCars = [
   {
-    id:"24613546845",
+    id: "24613546845",
     brand: "Kia",
     model: "Sportage",
     year: 2019,
@@ -51,7 +49,7 @@ export const mockListCars = [
     photos: carSportage,
   },
   {
-    id:"21654654312",
+    id: "21654654312",
     brand: "Audi",
     model: "R8",
     year: 2020,
@@ -63,7 +61,7 @@ export const mockListCars = [
     photos: carAudi,
   },
   {
-    id:"34545315",
+    id: "34545315",
     brand: "Ford",
     model: "Fusion",
     year: 2015,
@@ -75,7 +73,7 @@ export const mockListCars = [
     photos: carFusion,
   },
   {
-    id:"26645",
+    id: "26645",
     brand: "Volkswagem",
     model: "Tiguan",
     year: 2016,
@@ -87,7 +85,7 @@ export const mockListCars = [
     photos: carTiguan,
   },
   {
-    id:"662",
+    id: "662",
     brand: "Volkswagem",
     model: "Touareg",
     year: 2014,
@@ -100,7 +98,7 @@ export const mockListCars = [
   },
 
   {
-    id:"442",
+    id: "442",
     brand: "Chevrolet",
     model: "Camaro",
     year: 2016,
@@ -112,7 +110,7 @@ export const mockListCars = [
     photos: carCamaro,
   },
   {
-    id:"33",
+    id: "33",
     brand: "Volkswagem",
     model: "Fusca",
     year: 1979,
@@ -124,7 +122,7 @@ export const mockListCars = [
     photos: carFusca,
   },
   {
-    id:"2",
+    id: "2",
     brand: "Volkswagem",
     model: "Fusca",
     year: 1979,
@@ -138,26 +136,22 @@ export const mockListCars = [
 ];
 
 export const HomeListCardsCar = (): JSX.Element => {
-
-  const [selectCarID, setSelectCarID] = useState(CarsContext)
-  const navigate = useNavigate(); 
-    
-  
-    const handleClick = (carID: any) => {      
-      setSelectCarID(carID);
-      navigate('/product');
-      
-    }; 
-     
-
+  const { carsHome, showSelectCarPage } = useCarsHook();
 
   return (
     <StyledListCardsCar>
-      {mockListCars.map((car, key) => {
+      {carsHome.map((car) => {
+        const photoCape = car.photos.find((photo) => photo.isCover === true);
         return (
-          <StyledHomeCardCar key={car.id} onClick={() => handleClick(car.id)}>
+          <StyledHomeCardCar
+            key={car.id}
+            onClick={() => showSelectCarPage(car.id)}
+          >
             <div>
-              <img src={car.photos} alt={`Foto do carro ${car.model}`} />
+              <img
+                src={photoCape?.imageLink?.toString()}
+                alt={`Foto do carro ${car.model}`}
+              />
             </div>
             <div>
               <span>{car.brand}</span>
@@ -169,12 +163,12 @@ export const HomeListCardsCar = (): JSX.Element => {
             </div>
             <div>
               <InitialsName
-                name={car.seller}
+                name={car.user.name}
                 fontSize="16px"
                 height="32"
                 width="32"
               />
-              <Name fontSize="14" name={car.seller} />
+              <Name fontSize="14" name={car.user.name} />
             </div>
             <div>
               <div>
@@ -182,11 +176,13 @@ export const HomeListCardsCar = (): JSX.Element => {
                 <span>{car.year}</span>
               </div>
               <div>
-                <span>R$ {car.price}</span>
+                <span>R$ {(+car.price).toFixed(2)}</span>
               </div>
-              <div className="promo">
-                <span>$</span>
-              </div>
+              {car.isPromo && (
+                <div className="promo">
+                  <span>$</span>
+                </div>
+              )}
             </div>
           </StyledHomeCardCar>
         );

@@ -17,6 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { useModalHook } from "../hooks";
 import { iRecoveryPassword } from "../pages/Recovery/Recovery";
 import { iEmail } from "../pages/Login/RecoveryModal/RecoveryModal";
+import { iAttUser } from "../components/FormAttUser/attUserSchema";
+import { iAttUserAddress } from "../components/FormAttUserAddress/attUserAddressSchema";
+import { ICar } from "../interfaces/carInterface";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -60,10 +63,28 @@ interface IUserProvider {
   ChangePassword: (data: iRecoveryPassword) => void;
   selectedSellerAdID: string;
   setSelectedSellerAdID: Dispatch<SetStateAction<string>>;
-  selectedUserSeller: IUserResponse;
+  selectedUserSeller: iUserWithCars;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  setSelectedUserSeller: Dispatch<SetStateAction<IUserResponse>>;
+  setSelectedUserSeller: Dispatch<SetStateAction<iUserWithCars>>;
+  attUserInfo: (data: iAttUser) => void;
+  attUserAddress: (data: iAttUserAddress) => void;
+  deleteUser: () => void;
+}
+
+interface iUserWithCars {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  color: string;
+  phone: string;
+  birthdate: string;
+  description: string;
+  isSeller: boolean;
+  createdAt: string;
+  updatedAt: string;
+  cars: ICar[];
 }
 
 export const UserContext = createContext({} as IUserProvider);
@@ -75,8 +96,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [cep, setCep] = useState("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedSellerAdID, setSelectedSellerAdID] = useState<string>("");
-  const [selectedUserSeller, setSelectedUserSeller] = useState<IUserResponse>(
-    {} as IUserResponse
+  const [selectedUserSeller, setSelectedUserSeller] = useState<iUserWithCars>(
+    {} as iUserWithCars
   );
   const [isPassword, setIsPassword] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -84,10 +105,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [message, setMessage] = useState("");
 
   const route = useNavigate();
-  const { toggleModal } = useModalHook();
+  const { toggleModal, toggleModalFormsUser } = useModalHook();
 
   const CreateUser = async (data: IUserRequest) => {
-    const form = { ...data, isSeller: isSeller };
+    const form = { ...data, isSeller: isSeller, color: 1 };
     const newUser = await apiKmotorsService
       .post(`/users`, form, {
         headers: {
@@ -112,6 +133,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       })
       .then((res) => {
         setSelectedUserSeller(res.data);
+        route(`/seller/${res.data.name}`);
       })
       .catch((err) => {
         console.log(err);
@@ -180,10 +202,70 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const GetUserById = (id: string) => {
-    apiKmotorsService
-      .get(`/users/${id}`)
+    apiKmotorsService.get(`/users/${id}`).then((res) => {
+      setUser(res.data);
+    });
+  };
+
+  const attUserInfo = async (data: iAttUser) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      route("/login");
+    }
+
+    await apiKmotorsService
+      .patch(`/users/${user.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setUser(res.data);
+        toggleModalFormsUser();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const attUserAddress = async (data: iAttUserAddress) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      route("/login");
+    }
+
+    await apiKmotorsService
+      .patch(`/users/${user.id}/address`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setUser(res.data);
+        toggleModalFormsUser();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteUser = async () => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      route("/login");
+    }
+
+    await apiKmotorsService
+      .delete(`/users/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        localStorage.removeItem("@kmotors-g28");
+        route("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -222,6 +304,9 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         getUserById,
         showModal,
         setShowModal,
+        attUserInfo,
+        attUserAddress,
+        deleteUser,
       }}
     >
       {children}

@@ -11,7 +11,7 @@ import { HomeFilters } from "../../components/HomeFilters/HomeFilters";
 import { ModalBody } from "../../components/ModalBody";
 
 const Home = () => {
-  const { toggleModal, isOpenModal } = useContext(ModalContext);
+  const { isOpenModalFilter, toggleModalFilter } = useContext(ModalContext);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -29,8 +29,8 @@ const Home = () => {
 
   return (
     <>
-      {isMobile && isOpenModal && (
-        <ModalBody>
+      {isMobile && isOpenModalFilter && (
+        <ModalBody close={toggleModalFilter}>
           <HomeFilters className="mobile" />
         </ModalBody>
       )}
@@ -40,7 +40,7 @@ const Home = () => {
         <section className="container-section">
           <HomeFilters />
           <HomeListCardsCar />
-          <StyledButton className="brand1 big" onClick={toggleModal}>
+          <StyledButton className="brand1 big" onClick={toggleModalFilter}>
             Filtros
           </StyledButton>
         </section>

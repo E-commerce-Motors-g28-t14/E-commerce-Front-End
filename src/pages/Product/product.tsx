@@ -14,15 +14,14 @@ import { ModalBody } from "../../components/ModalBody";
 import { CarsContext } from "../../contexts/carsContext";
 
 function Product() {
-  const { isOpenModal, photoLink } = useModalHook();
+  const { isOpenModalPhoto, photoLink, toggleModalPhoto } = useModalHook();
   const [isMobile, setIsMobile] = useState(false);
-  const { selectCarID, selectCar, getCarById } = useContext(CarsContext);
+  const { selectCar } = useContext(CarsContext);
 
   useEffect(() => {
     const checkIsMobile = () => {
       const mobileWidth = 1080;
       setIsMobile(window.innerWidth < mobileWidth);
-      getCarById(selectCarID);
     };
 
     window.addEventListener("resize", checkIsMobile);
@@ -33,8 +32,8 @@ function Product() {
 
   return (
     <>
-      {isOpenModal && (
-        <ModalBody>
+      {isOpenModalPhoto && (
+        <ModalBody close={toggleModalPhoto}>
           <StyledModalDiv>
             <h2>Imagem do veículo</h2>
             <figure>
@@ -48,10 +47,13 @@ function Product() {
         {isMobile ? (
           <>
             <section>
-              <CoverImage />
               <CardCar car={selectCar} />
               <Description car={selectCar} />
-              <PhotoGalery />
+
+              <CoverImage images={selectCar.photos} />
+              <CardCar car={selectCar} />
+              <Description car={selectCar} />
+              <PhotoGalery gallery={selectCar.photos} />
               <CardAdvertiser user={selectCar.user} />
               <CommentCard />
               <CommentArea />
@@ -61,14 +63,14 @@ function Product() {
         ) : (
           <>
             <section>
-              <CoverImage />
+              <CoverImage images={selectCar.photos} />
               <CardCar car={selectCar} />
               <Description car={selectCar} />
               <CommentCard />
               <CommentArea />
             </section>
             <aside>
-              <PhotoGalery />
+              <PhotoGalery gallery={selectCar.photos} />
               <CardAdvertiser user={selectCar.user} />
             </aside>
           </>

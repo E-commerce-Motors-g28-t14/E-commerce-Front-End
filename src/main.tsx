@@ -11,13 +11,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <React.StrictMode>
       <StyledGlobal />
-      <UserProvider>
-        <ModalProvider>
+      <ModalProvider>
+        <UserProvider>
           <CarsProvider>
             <App />
           </CarsProvider>
-        </ModalProvider>
-      </UserProvider>
+        </UserProvider>
+      </ModalProvider>
     </React.StrictMode>
   </BrowserRouter>
 );

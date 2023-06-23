@@ -1,14 +1,16 @@
 import React from "react";
 import fusca from "../../../assets/banco de exemplos/fusca.png";
 import { StyledCoverImage } from "./style";
+import { ICarPhotos } from "../../../interfaces/carInterface";
 
-
-function CoverImage() {
+const CoverImage = ({ images }: { images: ICarPhotos[] }) => {
+  const coverImage = images.find((image) => image.isCover === true);
   return (
     <StyledCoverImage>
-      <img src={fusca} alt="Imagem de capa - fusca" />
+      {coverImage && (
+        <img src={coverImage.imageLink} alt="Imagem de capa - fusca" />
+      )}
     </StyledCoverImage>
   );
-}
-
+};
 export default CoverImage;
