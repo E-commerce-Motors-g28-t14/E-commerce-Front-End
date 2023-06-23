@@ -10,10 +10,10 @@ import { UserContext } from "../../contexts/userContext";
 import { StyledButton } from "../../styles/buttons";
 import { Link } from "react-router-dom";
 import { ModalBody } from "../../components/ModalBody";
+import { ModalRecovery } from "./RecoveryModal/RecoveryModal";
 
 const Login = () => {
-  const { LoginUser } = useContext(UserContext);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const { LoginUser, showModal, setShowModal } = useContext(UserContext);
 
   const {
     register,
@@ -57,15 +57,6 @@ const Login = () => {
             >
               Esqueci minha senha
             </button>
-            {showModal ? (
-              <ModalBody
-                children={
-                  <>
-                    <p>Alterar senha</p>
-                  </>
-                }
-              />
-            ) : null}
             <button className="btn--final" type="submit">
               Entrar
             </button>
@@ -78,6 +69,7 @@ const Login = () => {
         </div>
       </StyledMain>
       <Footer />
+      {showModal ? <ModalRecovery /> : null}
     </>
   );
 };

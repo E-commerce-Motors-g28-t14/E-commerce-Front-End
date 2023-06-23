@@ -8,7 +8,6 @@ import {
 import { apiFipeService, apiKmotorsService } from "../services";
 import { AxiosResponse } from "axios";
 import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
-import { useUserHook } from "../hooks";
 import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,7 @@ interface iCarsProvider {
   setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
   selectCar: ICar;
-  setSelectCar:Dispatch<SetStateAction<ICar>> 
+  setSelectCar: Dispatch<SetStateAction<ICar>>;
   carsQuantity: number;
   modelsAvaliable: iCarInfos[];
   searchCar: iSearchCar;
@@ -32,10 +31,8 @@ interface iCarsProvider {
   findCar: (data: string) => void;
   getFuel: (data: number) => string;
   createCar: (data: iRegisterCar) => void;
-  showSelectCarPage: (data:string) => void  
+  showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
-  
-
 }
 
 interface iCarInfos {
@@ -56,7 +53,7 @@ interface iSearchCar {
 interface iTeste {
   brand: string;
   model: string;
-  year: number;
+  year: string;
   fuel: string | number;
   km: number;
   color: string;
@@ -75,7 +72,6 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-  const [selectCarID, setSelectCarID] = useState<string>("")
   const [selectCar, setSelectCar] = useState<ICar>({} as ICar);
   const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
@@ -216,20 +212,21 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     //   })
     //   .catch((err) => console.log(err));
   };
-  const navigate = useNavigate(); 
 
-  const showSelectCarPage = (carID: string) => {      
+  const showSelectCarPage = (carID: string) => {
     setSelectCarID(carID);
-    navigate('/product');
-  }; 
+    navigate("/product");
+  };
 
   const getCarById = async (id: string) => {
-    await apiKmotorsService.get(`/cars/${id}`, {
+    await apiKmotorsService
+      .get(`/cars/${id}`, {
         headers: {
           Authorization: `Bearer ${tokenUser}`,
         },
       })
       .then((res) => {
+        console.log(res.data);
         setSelectCar(res.data);
       })
       .catch((err) => {
@@ -254,7 +251,8 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         getFuel,
         createCar,
         getCarById,
-        selectCar, setSelectCar
+        selectCar,
+        setSelectCar,
       }}
     >
       {children}

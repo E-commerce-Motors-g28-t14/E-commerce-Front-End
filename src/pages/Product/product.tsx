@@ -16,13 +16,13 @@ import { CarsContext } from "../../contexts/carsContext";
 function Product() {
   const { isOpenModal, photoLink } = useModalHook();
   const [isMobile, setIsMobile] = useState(false);
-  const {selectCarID,  selectCar, getCarById} = useContext(CarsContext)  
+  const { selectCarID, selectCar, getCarById } = useContext(CarsContext);
 
   useEffect(() => {
     const checkIsMobile = () => {
       const mobileWidth = 1080;
       setIsMobile(window.innerWidth < mobileWidth);
-      getCarById(selectCarID)
+      getCarById(selectCarID);
     };
 
     window.addEventListener("resize", checkIsMobile);
@@ -43,36 +43,35 @@ function Product() {
           </StyledModalDiv>
         </ModalBody>
       )}
-      <Header />     
+      <Header />
       <StyledMain>
         {isMobile ? (
           <>
-            <section>         
-              <CoverImage images={selectCar.photos}/>
-              <CardCar car={selectCar}/>
-              <Description car={selectCar}/>
-              <PhotoGalery gallery={selectCar.photos}/>
-              <CardAdvertiser user={selectCar.user}/>
+            <section>
+              <CoverImage />
+              <CardCar car={selectCar} />
+              <Description car={selectCar} />
+              <PhotoGalery />
+              <CardAdvertiser user={selectCar.user} />
               <CommentCard />
               <CommentArea />
             </section>
-            <aside>
-            </aside>
+            <aside></aside>
           </>
         ) : (
           <>
-            <section>         
-              <CoverImage images={selectCar.photos}/>
-              <CardCar car={selectCar}/>
-              <Description car={selectCar}/>
+            <section>
+              <CoverImage />
+              <CardCar car={selectCar} />
+              <Description car={selectCar} />
               <CommentCard />
               <CommentArea />
             </section>
             <aside>
-              <PhotoGalery gallery={selectCar.photos}/>
-              <CardAdvertiser user={selectCar.user}/>
+              <PhotoGalery />
+              <CardAdvertiser user={selectCar.user} />
             </aside>
-        </>
+          </>
         )}
       </StyledMain>
       <Footer />

@@ -16,6 +16,7 @@ import { apiCepService, apiKmotorsService } from "../services";
 import { useNavigate } from "react-router-dom";
 import { useModalHook } from "../hooks";
 import { iRecoveryPassword } from "../pages/Recovery/Recovery";
+import { iEmail } from "../pages/Login/RecoveryModal/RecoveryModal";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
@@ -52,7 +53,7 @@ interface IUserProvider {
   LoginUser: (data: IUserLoginRequest) => void;
   setTokenUser: Dispatch<SetStateAction<string>>;
   tokenUser: string;
-  SendEmailRecover: (data: iRecoveryPassword) => void;
+  SendEmailRecover: (data: iEmail) => void;
   setMessage: Dispatch<SetStateAction<string>>;
   message: string;
   GetUserById: (id: string) => void;
@@ -60,6 +61,8 @@ interface IUserProvider {
   selectedSellerAdID: string;
   setSelectedSellerAdID: Dispatch<SetStateAction<string>>;
   selectedUserSeller: IUserResponse;
+  showModal: boolean;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
   setSelectedUserSeller: Dispatch<SetStateAction<IUserResponse>>;
 }
 
@@ -70,6 +73,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [isSeller, setSeller] = useState<boolean>(false);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedSellerAdID, setSelectedSellerAdID] = useState<string>("");
   const [selectedUserSeller, setSelectedUserSeller] = useState<IUserResponse>(
     {} as IUserResponse
@@ -144,9 +148,9 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .catch((err) => console.log(err));
   };
 
-  const SendEmailRecover = async (data: iRecoveryPassword) => {
+  const SendEmailRecover = async (data: iEmail) => {
     console.log(data);
-    /* await apiKmotorsService
+    await apiKmotorsService
       .post(`/recovery`, data, {
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +161,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       })
       .catch((err) => {
         console.log(err);
-      }); */
+      });
   };
 
   const ChangePassword = async (data: iRecoveryPassword) => {
@@ -216,6 +220,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         selectedUserSeller,
         setSelectedUserSeller,
         getUserById,
+        showModal,
+        setShowModal,
       }}
     >
       {children}
