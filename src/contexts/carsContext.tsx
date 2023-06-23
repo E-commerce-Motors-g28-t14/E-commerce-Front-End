@@ -11,6 +11,7 @@ import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
 import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
 import { useNavigate } from "react-router-dom";
+import { IUserResponse } from "../interfaces/userIterface";
 
 interface iCarsProviderChildren {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ interface iCarsProvider {
   createCar: (data: iRegisterCar) => void;
   showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
+  carsHome: iCarReturn[];
 }
 
 interface iCarInfos {
@@ -67,6 +69,24 @@ interface iPhoto {
   isCover: boolean;
 }
 
+interface iCarReturn {
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  fuel: number;
+  km: number;
+  color: string;
+  price: string;
+  isActive: boolean;
+  description: string;
+  isPromo: boolean;
+  createdAt: string;
+  updatedAt: string;
+  photos: iPhoto[];
+  user: IUserResponse;
+}
+
 export const CarsContext = createContext({} as iCarsProvider);
 
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
@@ -78,6 +98,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
+  const [carsHome, setCarsHome] = useState([] as iCarReturn[]);
 
   const { tokenUser } = useUserHook();
   const { isOpenModal } = useModalHook();
@@ -93,6 +114,17 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       (async () => {
         const res = await apiFipeService.get("/cars");
         setBrands(Object.keys(res.data));
+      })();
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      (async () => {
+        const { data } = await apiKmotorsService.get("/cars");
+        setCarsHome(data);
       })();
     } catch (err) {
       console.error(err);
@@ -169,10 +201,10 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const createCar = async (data: iRegisterCar) => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
 
-    // if (!token) {
-    //   navigate("/", { replace: true });
-    //   return;
-    // }
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
 
     const photos: iPhoto[] = [];
 
@@ -198,35 +230,31 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
     resp.fuel = fuelBase.indexOf(resp.fuel as string) + 1;
 
-    console.log(resp);
-
-    // await apiKmotorsService
-    //   .post(`/cars`, resp, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${JSON.parse(token)}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.log(err));
+    await apiKmotorsService
+      .post(`/cars`, resp, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const showSelectCarPage = (carID: string) => {
+  const showSelectCarPage = async (carID: string) => {
     setSelectCarID(carID);
+    await getCarById(carID);
     navigate("/product");
   };
 
   const getCarById = async (id: string) => {
     await apiKmotorsService
       .get(`/cars/${id}`, {
-        headers: {
-          Authorization: `Bearer ${tokenUser}`,
-        },
+        headers: {},
       })
       .then((res) => {
-        console.log(res.data);
         setSelectCar(res.data);
       })
       .catch((err) => {
@@ -253,6 +281,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         getCarById,
         selectCar,
         setSelectCar,
+        carsHome,
       }}
     >
       {children}

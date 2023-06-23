@@ -14,6 +14,7 @@ export const StyledListCardsCar = styled.ul`
     display: grid;
     grid-template-columns: repeat(1, 100%);
     gap: 0;
+    align-items: flex-start;
     row-gap: 8rem;
     overflow-x: hidden;
   }

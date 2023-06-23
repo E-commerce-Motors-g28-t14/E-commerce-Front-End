@@ -13,10 +13,7 @@ const InitialsName = ({
   name,
   fontSize,
 }: IInitialsNameProps) => {
- 
- 
- 
-    const getUsernameLetters = (name: string) => {
+  const getUsernameLetters = (name: string) => {
     const nameParts = name.split(" ");
     const firstLetter = nameParts[0].charAt(0);
     const secondLetter = nameParts[nameParts.length - 1].charAt(0);

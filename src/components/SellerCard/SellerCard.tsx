@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { useModalHook } from "../../hooks";
 import { StyledButton } from "../../styles/buttons";
@@ -6,10 +6,52 @@ import { StyledButton } from "../../styles/buttons";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerSellerCard } from "./style";
+import { apiKmotorsService } from "../../services";
+import { iAdress } from "../../interfaces/userIterface";
+import { ICar } from "../../interfaces/carInterface";
+
+interface iUserResponse {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  color: string;
+  phone: string;
+  birthdate: string;
+  description: string;
+  isSeller: boolean;
+  createdAt: string;
+  updatedAt: string;
+  address: iAdress;
+  cars: ICar[];
+}
 
 const SellerCard = () => {
-  const { user } = useContext(UserContext);
-  const { toggleModal } = useModalHook();
+  const { toggleModalFormsCar } = useModalHook();
+
+  const [user, setUser] = useState({} as iUserResponse);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@kmotors-g28");
+
+    const getUserInfo = async () => {
+      const { data } = await apiKmotorsService.get("/users/profile", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token!)}`,
+        },
+      });
+
+      setUser(data);
+      setIsLoading(false);
+    };
+
+    getUserInfo();
+  }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <ContainerSellerCard>
@@ -27,7 +69,7 @@ const SellerCard = () => {
         <p>{user.description}</p>
         <StyledButton
           className="big outlineBrand1 btn-new-ad"
-          onClick={toggleModal}
+          onClick={toggleModalFormsCar}
         >
           Criar anuncio
         </StyledButton>

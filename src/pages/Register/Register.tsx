@@ -21,7 +21,7 @@ const Register = () => {
     GetAdressInZipCode,
   } = useContext(UserContext);
 
-  const { isOpenModal } = useModalHook();
+  const { isOpenModal, toggleModal } = useModalHook();
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const Register = () => {
   return (
     <>
       {isOpenModal && (
-        <ModalBody>
+        <ModalBody close={toggleModal}>
           <StyledMainModal className="createSuccess">
             <h2>Sucesso!</h2>
             <h3>Sua conta foi criada com sucesso!</h3>

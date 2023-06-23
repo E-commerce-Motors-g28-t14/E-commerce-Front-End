@@ -50,25 +50,7 @@ export interface IUserLoginRequest {
   password: string;
 }
 
-
-export interface IUserResponse {
-  id:string
-  name: string;
-  email: string;
-  cpf: string;
-  phone: string;
-  birthdate: string;   
-  description?: string | null;
-  isSeller: boolean;
-  color: number;
-  address: IAdresse;
-  cars: ICar[];
-  comments: Comment[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface IAdresse{
+export interface IAdresse {
   district: string;
   zipCode: string;
   state: string;

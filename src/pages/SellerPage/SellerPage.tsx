@@ -8,12 +8,12 @@ import { useModalHook } from "../../hooks";
 import { MainContainer, ContainerPageSeller, SectionSellerPage } from "./style";
 
 const SellerPage = () => {
-  const { isOpenModal } = useModalHook();
+  const { isOpenModalFormsCar, toggleModalFormsCar } = useModalHook();
 
   return (
     <>
-      {isOpenModal && (
-        <ModalBody>
+      {isOpenModalFormsCar && (
+        <ModalBody close={toggleModalFormsCar}>
           <FormCreateCar />
         </ModalBody>
       )}
