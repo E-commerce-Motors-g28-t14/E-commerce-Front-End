@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Username from "../Username/Username";
 import { useModalHook, useUserHook } from "../../hooks";
 import { Unlogged } from "../Unlogged/Unlogged";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ModalBody } from "../ModalBody";
 import { FormAttUser } from "../FormAttUser";
 import { FormAttUserAddress } from "../FormAttUserAddress";
@@ -16,6 +16,7 @@ const Header = () => {
   const { isLogin, user } = useUserHook();
   const { isOpenModalFormsUser, toggleModalFormsUser } = useModalHook();
   const [isAddress, setIsAddress] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -71,7 +72,9 @@ const Header = () => {
                   </li>
                   {user.isSeller && (
                     <li>
-                      <span>Meus anúncio</span>
+                      <span onClick={() => navigate("/seller")}>
+                        Meus anúncio
+                      </span>
                     </li>
                   )}
                   <li>
@@ -96,7 +99,9 @@ const Header = () => {
                   </li>
                   {user.isSeller && (
                     <li>
-                      <span>Meus anúncios</span>
+                      <span onClick={() => navigate("/seller")}>
+                        Meus anúncios
+                      </span>
                     </li>
                   )}
                   <li>

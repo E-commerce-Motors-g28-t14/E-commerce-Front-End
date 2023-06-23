@@ -10,6 +10,7 @@ import carTouareg from "../../assets/banco de exemplos/CARRO1 (6).png";
 import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
 import { useCarsHook } from "../../hooks/carsHook";
+import { useState } from "react";
 
 export interface imockListCars {
   id: string;
@@ -135,12 +136,16 @@ export const mockListCars = [
   },
 ];
 
-export const HomeListCardsCar = (): JSX.Element => {
+export const HomeListCardsCar = (): JSX.Element | null => {
   const { carsHome, showSelectCarPage } = useCarsHook();
+
+  if (Object.keys(carsHome).length === 0) {
+    return null;
+  }
 
   return (
     <StyledListCardsCar>
-      {carsHome.map((car) => {
+      {carsHome.data.map((car) => {
         const photoCape = car.photos.find((photo) => photo.isCover === true);
         return (
           <StyledHomeCardCar

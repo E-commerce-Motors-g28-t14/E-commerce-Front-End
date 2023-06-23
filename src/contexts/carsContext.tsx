@@ -34,7 +34,7 @@ interface iCarsProvider {
   createCar: (data: iRegisterCar) => void;
   showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
-  carsHome: iCarReturn[];
+  carsHome: iCarsHome;
 }
 
 interface iCarInfos {
@@ -87,6 +87,13 @@ interface iCarReturn {
   user: IUserResponse;
 }
 
+interface iCarsHome {
+  previousPage: string;
+  nextPage: string;
+  count: number;
+  data: iCarReturn[];
+}
+
 export const CarsContext = createContext({} as iCarsProvider);
 
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
@@ -98,7 +105,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
-  const [carsHome, setCarsHome] = useState([] as iCarReturn[]);
+  const [carsHome, setCarsHome] = useState({} as iCarsHome);
 
   const { tokenUser } = useUserHook();
   const { isOpenModal } = useModalHook();

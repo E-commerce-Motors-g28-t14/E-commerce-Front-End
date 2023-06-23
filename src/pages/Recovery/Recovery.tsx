@@ -8,6 +8,7 @@ import { UserContext } from "../../contexts/userContext";
 import { Input } from "../../components/Input/Input";
 import { StyledButton } from "../../styles/buttons";
 import { useParams } from "react-router-dom";
+import { useModalHook } from "../../hooks";
 
 export interface iRecoveryPassword {
   password: string;
@@ -18,6 +19,7 @@ const Recovery = () => {
   const { SendEmailRecover, message, GetUserById, user, ChangePassword } =
     useContext(UserContext);
   const [showLoading, setShowLoading] = useState(false);
+  const { toggleModal } = useModalHook();
   const { id } = useParams();
   const {
     register,
@@ -29,8 +31,10 @@ const Recovery = () => {
   };
 
   useEffect(() => {
+    console.log(id);
     GetUserById(id);
   }, []);
+
   return (
     <>
       <Header />
@@ -45,6 +49,7 @@ const Recovery = () => {
             <Input
               disabled={false}
               errors={errors.password}
+              type="password"
               label="Nova senha"
               placeholder="Insira nova senha"
               register={register("password")}
@@ -63,7 +68,10 @@ const Recovery = () => {
           </form>
         </MainContainer>
       ) : (
-        <ModalBody children={<h2>Verificando usuário</h2>} />
+        <ModalBody
+          close={toggleModal}
+          children={<h2>Verificando usuário</h2>}
+        />
       )}
       <Footer />
     </>

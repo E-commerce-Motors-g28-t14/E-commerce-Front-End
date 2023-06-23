@@ -195,6 +195,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       })
       .then((res) => {
         setMessage(res.data);
+        route("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -217,7 +218,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .patch(`/users/${user.id}`, data, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
       .then((res) => {
@@ -238,7 +239,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .patch(`/users/${user.id}/address`, data, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
       .then((res) => {
@@ -260,7 +261,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .delete(`/users/${user.id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
       .then((res) => {
