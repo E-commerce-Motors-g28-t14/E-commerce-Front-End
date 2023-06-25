@@ -1,5 +1,5 @@
 
-![BackGround Logo G28](../src/assets/img/bg.png)
+![BackGround Logo G28](bg.png)
 
 # E-commerce-Front-End G28
 The front-end of the e-commerce platform was developed using React.js along with several libraries and dependencies. 
