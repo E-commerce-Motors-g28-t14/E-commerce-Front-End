@@ -10,7 +10,7 @@ import { AxiosResponse } from "axios";
 import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
 import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
-import { useNavigate } from "react-router-dom";
+import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
 
 interface iCarsProviderChildren {
@@ -35,6 +35,8 @@ interface iCarsProvider {
   showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
   carsHome: iCarsHome;
+  siteUrl: Location;
+  convertFuelString: (fuel: string) => number;
 }
 
 interface iCarInfos {
@@ -112,9 +114,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
   const navigate = useNavigate();
 
-  // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
-  // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
-  // somente carro civic, e só tem 43 desse tipo, setar a quantidade para 43 ao invés de 1000
+  const siteUrl = useLocation()
 
   useEffect(() => {
     try {
@@ -130,13 +130,14 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   useEffect(() => {
     try {
       (async () => {
-        const { data } = await apiKmotorsService.get("/cars");
+        const { data } = await apiKmotorsService.get(`/cars${siteUrl.search ? `${siteUrl.search}&page=${page}&perPage=12` : `?page=${page}&perPage=12`}`);
         setCarsHome(data);
+        setCarsQuantity(data.count)
       })();
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [siteUrl.search, page]);
 
   useEffect(() => {
     (async () => {
@@ -204,6 +205,18 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
     return fuelBase[index - 1];
   };
+
+  const convertFuelString = (fuel: string): number => {
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"]
+
+    const number: number | undefined = fuelBase.map((fuelBaseElement, index) => {
+      if(fuelBaseElement === fuel){
+        return index + 1
+      }
+    })[0]
+
+    return number || 1
+  }
 
   const createCar = async (data: iRegisterCar) => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
@@ -289,6 +302,8 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         selectCar,
         setSelectCar,
         carsHome,
+        siteUrl,
+        convertFuelString
       }}
     >
       {children}

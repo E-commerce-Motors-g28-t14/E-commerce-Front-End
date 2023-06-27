@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ModalProvider } from "./contexts";
 import { CarsProvider } from "./contexts/carsContext.tsx";
 import { UserProvider } from "./contexts/userContext.tsx";
+import { FilterProvider } from "./contexts/filterContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <ModalProvider>
         <UserProvider>
           <CarsProvider>
-            <App />
+            <FilterProvider>
+              <App />
+            </FilterProvider>
           </CarsProvider>
         </UserProvider>
       </ModalProvider>

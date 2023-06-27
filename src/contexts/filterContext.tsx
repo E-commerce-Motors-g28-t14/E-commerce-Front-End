@@ -48,7 +48,8 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
         "Volkswagem",
       ];
       const modelDefault = [
-        "Civic, Corolla",
+        "Civic", 
+        "Corolla",
         "Cruze",
         "Fit",
         "Gol",

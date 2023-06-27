@@ -26,7 +26,7 @@ export const CarPagination = () => {
         </button>
       )}
       <span>
-        <span>{page}</span> de {pageNumber}
+        <span>{page}</span> de {Math.round(pageNumber)}
       </span>
       {page < pageNumber && (
         <button disabled={page >= pageNumber} onClick={() => nextPage()}>
