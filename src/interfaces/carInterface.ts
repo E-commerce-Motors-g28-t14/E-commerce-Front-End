@@ -22,3 +22,19 @@ export interface ICarPhotos{
     isCover: boolean
     imageLink: string
 }
+
+export interface ICarsResponse{
+    id: string;
+    brand: string;
+    color: string;
+    createdAt: Date;
+    updatedAt: Date;
+    description: string | null;
+    fuel: number;
+    isActive: boolean;
+    isPromo: boolean;
+    km: number;
+    model: string;
+    price: string;
+    year: number;
+}
