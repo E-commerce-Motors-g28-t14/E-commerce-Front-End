@@ -209,13 +209,14 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const convertFuelString = (fuel: string): number => {
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"]
 
-    const number: number | undefined = fuelBase.map((fuelBaseElement, index) => {
-      if(fuelBaseElement === fuel){
-        return index + 1
-      }
-    })[0]
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+    let number: number = 1
 
-    return number || 1
+    fuelBase.forEach((fuelCar: string, index: number) => {
+      if(fuel === fuelCar) number = index + 1
+    })
+
+    return number
   }
 
   const createCar = async (data: iRegisterCar) => {
