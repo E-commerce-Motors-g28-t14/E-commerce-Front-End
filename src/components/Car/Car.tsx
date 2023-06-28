@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import carro from "../../assets/banco de exemplos/fusca.png";
 import { StyleLi } from "./style";
+import { CarsContext } from "../../contexts/carsContext";
 
 const Car = () => {
+  const { getCarsUser, ListCarUser } = useContext(CarsContext);
   const car = {
     cover: { carro },
     brand: "Mercedes Benz",
@@ -16,6 +18,12 @@ const Car = () => {
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...",
     isActive: true,
   };
+
+  useEffect(() => {
+    getCarsUser();
+    console.log(ListCarUser);
+  }, []);
+
   return (
     <StyleLi>
       <div className="div-car__img">
@@ -30,6 +38,7 @@ const Car = () => {
           <p>{car.price}</p>
         </span>
       </div>
+      <button>Editar Anuncio</button>
     </StyleLi>
   );
 };
