@@ -147,6 +147,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         console.log(res.data);
         setAdress(res.data);
         setCep("");
+        return;
       })
       .catch((err) => {
         console.log(err);
