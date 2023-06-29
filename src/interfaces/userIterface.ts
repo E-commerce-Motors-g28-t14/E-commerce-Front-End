@@ -59,3 +59,7 @@ export interface IAdresse {
   complement: string;
   number: string;
 }
+
+export interface ICommentRequest{
+  comment: string
+}
