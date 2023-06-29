@@ -141,17 +141,22 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const GetAdressInZipCode = async (cep: string) => {
-    await apiCepService
-      .get(`${cep}/json`)
-      .then((res) => {
-        console.log(res.data);
-        setAdress(res.data);
-        setCep("");
-        return;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const formatedCep: string = cep.replace(/[^0-9]/g, "");
+    if (formatedCep.length === 8) {
+      await apiCepService
+        .get(`${cep}/json`)
+        .then((res) => {
+          console.log(res.data);
+          setAdress(res.data);
+          setCep("");
+          return;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setAdress({} as CepResponse);
+    }
   };
 
   const LoginUser = async (data: IUserLoginRequest) => {

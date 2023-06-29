@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
@@ -13,8 +13,14 @@ import { StyledButton } from "../../styles/buttons";
 import { useNavigate } from "react-router-dom";
 import { apiCepService } from "../../services";
 const Register = () => {
-  const { CreateUser, isSeller, setIsPassword, adress, setSeller } =
-    useContext(UserContext);
+  const {
+    CreateUser,
+    isSeller,
+    setIsPassword,
+    adress,
+    setSeller,
+    GetAdressInZipCode,
+  } = useContext(UserContext);
 
   const { isOpenModal, toggleModal } = useModalHook();
 
@@ -29,22 +35,25 @@ const Register = () => {
     resolver: zodResolver(UserSchema),
   });
 
-  const GetAdressInZipCode = async (cep: string) => {
-    const formatedCep: string = cep.replace(/[^0-9]/g, "");
-    if (formatedCep.length === 8) {
-      await apiCepService
-        .get(`${cep}/json`)
-        .then((res) => {
-          setValue("district", res.data.bairro);
-          setValue("state", res.data.uf);
-          setValue("city", res.data.localidade);
-          setValue("street", res.data.logradouro);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+  useEffect(() => {
+    const changeValuesCar = () => {
+      setValue("number", "");
+      setValue("complement", "");
+      if (Object.keys(adress).length === 0) {
+        setValue("district", "");
+        setValue("state", "");
+        setValue("city", "");
+        setValue("street", "");
+      } else {
+        setValue("district", adress.bairro);
+        setValue("state", adress.uf);
+        setValue("city", adress.localidade);
+        setValue("street", adress.logradouro);
+      }
+    };
+
+    changeValuesCar();
+  }, [adress]);
 
   return (
     <>

@@ -50,7 +50,7 @@ interface iCarInfos {
 
 interface iSearchCar {
   fuel: string;
-  fipe: number;
+  fipe: string;
   year: string;
 }
 
@@ -114,7 +114,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
   const navigate = useNavigate();
 
-  const siteUrl = useLocation()
+  const siteUrl = useLocation();
 
   useEffect(() => {
     try {
@@ -130,9 +130,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   useEffect(() => {
     try {
       (async () => {
-        const { data } = await apiKmotorsService.get(`/cars${siteUrl.search ? `${siteUrl.search}&page=${page}&perPage=12` : `?page=${page}&perPage=12`}`);
+        const { data } = await apiKmotorsService.get(
+          `/cars${
+            siteUrl.search
+              ? `${siteUrl.search}&page=${page}&perPage=12`
+              : `?page=${page}&perPage=12`
+          }`
+        );
         setCarsHome(data);
-        setCarsQuantity(data.count)
+        setCarsQuantity(data.count);
       })();
     } catch (err) {
       console.error(err);
@@ -192,11 +198,12 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
 
     const carData = {
       fuel: getFuel(fuel),
-      fipe: value,
+      fipe: value.toString(),
       year: year,
     };
 
     setSearchCar({ ...carData });
+    console.log(searchCar);
     return;
   };
 
@@ -207,17 +214,17 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const convertFuelString = (fuel: string): number => {
-    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"]
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
     // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    let number: number = 1
+    let number: number = 1;
 
     fuelBase.forEach((fuelCar: string, index: number) => {
-      if(fuel === fuelCar) number = index + 1
-    })
+      if (fuel === fuelCar) number = index + 1;
+    });
 
-    return number
-  }
+    return number;
+  };
 
   const createCar = async (data: iRegisterCar) => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
@@ -304,7 +311,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         setSelectCar,
         carsHome,
         siteUrl,
-        convertFuelString
+        convertFuelString,
       }}
     >
       {children}
