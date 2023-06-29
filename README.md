@@ -18,11 +18,13 @@ interface for the e-commerce platform.
    
 </div></br>
 
-## Getting Started
-<ol>
-  <li>Clone the repository and navigate to the project directory.</li>
-  <li>Install the dependencies by running the command: yarn install.</li>
-  <li>Start the development server using: yarn dev.</li>
-  
-</ol>
+#### Workflow
+<div style="display: flex; flex-direction: row; gap: 5px;">
+<img align="center" alt="TS" src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white">
+</div></br>
+
+## Documentation
+
+[See the complete documentation here.](./documentation.md)
+
 
