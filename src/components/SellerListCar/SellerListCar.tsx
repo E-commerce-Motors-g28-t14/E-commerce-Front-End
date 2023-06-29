@@ -3,10 +3,13 @@ import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import carSportage from "../../assets/banco de exemplos/CARRO1 (1).png";
 import { UserContext } from "../../contexts/userContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CarsContext } from "../../contexts/carsContext";
 import { useNavigate } from "react-router-dom";
 import { StyledButton } from "../../styles/buttons";
+import { ModalBody } from "../ModalBody";
+import { FormUpdateCar } from "../FormUpdateCar";
+import { useModalHook } from "../../hooks";
 
 interface ICar {
   id: string;
@@ -78,22 +81,30 @@ const cars = [
 
 const SellerListCar = () => {
   const { user } = useContext(UserContext);
+  const { toggleModal, isOpenModal } = useModalHook();
+  const { ListCarUser, getCarsUser, getCarById, selectCar } =
+    useContext(CarsContext);
 
-  const [selectCarID, setSelectCarID] = useState(CarsContext);
-  const navigate = useNavigate();
+  const [selectCarID, setSelectCarID] = useState();
 
   const handleClick = (carID: any) => {
     setSelectCarID(carID);
-    navigate("/product");
+    getCarById(carID);
+    console.log(carID);
+    toggleModal();
   };
+
+  useEffect(() => {
+    getCarsUser();
+  }, []);
 
   return (
     <ListCarContainer>
-      {cars && cars.length > 0 ? (
-        cars.map((car, key) => (
+      {ListCarUser && ListCarUser.length > 0 ? (
+        ListCarUser.map((car, key) => (
           <ListCar key={key}>
             <div>
-              <img src={car.photos} alt={`Foto do carro ${car.model}`} />
+              <img src={car.photoCape} alt={`Foto do carro ${car.photoCape}`} />
             </div>
             <div>
               <span>{car.brand}</span>
@@ -125,7 +136,12 @@ const SellerListCar = () => {
               </div>
             </div>
             <div className="btn-update-ad">
-              <StyledButton className="medium outline1">Editar</StyledButton>
+              <StyledButton
+                className="medium outline1"
+                onClick={() => handleClick(car.id)}
+              >
+                Editar
+              </StyledButton>
               <StyledButton className="medium outline1">
                 Ver detalhes
               </StyledButton>
@@ -135,6 +151,32 @@ const SellerListCar = () => {
       ) : (
         <h4 className="info-message">Você não possui nenhum anúncio.</h4>
       )}
+      <>
+        {isOpenModal ? (
+          <ModalBody close={toggleModal}>
+            <FormUpdateCar
+              brand={selectCar.brand}
+              color={selectCar.color}
+              fipePrice={""}
+              fuel={""}
+              id={selectCar.id}
+              isActive={selectCar.isActive}
+              km={selectCar.km}
+              model={selectCar.model}
+              photoCape={selectCar.photoCape}
+              price={selectCar.price}
+              year={selectCar.year}
+              description={selectCar.description}
+              photo1={selectCar.photo1}
+              photo2={selectCar.photo2}
+              photo3={selectCar.photo3}
+              photo4={selectCar.photo4}
+              photo5={selectCar.photo5}
+              photo6={selectCar.photo6}
+            />
+          </ModalBody>
+        ) : null}
+      </>
     </ListCarContainer>
   );
 };
