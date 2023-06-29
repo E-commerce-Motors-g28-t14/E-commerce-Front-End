@@ -95,17 +95,20 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
         const colorsCars: string[] = []
         const yearsCars: number[] = []
         const fuelsCars: string[] = []
+        const modelCars: string[] = []
         
         cars.forEach(car => {
           if(!colorsCars.includes(car.color)) colorsCars.push(car.color)
           if(!yearsCars.includes(car.year)) yearsCars.push(car.year)
           const convertFuel: string = getFuel(car.fuel)
           if(!fuelsCars.includes(convertFuel)) fuelsCars.push(convertFuel)
+          if(!modelCars.includes(car.model)) modelCars.push(car.model)
         })
 
         colorsCars.length ? setColors(colorsCars) : setColors(colorDefault)
         yearsCars.length ? setYears(yearsCars) : setYears(yearDefault)
         fuelsCars.length? setFuelTypes(fuelsCars) : setFuelTypes(fuelDefault)
+        modelCars.length? setModels(modelCars) : setModels(modelDefault)
         
         const brandsKeys: string[] = Object.keys(api.data);
 
@@ -116,9 +119,8 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
         setColors(colorDefault);
         setYears(yearDefault);
         setFuelTypes(fuelDefault);
+        setModels(modelDefault);
       }
-      
-      setModels(modelDefault);
     };
 
     getFilterValues();
