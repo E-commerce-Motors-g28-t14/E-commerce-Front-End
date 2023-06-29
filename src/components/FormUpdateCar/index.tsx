@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
+import { ICarsResponse } from "../../interfaces/carInterface";
 
 export const FormUpdateCar = ({
   id,
@@ -34,6 +35,7 @@ export const FormUpdateCar = ({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<iUpdaterCar>({
     resolver: zodResolver(updateCarSchema),
   });
@@ -52,6 +54,7 @@ export const FormUpdateCar = ({
   const { toggleModal } = useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
+  const [isActive, setisActive] = useState(false);
 
   const newPhoto = () => {
     if (photoQuantity < 6) {
@@ -110,7 +113,6 @@ export const FormUpdateCar = ({
             type="text"
             disabled={false}
             width="45%"
-            value={searchCar?.year || year}
           />
 
           <Input
@@ -171,6 +173,7 @@ export const FormUpdateCar = ({
             readOnly
           />
         </div>
+
         <TextArea
           errors={errors.description}
           register={register("description")}
@@ -180,6 +183,26 @@ export const FormUpdateCar = ({
           value={description || ""}
           width="100%"
         />
+        <div className="">
+          <StyledButton
+            className={!isActive ? "big negative" : "big brand1"}
+            onClick={() => {
+              setValue("isActive", true);
+              setisActive(true);
+            }}
+          >
+            Ativar
+          </StyledButton>
+          <StyledButton
+            className={!isActive ? "big brand1" : "big negative"}
+            onClick={() => {
+              setValue("isActive", false);
+              setisActive(false);
+            }}
+          >
+            Desativar
+          </StyledButton>
+        </div>
         <Input
           errors={errors.photoCape}
           register={register("photoCape")}
