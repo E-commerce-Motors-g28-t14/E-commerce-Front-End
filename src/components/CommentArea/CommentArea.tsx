@@ -1,19 +1,32 @@
+import { UserContext } from '../../contexts/userContext';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerCommentArea } from "./style";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const CommentArea = () => {
   const [commentText, setCommentText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const [isSend, setIsSend] = useState(false);
+  const { createComment } = useContext(UserContext)
+
+  useEffect(() => {
+
+    (async() => {
+      isSend ? createComment(inputValue) : null;
+      setIsSend(false)
+    })()
+
+  }, [])
 
   const handleCommentButtonClick = () => {
     setInputValue(commentText);
   };
   
-  const handleCommentBtnClick = (text: string) => {
+  const handleCommentBtnClick = async (text: string) => {
     setCommentText((prevCommentText) => prevCommentText + text);
+    setIsSend(true)
   };
 
   useEffect(() => {

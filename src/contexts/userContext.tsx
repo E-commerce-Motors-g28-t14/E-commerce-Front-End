@@ -70,6 +70,7 @@ interface IUserProvider {
   attUserInfo: (data: iAttUser) => void;
   attUserAddress: (data: iAttUserAddress) => void;
   deleteUser: () => void;
+  createComment: (data: string) => void;
 }
 
 interface iUserWithCars {
@@ -279,6 +280,23 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       });
   };
 
+  const createComment = async (data: string): Promise<void> => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+    await apiKmotorsService
+      .post(`/comments`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(token!)}`,
+        },
+      })
+      .then((res) => res.data)
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
   return (
     <UserContext.Provider
       value={{
@@ -314,6 +332,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         attUserInfo,
         attUserAddress,
         deleteUser,
+        createComment,
       }}
     >
       {children}
