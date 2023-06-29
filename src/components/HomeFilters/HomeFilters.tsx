@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HomeFiltersStyled } from "./style";
 import { useFilterHook } from "../../hooks";
 import { useCarsHook } from "../../hooks/carsHook";
@@ -108,31 +108,31 @@ export const HomeFilters = ({ className }: IHomeFilterProps) => {
         <h2>Marca</h2>
         <li>
           {
-            brands && brands.map((brand: string, index: number) => <Link key={index} to={handleLinkQuery(`brand=${brand}`)}>{brand}</Link>)
+            brands && brands.map((brand: string, index: number) => <Link key={index} to={handleLinkQuery(`brand=${brand}`)}>{brand.charAt(0).toUpperCase() + brand.substring(1)}</Link>)
           }
         </li>
         <h2>Modelo</h2>
         <li>
           {
-            models && models.map((model: string, index: number) => <Link key={index} to={handleLinkQuery(`model=${model}`)}>{model}</Link>)
+            models && models.map((model: string, index: number) => <Link key={index} to={handleLinkQuery(`model=${model}`)}>{model.charAt(0).toUpperCase() + model.substring(1)}</Link>)
           }
         </li>
         <h2>Cor</h2>
         <li>
           {
-            colors && colors.map((color: string, index: number) => <Link key={index} to={handleLinkQuery(`color=${color}`)}>{color}</Link>)
+            colors && colors.map((color: string, index: number) => <Link key={index} to={handleLinkQuery(`color=${color}`)}>{color.charAt(0).toUpperCase() + color.substring(1)}</Link>)
           }
         </li>
         <h2>Ano</h2>
         <li>
           {
-            years && years.map((year: string, index: number) => <Link key={index} to={handleLinkQuery(`year=${year}`)}>{year}</Link>)
+            years && years.map((year: number, index: number) => <Link key={index} to={handleLinkQuery(`year=${year}`)}>{year}</Link>)
           }
         </li>
         <h2>Combustivel</h2>
         <li>
           {
-            fuelTypes && fuelTypes.map((fuelType: string, index: number) => <Link key={index} to={handleLinkQuery(`fuel=${convertFuelString(fuelType)}`)}>{fuelType}</Link>)
+            fuelTypes && fuelTypes.map((fuelType: string, index: number) => <Link key={index} to={handleLinkQuery(`fuel=${convertFuelString(fuelType)}`)}>{fuelType.charAt(0).toUpperCase() + fuelType.substring(1)}</Link>)
           }
         </li>
         <h2>Km</h2>
