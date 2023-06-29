@@ -81,10 +81,9 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
         2010,
       ];
       const fuelDefault = [
-        "Diesel",
-        "Etanol",
-        "Gasolina",
-        "Flex"
+        "Flex",
+        "Híbrido",
+        "Elétrico",
       ];
 
       try {

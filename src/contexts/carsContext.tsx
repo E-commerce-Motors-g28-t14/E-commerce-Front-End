@@ -50,19 +50,19 @@ interface iCarInfos {
   id: string;
   name: string;
   value: number;
-  year: string;
+  year: number;
 }
 
 interface iSearchCar {
   fuel: string;
   fipe: number;
-  year: string;
+  year: number;
 }
 
 interface iTeste {
   brand: string;
   model: string;
-  year: string;
+  year: number;
   fuel: string | number;
   km: number;
   color: string;
@@ -219,7 +219,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const getFuel = (index: number) => {
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
-    return fuelBase[index - 1];
+    return fuelBase[index - 1] || "Flex"
   };
 
   const convertFuelString = (fuel: string): number => {
