@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StyledMain } from "./style";
-import { iRegisterCar, registerCarSchema } from "./createCarSchema";
+import { iUpdaterCar, updateCarSchema } from "./updateCarSchema";
 import { useForm } from "react-hook-form";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
@@ -9,14 +9,33 @@ import { TextArea } from "../TextArea/TextArea";
 import { useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
+import { ModalBody } from "../ModalBody";
 
-export const FormCreateCar = () => {
+export const FormUpdateCar = ({
+  id,
+  brand,
+  color,
+  fipePrice,
+  fuel,
+  km,
+  model,
+  photoCape,
+  price,
+  year,
+  description,
+  photo1,
+  photo2,
+  photo3,
+  photo4,
+  photo5,
+  photo6,
+}: iUpdaterCar) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<iRegisterCar>({
-    resolver: zodResolver(registerCarSchema),
+  } = useForm<iUpdaterCar>({
+    resolver: zodResolver(updateCarSchema),
   });
 
   const {
@@ -27,6 +46,7 @@ export const FormCreateCar = () => {
     searchCar,
     getFuel,
     createCar,
+    updateCar,
   } = useCarsHook();
 
   const { toggleModal } = useModalHook();
@@ -48,22 +68,25 @@ export const FormCreateCar = () => {
     const nameFormated = element.name.toUpperCase() + element.name.slice(1);
     return { name: nameFormated, value: element.name };
   });
+  const handleFormdata = (data: iUpdaterCar) => {
+    console.log(data);
+  };
 
   return (
     <StyledMain>
-      <h3>Criar anúncio</h3>
-      <form onSubmit={handleSubmit(createCar)} noValidate>
+      <h3>Editar anúncio</h3>
+      <form onSubmit={handleSubmit(updateCar)} noValidate>
         <p>Informações do veículo</p>
         <Select
-          register={register("brand")}
           label="Marca"
           placeholder={"Selecionar marca"}
           disabled={false}
           width="100%"
-          options={[...brandsForm]}
+          options={[...brandsForm] || brand}
           change={(event) => {
             searchCarsByBrand(event.target.value);
           }}
+          register={register("brand")}
         />
 
         <Select
@@ -72,7 +95,7 @@ export const FormCreateCar = () => {
           placeholder={"Selecionar modelo"}
           disabled={false}
           width="100%"
-          options={[...modelsForm]}
+          options={[...modelsForm] || model}
           change={(event) => {
             findCar(event.target.value);
           }}
@@ -85,9 +108,9 @@ export const FormCreateCar = () => {
             label="Ano"
             placeholder="Ano"
             type="text"
-            disabled={true}
+            disabled={false}
             width="45%"
-            value={searchCar?.year}
+            value={searchCar?.year || year}
           />
 
           <Input
@@ -98,7 +121,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={true}
             width="45%"
-            value={searchCar?.fuel || ""}
+            value={searchCar?.fuel || fuel}
           />
         </div>
         <div className="doubleInput">
@@ -110,6 +133,8 @@ export const FormCreateCar = () => {
             type="number"
             disabled={false}
             width="45%"
+            value={km}
+            readOnly
           />
           <Input
             errors={errors.color}
@@ -118,6 +143,8 @@ export const FormCreateCar = () => {
             placeholder="Cor"
             type="text"
             disabled={false}
+            value={color}
+            readOnly
             width="45%"
           />
         </div>
@@ -130,7 +157,7 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
-            value={searchCar?.fipe}
+            value={searchCar?.fipe || fipePrice}
           />
           <Input
             errors={errors.price}
@@ -139,7 +166,9 @@ export const FormCreateCar = () => {
             placeholder="Preço"
             type="number"
             disabled={false}
+            value={price}
             width="45%"
+            readOnly
           />
         </div>
         <TextArea
@@ -148,6 +177,7 @@ export const FormCreateCar = () => {
           label="Descrição"
           placeholder="Descrição"
           disabled={false}
+          value={description || ""}
           width="100%"
         />
         <Input
@@ -158,6 +188,7 @@ export const FormCreateCar = () => {
           type="text"
           disabled={false}
           width="100%"
+          value={photoCape}
         />
         <Input
           errors={errors.photo1}
@@ -167,6 +198,7 @@ export const FormCreateCar = () => {
           type="text"
           disabled={false}
           width="100%"
+          value={photo1 || ""}
         />
         <Input
           errors={errors.photo2}
@@ -176,6 +208,7 @@ export const FormCreateCar = () => {
           type="text"
           disabled={false}
           width="100%"
+          value={photo2 || ""}
         />
         {photoQuantity >= 3 && (
           <Input
@@ -186,6 +219,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo3 || ""}
           />
         )}
         {photoQuantity >= 4 && (
@@ -197,6 +231,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo4 || ""}
           />
         )}
         {photoQuantity >= 5 && (
@@ -208,6 +243,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo5 || ""}
           />
         )}
         {photoQuantity === 6 && (
@@ -219,6 +255,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo6 || ""}
           />
         )}
         <div className="photo">
@@ -239,7 +276,7 @@ export const FormCreateCar = () => {
             Close
           </StyledButton>
           <StyledButton className="big brand1" type="submit">
-            Cadastrar
+            Atualizar
           </StyledButton>
         </div>
       </form>

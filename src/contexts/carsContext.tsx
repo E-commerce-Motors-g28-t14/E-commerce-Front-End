@@ -12,6 +12,7 @@ import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
 import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
+import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
 
 interface iCarsProviderChildren {
   children: React.ReactNode;
@@ -23,8 +24,8 @@ interface iCarsProvider {
   selectCarID: string;
   setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
-  selectCar: ICar;
-  setSelectCar: Dispatch<SetStateAction<ICar>>;
+  selectCar: iUpdaterCar;
+  setSelectCar: Dispatch<SetStateAction<iUpdaterCar>>;
   carsQuantity: number;
   modelsAvaliable: iCarInfos[];
   searchCar: iSearchCar;
@@ -35,6 +36,10 @@ interface iCarsProvider {
   showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
   carsHome: iCarsHome;
+  updateCar: (data: iUpdaterCar) => void;
+  getCarsUser: () => void;
+  ListCarUser: iUpdaterCar[];
+  setListCarUser: Dispatch<SetStateAction<iUpdaterCar[]>>;
   siteUrl: Location;
   convertFuelString: (fuel: string) => number;
 }
@@ -101,20 +106,25 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-  const [selectCar, setSelectCar] = useState<ICar>({} as ICar);
+  const [selectCar, setSelectCar] = useState<iUpdaterCar>({} as iUpdaterCar);
   const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
   const [carsHome, setCarsHome] = useState({} as iCarsHome);
+  const [ListCarUser, setListCarUser] = useState<iUpdaterCar[]>([]);
 
   const { tokenUser } = useUserHook();
   const { isOpenModal } = useModalHook();
 
   const navigate = useNavigate();
+  console.log(selectCar);
+  // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
+  // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
+  // somente carro civic, e só tem 43 desse tipo, setar a quantidade para 43 ao invés de 1000
 
-  const siteUrl = useLocation()
+  const siteUrl = useLocation();
 
   useEffect(() => {
     try {
@@ -130,9 +140,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   useEffect(() => {
     try {
       (async () => {
-        const { data } = await apiKmotorsService.get(`/cars${siteUrl.search ? `${siteUrl.search}&page=${page}&perPage=12` : `?page=${page}&perPage=12`}`);
+        const { data } = await apiKmotorsService.get(
+          `/cars${
+            siteUrl.search
+              ? `${siteUrl.search}&page=${page}&perPage=12`
+              : `?page=${page}&perPage=12`
+          }`
+        );
         setCarsHome(data);
-        setCarsQuantity(data.count)
+        setCarsQuantity(data.count);
       })();
     } catch (err) {
       console.error(err);
@@ -207,7 +223,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const convertFuelString = (fuel: string): number => {
-    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"]
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
     // eslint-disable-next-line @typescript-eslint/no-inferrable-types
     let number: number = 1
@@ -264,6 +280,33 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .catch((err) => console.log(err));
   };
 
+  const getCarsUser = async () => {
+    await apiKmotorsService
+      .get(`users/profile`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+        },
+      })
+      .then((res) => setListCarUser(res.data.cars))
+      .catch((err) => console.log(err));
+  };
+
+  const updateCar = async (data: iUpdaterCar) => {
+    console.log("oi");
+    const id = selectCar.id;
+    const newData = { ...data, id };
+    await apiKmotorsService
+      .put(`/cars/${id}`, newData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+        },
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
   const showSelectCarPage = async (carID: string) => {
     setSelectCarID(carID);
     await getCarById(carID);
@@ -303,8 +346,12 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         selectCar,
         setSelectCar,
         carsHome,
+        getCarsUser,
+        updateCar,
+        setListCarUser,
+        ListCarUser,
         siteUrl,
-        convertFuelString
+        convertFuelString,
       }}
     >
       {children}
