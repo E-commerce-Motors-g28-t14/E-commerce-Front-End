@@ -60,10 +60,6 @@
 │   │   ├── App.css
 │   │   ├── globalStyle.ts
 │   │   └── ...
-│   ├── utils
-│   │   ├── api.tsx
-│   │   ├── helpers.tsx
-│   │   └── ...
 │   ├── App.tsx
 │   ├── main.tsx
 │   └── ...
@@ -182,7 +178,7 @@ To set up the front-end development environment and start the application locall
   <li>Clone the repository from GitHub.</li>
   <li>Install the required dependencies using yarn install.</li>
   <li>Start the development server with yarn dev.</li>
-  <li>Access the application in your web browser at http://localhost:3000</li>
+  <li>Access the application in your web browser at <strong>http://localhost:5173 </strong> </li>
 </ol>
 
 ## Deployment 
