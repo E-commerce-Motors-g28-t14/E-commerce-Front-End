@@ -37,8 +37,8 @@ const Register = () => {
         .then((res) => {
           setValue("district", res.data.bairro);
           setValue("state", res.data.uf);
-          setValue("city", res.data.logradouro);
-          setValue("street", res.data.localidade);
+          setValue("city", res.data.localidade);
+          setValue("street", res.data.logradouro);
         })
         .catch((err) => {
           console.log(err);

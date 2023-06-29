@@ -11,6 +11,7 @@ interface iInputProps extends InputHTMLAttributes<HTMLInputElement> {
   disabled: boolean;
   width?: string;
   value?: string | number;
+  actionBlur?: () => void;
 }
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   disabled,
   width = "19.6875rem",
   value,
+  actionBlur,
 }: iInputProps) => {
   return (
     <InputStyled width={width}>
@@ -34,6 +36,7 @@ export const Input = ({
           {...register}
           readOnly={disabled}
           defaultValue={value}
+          onBlur={actionBlur}
         />
         {errors && <span>{errors.message}</span>}
       </div>
