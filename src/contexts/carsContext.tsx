@@ -101,23 +101,23 @@ export interface iPhotoResponse {
   id: string;
 }
 
-interface iCarReturn {
+export interface iCarReturn {
   id: string;
   brand: string;
   model: string;
   year: number;
-  fuel: string;
-  km: string;
-  fipePrice: number;
+  fuel: number;
+  km: number;
+  isPromo: boolean;
   color: string;
   price: string;
   isActive: boolean;
-  description: string | undefined;
-  isPromo: boolean;
+  description?: string | null | undefined;
   createdAt: string;
   updatedAt: string;
   photos: iPhotoResponse[];
   user: IUserResponse;
+  comments: Comment[];
 }
 
 interface iCarsHome {
