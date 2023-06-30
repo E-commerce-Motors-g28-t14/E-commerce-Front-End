@@ -6,11 +6,11 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { StyledButton } from "../../styles/buttons";
 import { TextArea } from "../TextArea/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
-import { ICarsResponse } from "../../interfaces/carInterface";
+import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
 
 export const FormUpdateCar = ({
   id,
@@ -24,6 +24,7 @@ export const FormUpdateCar = ({
   price,
   year,
   description,
+
   photo1,
   photo2,
   photo3,
@@ -47,8 +48,9 @@ export const FormUpdateCar = ({
     findCar,
     searchCar,
     getFuel,
-    createCar,
     updateCar,
+    selectCar,
+    DeleteCar,
   } = useCarsHook();
 
   const { toggleModal } = useModalHook();
@@ -71,9 +73,33 @@ export const FormUpdateCar = ({
     const nameFormated = element.name.toUpperCase() + element.name.slice(1);
     return { name: nameFormated, value: element.name };
   });
-  const handleFormdata = (data: iUpdaterCar) => {
+  const handleclick = (data: any) => {
+    DeleteCar(data);
     console.log(data);
   };
+
+  useEffect(() => {
+    const getValues = () => {
+      setValue("brand", brand);
+      setValue("color", color);
+      setValue("fipePrice", Number(searchCar?.fipe));
+      setValue("fuel", searchCar?.fuel);
+      setValue("id", id);
+      setValue("isActive", isActive);
+      setValue("km", km);
+      setValue("photoCape", photoCape);
+      setValue("price", price);
+      setValue("year", Number(searchCar?.year));
+      setValue("description", description);
+      setValue("photo1", photo1);
+      setValue("photo2", "");
+      setValue("photo3", "");
+      setValue("photo4", "");
+      setValue("photo5", "");
+      setValue("photo6", "");
+    };
+    getValues();
+  }, [searchCar, selectCar]);
 
   return (
     <StyledMain>
@@ -110,8 +136,8 @@ export const FormUpdateCar = ({
             register={register("year")}
             label="Ano"
             placeholder="Ano"
-            type="text"
-            disabled={false}
+            type="number"
+            disabled={true}
             width="45%"
           />
 
@@ -123,7 +149,7 @@ export const FormUpdateCar = ({
             type="text"
             disabled={true}
             width="45%"
-            value={searchCar?.fuel || fuel}
+            value={Number(searchCar?.fuel) || Number(fuel)}
           />
         </div>
         <div className="doubleInput">
@@ -132,10 +158,9 @@ export const FormUpdateCar = ({
             register={register("km")}
             label="Quilometragem"
             placeholder="Quilometragem"
-            type="number"
+            type="text"
             disabled={false}
             width="45%"
-            value={km}
             readOnly
           />
           <Input
@@ -159,7 +184,7 @@ export const FormUpdateCar = ({
             type="number"
             disabled={true}
             width="45%"
-            value={searchCar?.fipe || fipePrice}
+            value={Number(searchCar?.fipe) || Number(fipePrice)}
           />
           <Input
             errors={errors.price}
@@ -183,16 +208,7 @@ export const FormUpdateCar = ({
           value={description || ""}
           width="100%"
         />
-        <div className="">
-          <StyledButton
-            className={!isActive ? "big negative" : "big brand1"}
-            onClick={() => {
-              setValue("isActive", true);
-              setisActive(true);
-            }}
-          >
-            Ativar
-          </StyledButton>
+        <div className="buttons">
           <StyledButton
             className={!isActive ? "big brand1" : "big negative"}
             onClick={() => {
@@ -201,6 +217,15 @@ export const FormUpdateCar = ({
             }}
           >
             Desativar
+          </StyledButton>
+          <StyledButton
+            className={!isActive ? "big negative" : "big brand1"}
+            onClick={() => {
+              setValue("isActive", true);
+              setisActive(true);
+            }}
+          >
+            Ativar
           </StyledButton>
         </div>
         <Input
@@ -211,7 +236,6 @@ export const FormUpdateCar = ({
           type="text"
           disabled={false}
           width="100%"
-          value={photoCape}
         />
         <Input
           errors={errors.photo1}
@@ -297,6 +321,13 @@ export const FormUpdateCar = ({
             onClick={toggleModal}
           >
             Close
+          </StyledButton>
+          <StyledButton
+            className="big brand1"
+            type="button"
+            onClick={() => handleclick(id)}
+          >
+            Deletar
           </StyledButton>
           <StyledButton className="big brand1" type="submit">
             Atualizar
