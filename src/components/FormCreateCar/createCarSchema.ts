@@ -3,7 +3,10 @@ import { z } from "zod";
 export const registerCarSchema = z.object({
   brand: z.string().max(150).nonempty({ message: "Marca obrigatória" }),
   model: z.string().max(150).nonempty({ message: "Modelo obrigatório" }),
-  year: z.string().or(z.number()).transform((yearCar) => Number(yearCar)),
+  year: z
+    .string()
+    .or(z.number())
+    .transform((yearCar) => Number(yearCar)),
   fuel: z.string().max(150),
   km: z.string().nonempty({ message: "KM obrigatória" }).transform(Number),
   color: z.string().max(150).nonempty({ message: "Cor obrigatória" }),

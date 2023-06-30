@@ -33,7 +33,13 @@ export const CardAdvertiser = ({
 
   return (
     <ContainerCardAdvertiser>
-      <InitialsName width="104" height="104" fontSize="36px" name={user.name} />
+      <InitialsName
+        width="104"
+        height="104"
+        fontSize="36px"
+        name={user.name}
+        color={user.color}
+      />
       <Name fontSize="20px" name={user.name} />
       <div className="container-description">
         <span>{user.description}</span>

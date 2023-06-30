@@ -172,6 +172,7 @@ export const HomeListCardsCar = (): JSX.Element | null => {
                 fontSize="16px"
                 height="32"
                 width="32"
+                color={car.user.color}
               />
               <Name fontSize="14" name={car.user.name} />
             </div>

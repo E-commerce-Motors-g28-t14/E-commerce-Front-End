@@ -8,6 +8,11 @@ interface INameProps {
 const Name = ({ fontSize, name }: INameProps) => {
   const getUserName = (name: string) => {
     const nameParts = name.split(" ");
+
+    if (nameParts.length === 1) {
+      return `${nameParts[0]}`;
+    }
+
     const firstName = nameParts[0];
     const secondName = nameParts[nameParts.length - 1];
 

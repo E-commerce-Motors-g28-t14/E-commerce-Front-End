@@ -23,6 +23,7 @@ const GeneralSellerPage = () => {
                 height={"104"}
                 name={selectedUserSeller.name}
                 fontSize={"36px"}
+                color={selectedUserSeller.color}
               />
               <div className="container-seller-Name">
                 <Name fontSize={"20px"} name={selectedUserSeller.name} />
@@ -58,6 +59,7 @@ const GeneralSellerPage = () => {
                           fontSize="16px"
                           height="32"
                           width="32"
+                          color={selectedUserSeller.color}
                         />
                         <Name fontSize="14px" name={selectedUserSeller.name} />
                       </div>

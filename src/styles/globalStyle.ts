@@ -83,6 +83,19 @@ button {
 
 ul {
   list-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-grey-8);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-grey-5);
+    border-radius: 20px;
+  }
 }
 
 .container {

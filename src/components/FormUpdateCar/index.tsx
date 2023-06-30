@@ -35,8 +35,8 @@ export const FormUpdateCar = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setValue,
+    formState: { errors },
   } = useForm<iUpdaterCar>({
     resolver: zodResolver(updateCarSchema),
   });
@@ -139,6 +139,7 @@ export const FormUpdateCar = ({
             type="number"
             disabled={true}
             width="45%"
+            value={searchCar?.year || year}
           />
 
           <Input
@@ -198,7 +199,6 @@ export const FormUpdateCar = ({
             readOnly
           />
         </div>
-
         <TextArea
           errors={errors.description}
           register={register("description")}

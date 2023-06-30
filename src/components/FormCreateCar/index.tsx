@@ -30,7 +30,7 @@ export const FormCreateCar = () => {
     createCar,
   } = useCarsHook();
 
-  const { toggleModal } = useModalHook();
+  const { toggleModal, toggleModalFormsCar } = useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
 
@@ -54,11 +54,11 @@ export const FormCreateCar = () => {
     const changeValuesCar = () => {
       if (Object.keys(searchCar).length === 0) {
         setValue("model", "");
-        setValue("year", "");
+        setValue("year", +"");
         setValue("fuel", "");
         setValue("fipePrice", "");
       } else {
-        setValue("year", searchCar.year);
+        setValue("year", +searchCar.year);
         setValue("fuel", searchCar.fuel);
         setValue("fipePrice", searchCar.fipe);
       }
@@ -105,10 +105,6 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
-<<<<<<< HEAD
-=======
-            value={searchCar?.year}
->>>>>>> a987154cc0049bb647e069d63ca3dc8dc1cbaa39
           />
 
           <Input
@@ -253,7 +249,7 @@ export const FormCreateCar = () => {
           <StyledButton
             className="big negative"
             type="button"
-            onClick={toggleModal}
+            onClick={toggleModalFormsCar}
           >
             Close
           </StyledButton>
