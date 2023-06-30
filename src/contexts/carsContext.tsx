@@ -59,11 +59,11 @@ interface iCarInfos {
 
 interface iSearchCar {
   fuel: string;
-  fipe: number;
-  year: number;
+  fipe: string;
+  year: string;
 }
 
-interface iTeste {
+interface iCarRequest {
   brand: string;
   model: string;
   year: number | string;
@@ -127,6 +127,13 @@ interface iCarsHome {
   data: iCarReturn[];
 }
 
+interface iCarForFipeSearch {
+  brand: string;
+  model: string;
+  year: string;
+  fuel: number;
+}
+
 export const CarsContext = createContext({} as iCarsProvider);
 
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
@@ -142,10 +149,9 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [ListCarUser, setListCarUser] = useState<iCarReturn[]>([]);
   const [photo, setPhoto] = useState<iPhotoResponse>({} as iPhotoResponse);
   const { tokenUser } = useUserHook();
-  const { isOpenModal, toggleModal } = useModalHook();
+  const { isOpenModal, toggleModal, toggleModalFormsCar } = useModalHook();
 
   const navigate = useNavigate();
-  console.log(selectCar);
   // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
   // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
   // somente carro civic, e só tem 43 desse tipo, setar a quantidade para 43 ao invés de 1000
@@ -228,14 +234,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       setSearchCar({} as iSearchCar);
       return;
     }
+
     const { fuel, value, year } = modelsAvaliable.filter(
       (element) => element.name === modelName
     )[0];
 
     const carData = {
       fuel: getFuel(fuel),
-      fipe: value,
-      year: year,
+      fipe: value.toString(),
+      year: year.toString(),
     };
 
     setSearchCar({ ...carData });
@@ -288,7 +295,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       }
     });
 
-    const resp: iTeste = { ...data, photos: [...photos] };
+    const resp: iCarRequest = { ...data, photos: [...photos] };
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
     resp.fuel = fuelBase.indexOf(resp.fuel as string) + 1;
@@ -301,17 +308,25 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        getCarsUser();
+        toggleModalFormsCar();
       })
       .catch((err) => console.log(err));
   };
 
   const getCarsUser = async () => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
     await apiKmotorsService
       .get(`users/profile`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+          Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((res) => setListCarUser(res.data.cars))
@@ -319,7 +334,6 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const updateCar = async (data: iUpdaterCar) => {
-    console.log(data);
     const token: string | null = localStorage.getItem("@kmotors-g28");
 
     if (!token) {
@@ -357,7 +371,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .put(`/cars/${id}`, newData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+          Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((res) => {
@@ -390,17 +404,24 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const DeleteCar = async (id: string) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
     await apiKmotorsService
       .delete(`/cars/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+          Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((res) => {
         setSelectCar(res.data);
         setListCarUser(ListCarUser);
-        toggleModal;
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);

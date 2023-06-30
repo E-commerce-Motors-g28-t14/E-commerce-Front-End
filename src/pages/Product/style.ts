@@ -12,7 +12,7 @@ export const StyledMain = styled.main`
   );
   justify-content: center;
 
-  @media (max-width: 1080px) {
+  @media (max-width: 800px) {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -33,7 +33,7 @@ export const StyledMain = styled.main`
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 1080px) {
+    @media (max-width: 800px) {
       max-width: none;
       width: 100%;
       display: flex;
@@ -50,12 +50,11 @@ export const StyledMain = styled.main`
     justify-content: flex-start;
     align-items: center;
 
-    @media (max-width: 1080px) {
+    @media (max-width: 800px) {
       max-width: none;
       width: 100%;
       gap: 20px;
       display: flex;
-
     }
   }
 `;
@@ -74,10 +73,11 @@ export const StyledModalDiv = styled.div`
     justify-content: center;
     border-radius: var(--radius-2);
     background-color: var(--color-grey-7);
+    overflow: hidden;
 
     img {
-      width: max-content;
-      height: 50%;
+      width: 100%;
+      object-fit: contain;
     }
   }
 `;

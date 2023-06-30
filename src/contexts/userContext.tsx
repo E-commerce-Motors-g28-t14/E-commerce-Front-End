@@ -78,7 +78,7 @@ interface iUserWithCars {
   name: string;
   email: string;
   cpf: string;
-  color: string;
+  color: number;
   phone: string;
   birthdate: string;
   description: string;
@@ -109,7 +109,11 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   const { toggleModal, toggleModalFormsUser } = useModalHook();
 
   const CreateUser = async (data: IUserRequest) => {
-    const form = { ...data, isSeller: isSeller, color: 1 };
+    const maxColor = 12;
+    const minColor = 1;
+    const color: number =
+      Math.floor(Math.random() * (maxColor - minColor + 1)) + minColor;
+    const form = { ...data, isSeller: isSeller, color: color };
     const newUser = await apiKmotorsService
       .post(`/users`, form, {
         headers: {
@@ -142,16 +146,22 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const GetAdressInZipCode = async (cep: string) => {
-    await apiCepService
-      .get(`${cep}/json`)
-      .then((res) => {
-        console.log(res.data);
-        setAdress(res.data);
-        setCep("");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const formatedCep: string = cep.replace(/[^0-9]/g, "");
+    if (formatedCep.length === 8) {
+      await apiCepService
+        .get(`${cep}/json`)
+        .then((res) => {
+          console.log(res.data);
+          setAdress(res.data);
+          setCep("");
+          return;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setAdress({} as CepResponse);
+    }
   };
 
   const LoginUser = async (data: IUserLoginRequest) => {

@@ -5,6 +5,7 @@ interface IInitialsNameProps {
   height: string;
   name: string;
   fontSize: string;
+  color: number;
 }
 
 const InitialsName = ({
@@ -12,6 +13,7 @@ const InitialsName = ({
   height,
   name,
   fontSize,
+  color,
 }: IInitialsNameProps) => {
   const getUsernameLetters = (name: string) => {
     const nameParts = name.split(" ");
@@ -43,13 +45,13 @@ const InitialsName = ({
 
   const userLetter = getUsernameLetters(name);
   const randomBackground = getRandomColor(randomColor);
-
+  console.log(color);
   return (
     <ContainerInitial
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        background: `var(${randomBackground})`,
+        background: `var(--color-random-${color})`,
       }}
     >
       <div>

@@ -4,12 +4,22 @@ import { ContainerUsername } from "./style";
 
 interface IUserNameProps {
   name: string;
+  color: number;
 }
 
-const Username = ({ name = "Maria Fernanda Batista" }: IUserNameProps) => {
+const Username = ({
+  name = "Maria Fernanda Batista",
+  color = 3,
+}: IUserNameProps) => {
   return (
     <ContainerUsername>
-      <InitialsName width={"32"} height={"32"} name={name} fontSize={"14px"} />
+      <InitialsName
+        width={"32"}
+        height={"32"}
+        name={name}
+        fontSize={"14px"}
+        color={color}
+      />
       <Name fontSize={"16px"} name={name} />
     </ContainerUsername>
   );

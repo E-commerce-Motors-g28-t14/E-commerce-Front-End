@@ -6,7 +6,7 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { StyledButton } from "../../styles/buttons";
 import { TextArea } from "../TextArea/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 
@@ -14,6 +14,7 @@ export const FormCreateCar = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<iRegisterCar>({
     resolver: zodResolver(registerCarSchema),
@@ -29,7 +30,7 @@ export const FormCreateCar = () => {
     createCar,
   } = useCarsHook();
 
-  const { toggleModal } = useModalHook();
+  const { toggleModal, toggleModalFormsCar } = useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
 
@@ -48,6 +49,23 @@ export const FormCreateCar = () => {
     const nameFormated = element.name.toUpperCase() + element.name.slice(1);
     return { name: nameFormated, value: element.name };
   });
+
+  useEffect(() => {
+    const changeValuesCar = () => {
+      if (Object.keys(searchCar).length === 0) {
+        setValue("model", "");
+        setValue("year", +"");
+        setValue("fuel", "");
+        setValue("fipePrice", "");
+      } else {
+        setValue("year", +searchCar.year);
+        setValue("fuel", searchCar.fuel);
+        setValue("fipePrice", searchCar.fipe);
+      }
+    };
+
+    changeValuesCar();
+  }, [searchCar]);
 
   return (
     <StyledMain>
@@ -87,7 +105,6 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
-            value={searchCar?.year}
           />
 
           <Input
@@ -98,7 +115,6 @@ export const FormCreateCar = () => {
             type="text"
             disabled={true}
             width="45%"
-            value={searchCar?.fuel || ""}
           />
         </div>
         <div className="doubleInput">
@@ -127,10 +143,9 @@ export const FormCreateCar = () => {
             register={register("fipePrice")}
             label="Preço tabela FIPE"
             placeholder="Quilometragem"
-            type="number"
+            type="text"
             disabled={true}
             width="45%"
-            value={searchCar?.fipe}
           />
           <Input
             errors={errors.price}
@@ -234,7 +249,7 @@ export const FormCreateCar = () => {
           <StyledButton
             className="big negative"
             type="button"
-            onClick={toggleModal}
+            onClick={toggleModalFormsCar}
           >
             Close
           </StyledButton>

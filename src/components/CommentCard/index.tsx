@@ -6,6 +6,7 @@ import { BsDot } from "react-icons/bs";
 interface IMockClients {
   comment: string;
   username: string;
+  color: number;
   createdAt: string;
 }
 
@@ -15,18 +16,21 @@ export const CommentCard = (): JSX.Element => {
       comment:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       username: "Júlia Lima",
+      color: 2,
       createdAt: "2021-05-01T15:34:56.789Z",
     },
     {
       comment:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       username: "Marcos Antônio",
+      color: 2,
       createdAt: "2023-02-22T18:09:21.789Z",
     },
     {
       comment:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       username: "Marcos Antônio",
+      color: 2,
       createdAt: "2023-02-22T18:09:21.789Z",
     },
   ];
@@ -66,8 +70,9 @@ export const CommentCard = (): JSX.Element => {
 
   return (
     <StyledContainerComments>
-      <div className="container-comment-title"><h2 className="comment-title">Comentários</h2></div>
-      
+      <div className="container-comment-title">
+        <h2 className="comment-title">Comentários</h2>
+      </div>
 
       <ul>
         {mockClients.map((client, key) => {
@@ -79,6 +84,7 @@ export const CommentCard = (): JSX.Element => {
                   height="32"
                   width="32"
                   name={client.username}
+                  color={client.color}
                 />
                 <Name fontSize="14" name={client.username} />
                 <BsDot />

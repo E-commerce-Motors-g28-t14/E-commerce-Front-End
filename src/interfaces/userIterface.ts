@@ -35,7 +35,7 @@ export interface IUserResponse {
   name: string;
   email: string;
   cpf: string;
-  color: string;
+  color: number;
   phone: string;
   birthdate: string;
   description: string;

@@ -20,7 +20,7 @@ function Product() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      const mobileWidth = 1080;
+      const mobileWidth = 800;
       setIsMobile(window.innerWidth < mobileWidth);
     };
 
@@ -47,9 +47,6 @@ function Product() {
         {isMobile ? (
           <>
             <section>
-              <CardCar car={selectCar} />
-              <Description car={selectCar} />
-
               <CoverImage images={selectCar.photos} />
               <CardCar car={selectCar} />
               <Description car={selectCar} />

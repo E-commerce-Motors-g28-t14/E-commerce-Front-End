@@ -1,4 +1,4 @@
-import { UserContext } from '../../contexts/userContext';
+import { UserContext } from "../../contexts/userContext";
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerCommentArea } from "./style";
@@ -9,24 +9,23 @@ const CommentArea = () => {
   const [inputValue, setInputValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [isSend, setIsSend] = useState(false);
-  const { createComment } = useContext(UserContext)
+  const { createComment } = useContext(UserContext);
 
   useEffect(() => {
-
-    (async() => {
+    (async () => {
+      console.log("teste");
       isSend ? createComment(inputValue) : null;
-      setIsSend(false)
-    })()
-
-  }, [])
+      setIsSend(false);
+    })();
+  }, []);
 
   const handleCommentButtonClick = () => {
     setInputValue(commentText);
   };
-  
-  const handleCommentBtnClick = async (text: string) => {
+
+  const handleCommentBtnClick = (text: string) => {
     setCommentText((prevCommentText) => prevCommentText + text);
-    setIsSend(true)
+    setIsSend(true);
   };
 
   useEffect(() => {
@@ -49,46 +48,46 @@ const CommentArea = () => {
           height={"32"}
           name={"Maria Batista"}
           fontSize={"14px"}
+          color={1}
         />
         <Name fontSize={"14px"} name={"Maria Batista"} />
       </div>
 
       {isMobile ? (
         <>
-      <div className="container-input-comment">
-        <textarea
-          value={commentText}
-          onChange={(event) => setCommentText(event.target.value)}
-        ></textarea>
-      </div>
-        <div className="container-btn-comment-send-mobile">
-          <button
-            className="btn-comment-send"
-            onClick={handleCommentButtonClick}
-          >
-            Comentar
-          </button>
-        </div>
-        </>
-        ) : (
-          <>
           <div className="container-input-comment">
-          <textarea
-            value={commentText}
-            onChange={(event) => setCommentText(event.target.value)}
-          ></textarea>
-          <div className="container-btn-comment-send">
+            <textarea
+              value={commentText}
+              onChange={(event) => setCommentText(event.target.value)}
+            ></textarea>
+          </div>
+          <div className="container-btn-comment-send-mobile">
             <button
               className="btn-comment-send"
               onClick={handleCommentButtonClick}
             >
               Comentar
             </button>
-        </div>
-        </div>
+          </div>
         </>
-        )
-      }
+      ) : (
+        <>
+          <div className="container-input-comment">
+            <textarea
+              value={commentText}
+              onChange={(event) => setCommentText(event.target.value)}
+            ></textarea>
+            <div className="container-btn-comment-send">
+              <button
+                className="btn-comment-send"
+                onClick={handleCommentButtonClick}
+              >
+                Comentar
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="container-comment-btn">
         <button
