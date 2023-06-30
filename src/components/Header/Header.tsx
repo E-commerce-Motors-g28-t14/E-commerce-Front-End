@@ -13,12 +13,16 @@ import { FormAttUserAddress } from "../FormAttUserAddress";
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { isLogin, user } = useUserHook();
+  const { isLogin, setIsLogin, user, handleLogout } = useUserHook();
   const { isOpenModalFormsUser, toggleModalFormsUser } = useModalHook();
   const [isAddress, setIsAddress] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
+    const userIdLocalStorage = localStorage.getItem("@kmotors-g28:userId")
+    if (userIdLocalStorage) {
+      setIsLogin(true);
+    }
     const checkIsMobile = () => {
       const mobileWidth = 768;
       setIsMobile(window.innerWidth < mobileWidth);
@@ -78,7 +82,7 @@ const Header = () => {
                     </li>
                   )}
                   <li>
-                    <span>Sair</span>
+                    <span onClick={handleLogout}>Sair</span>
                   </li>
                 </ul>
               )}
@@ -105,7 +109,7 @@ const Header = () => {
                     </li>
                   )}
                   <li>
-                    <span>Sair</span>
+                    <span onClick={handleLogout}>Sair</span>
                   </li>
                 </ul>
               )}

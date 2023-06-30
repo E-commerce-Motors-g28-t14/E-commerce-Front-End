@@ -8,9 +8,10 @@ interface IUserNameProps {
 }
 
 const Username = ({
-  name = "Maria Fernanda Batista",
-  color = 3,
+  name = "G28 Motors",
+  color = 5,
 }: IUserNameProps) => {
+
   return (
     <ContainerUsername>
       <InitialsName

@@ -1,10 +1,11 @@
  
 import { StyledCoverDescription } from "./style";
 import { ICar } from "../../../interfaces/carInterface";
+import { iCarReturn } from "../../../contexts/carsContext";
 
 
 
-const Description = ({car}:{ car: ICar }) => {
+const Description = ({car}:{ car: iCarReturn }) => {
   return (
     <StyledCoverDescription>
       <h2>Descrição</h2>
