@@ -13,6 +13,7 @@ import { useModalHook, useUserHook } from "../hooks";
 import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
 import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
+import { useCarsHook } from "../hooks/carsHook";
 
 interface iCarsProviderChildren {
   children: React.ReactNode;
@@ -24,8 +25,8 @@ interface iCarsProvider {
   selectCarID: string;
   setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
-  selectCar: iUpdaterCar;
-  setSelectCar: Dispatch<SetStateAction<iUpdaterCar>>;
+  selectCar: iCarReturn;
+  setSelectCar: Dispatch<SetStateAction<iCarReturn>>;
   carsQuantity: number;
   modelsAvaliable: iCarInfos[];
   searchCar: iSearchCar;
@@ -38,10 +39,13 @@ interface iCarsProvider {
   carsHome: iCarsHome;
   updateCar: (data: iUpdaterCar) => void;
   getCarsUser: () => void;
-  ListCarUser: iUpdaterCar[];
-  setListCarUser: Dispatch<SetStateAction<iUpdaterCar[]>>;
+  ListCarUser: iCarReturn[];
+  setListCarUser: Dispatch<SetStateAction<iCarReturn[]>>;
   siteUrl: Location;
   convertFuelString: (fuel: string) => number;
+  photo: iPhotoResponse;
+  setPhoto: Dispatch<SetStateAction<iPhotoResponse>>;
+  DeleteCar: (id: string) => void;
 }
 
 interface iCarInfos {
@@ -62,7 +66,7 @@ interface iSearchCar {
 interface iTeste {
   brand: string;
   model: string;
-  year: number;
+  year: number | string;
   fuel: string | number;
   km: number;
   color: string;
@@ -71,9 +75,30 @@ interface iTeste {
   photos: iPhoto[];
 }
 
+interface iUpdate {
+  brand: string;
+  model: string;
+  year: number | string;
+  fuel: string | number;
+  km: number;
+  color: string;
+  fipePrice: string;
+  price: string;
+  photos: iPhoto[];
+  isActive: boolean;
+  id: string;
+  description: string;
+}
+
 interface iPhoto {
-  imageLink: string | number | null | undefined;
+  imageLink: string | number | null | undefined | boolean;
   isCover: boolean;
+}
+
+export interface iPhotoResponse {
+  imageLink: string;
+  isCover: boolean;
+  id: string;
 }
 
 interface iCarReturn {
@@ -81,16 +106,17 @@ interface iCarReturn {
   brand: string;
   model: string;
   year: number;
-  fuel: number;
-  km: number;
+  fuel: string;
+  km: string;
+  fipePrice: number;
   color: string;
   price: string;
   isActive: boolean;
-  description: string;
+  description: string | undefined;
   isPromo: boolean;
   createdAt: string;
   updatedAt: string;
-  photos: iPhoto[];
+  photos: iPhotoResponse[];
   user: IUserResponse;
 }
 
@@ -106,17 +132,17 @@ export const CarsContext = createContext({} as iCarsProvider);
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-  const [selectCar, setSelectCar] = useState<iUpdaterCar>({} as iUpdaterCar);
+  const [selectCar, setSelectCar] = useState<iCarReturn>({} as iCarReturn);
   const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
   const [carsHome, setCarsHome] = useState({} as iCarsHome);
-  const [ListCarUser, setListCarUser] = useState<iUpdaterCar[]>([]);
-
+  const [ListCarUser, setListCarUser] = useState<iCarReturn[]>([]);
+  const [photo, setPhoto] = useState<iPhotoResponse>({} as iPhotoResponse);
   const { tokenUser } = useUserHook();
-  const { isOpenModal } = useModalHook();
+  const { isOpenModal, toggleModal } = useModalHook();
 
   const navigate = useNavigate();
   console.log(selectCar);
@@ -219,21 +245,21 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const getFuel = (index: number) => {
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
-    return fuelBase[index - 1] || "Flex"
+    return fuelBase[index - 1] || "Flex";
   };
 
   const convertFuelString = (fuel: string): number => {
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
     // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    let number: number = 1
+    let number: number = 1;
 
     fuelBase.forEach((fuelCar: string, index: number) => {
-      if(fuel === fuelCar) number = index + 1
-    })
+      if (fuel === fuelCar) number = index + 1;
+    });
 
-    return number
-  }
+    return number;
+  };
 
   const createCar = async (data: iRegisterCar) => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
@@ -293,9 +319,40 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const updateCar = async (data: iUpdaterCar) => {
-    console.log("oi");
+    console.log(data);
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const photos: iPhoto[] = [];
+
+    const dataKeys: string[] = Object.keys(data);
+
+    dataKeys.forEach((key: string) => {
+      if (key.includes("photo")) {
+        if (data[key as keyof iUpdaterCar]) {
+          const photoData = {
+            imageLink: data[key as keyof iUpdaterCar],
+            isCover: key.includes("Cape"),
+          };
+          console.log(photoData);
+
+          photos.push(photoData);
+        }
+
+        delete data[key as keyof iUpdaterCar];
+      }
+    });
+
+    const newData: any = { ...data, photos: [...photos] };
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
+
+    newData.fuel = fuelBase.indexOf(newData.fuel as string) + 1;
+
     const id = selectCar.id;
-    const newData = { ...data, id };
     await apiKmotorsService
       .put(`/cars/${id}`, newData, {
         headers: {
@@ -303,7 +360,10 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
           Authorization: `Bearer ${JSON.parse(tokenUser)}`,
         },
       })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        setSelectCar(res.data);
+        toggleModal;
+      })
       .catch((err) => console.log(err));
   };
 
@@ -320,6 +380,27 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .then((res) => {
         setSelectCar(res.data);
+        res.data.photos.map((photo: any) => {
+          setPhoto(photo);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const DeleteCar = async (id: string) => {
+    await apiKmotorsService
+      .delete(`/cars/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(tokenUser)}`,
+        },
+      })
+      .then((res) => {
+        setSelectCar(res.data);
+        setListCarUser(ListCarUser);
+        toggleModal;
       })
       .catch((err) => {
         console.log(err);
@@ -352,6 +433,9 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         ListCarUser,
         siteUrl,
         convertFuelString,
+        photo,
+        setPhoto,
+        DeleteCar,
       }}
     >
       {children}
