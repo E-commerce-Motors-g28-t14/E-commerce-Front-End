@@ -32,7 +32,7 @@ const Recovery = () => {
 
   useEffect(() => {
     console.log(id);
-    GetUserById(id);
+    GetUserById(user.id);
   }, []);
 
   return (
