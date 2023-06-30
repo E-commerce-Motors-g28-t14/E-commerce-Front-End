@@ -88,7 +88,7 @@ const Header = () => {
               onClick={() => setIsOpenMenu(!isOpenMenu)}
               className="container-user"
             >
-              {isLogin && <Username name={user.name} />}
+              {isLogin && <Username name={user.name} color={user.color} />}
               {isOpenMenu && (
                 <ul>
                   <li>

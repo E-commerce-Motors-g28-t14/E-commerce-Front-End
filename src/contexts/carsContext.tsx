@@ -12,6 +12,8 @@ import { ICar } from "../interfaces/carInterface";
 import { useModalHook, useUserHook } from "../hooks";
 import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
+import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
+import { useCarsHook } from "../hooks/carsHook";
 
 interface iCarsProviderChildren {
   children: React.ReactNode;
@@ -23,8 +25,8 @@ interface iCarsProvider {
   selectCarID: string;
   setSelectCarID: Dispatch<SetStateAction<string>>;
   setPage: Dispatch<SetStateAction<number>>;
-  selectCar: ICar;
-  setSelectCar: Dispatch<SetStateAction<ICar>>;
+  selectCar: iCarReturn;
+  setSelectCar: Dispatch<SetStateAction<iCarReturn>>;
   carsQuantity: number;
   modelsAvaliable: iCarInfos[];
   searchCar: iSearchCar;
@@ -35,8 +37,15 @@ interface iCarsProvider {
   showSelectCarPage: (data: string) => void;
   getCarById: (data: string) => void;
   carsHome: iCarsHome;
+  updateCar: (data: iUpdaterCar) => void;
+  getCarsUser: () => void;
+  ListCarUser: iCarReturn[];
+  setListCarUser: Dispatch<SetStateAction<iCarReturn[]>>;
   siteUrl: Location;
   convertFuelString: (fuel: string) => number;
+  photo: iPhotoResponse;
+  setPhoto: Dispatch<SetStateAction<iPhotoResponse>>;
+  DeleteCar: (id: string) => void;
 }
 
 interface iCarInfos {
@@ -45,19 +54,19 @@ interface iCarInfos {
   id: string;
   name: string;
   value: number;
-  year: string;
+  year: number;
 }
 
 interface iSearchCar {
   fuel: string;
-  fipe: number;
+  fipe: string;
   year: string;
 }
 
-interface iTeste {
+interface iCarRequest {
   brand: string;
   model: string;
-  year: string;
+  year: number | string;
   fuel: string | number;
   km: number;
   color: string;
@@ -66,9 +75,30 @@ interface iTeste {
   photos: iPhoto[];
 }
 
+interface iUpdate {
+  brand: string;
+  model: string;
+  year: number | string;
+  fuel: string | number;
+  km: number;
+  color: string;
+  fipePrice: string;
+  price: string;
+  photos: iPhoto[];
+  isActive: boolean;
+  id: string;
+  description: string;
+}
+
 interface iPhoto {
-  imageLink: string | number | null | undefined;
+  imageLink: string | number | null | undefined | boolean;
   isCover: boolean;
+}
+
+export interface iPhotoResponse {
+  imageLink: string;
+  isCover: boolean;
+  id: string;
 }
 
 interface iCarReturn {
@@ -76,16 +106,17 @@ interface iCarReturn {
   brand: string;
   model: string;
   year: number;
-  fuel: number;
-  km: number;
+  fuel: string;
+  km: string;
+  fipePrice: number;
   color: string;
   price: string;
   isActive: boolean;
-  description: string;
+  description: string | undefined;
   isPromo: boolean;
   createdAt: string;
   updatedAt: string;
-  photos: iPhoto[];
+  photos: iPhotoResponse[];
   user: IUserResponse;
 }
 
@@ -96,25 +127,36 @@ interface iCarsHome {
   data: iCarReturn[];
 }
 
+interface iCarForFipeSearch {
+  brand: string;
+  model: string;
+  year: string;
+  fuel: number;
+}
+
 export const CarsContext = createContext({} as iCarsProvider);
 
 export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [page, setPage] = useState<number>(1);
   const [carsQuantity, setCarsQuantity] = useState<number>(0);
-  const [selectCar, setSelectCar] = useState<ICar>({} as ICar);
+  const [selectCar, setSelectCar] = useState<iCarReturn>({} as iCarReturn);
   const [selectCarID, setSelectCarID] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
   const [cars, setCars] = useState<iCarInfos[]>([]);
   const [modelsAvaliable, setModelsAvaliable] = useState<iCarInfos[]>([]);
   const [searchCar, setSearchCar] = useState({} as iSearchCar);
   const [carsHome, setCarsHome] = useState({} as iCarsHome);
-
+  const [ListCarUser, setListCarUser] = useState<iCarReturn[]>([]);
+  const [photo, setPhoto] = useState<iPhotoResponse>({} as iPhotoResponse);
   const { tokenUser } = useUserHook();
-  const { isOpenModal } = useModalHook();
+  const { isOpenModal, toggleModal, toggleModalFormsCar } = useModalHook();
 
   const navigate = useNavigate();
+  // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
+  // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
+  // somente carro civic, e só tem 43 desse tipo, setar a quantidade para 43 ao invés de 1000
 
-  const siteUrl = useLocation()
+  const siteUrl = useLocation();
 
   useEffect(() => {
     try {
@@ -130,9 +172,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   useEffect(() => {
     try {
       (async () => {
-        const { data } = await apiKmotorsService.get(`/cars${siteUrl.search ? `${siteUrl.search}&page=${page}&perPage=12` : `?page=${page}&perPage=12`}`);
+        const { data } = await apiKmotorsService.get(
+          `/cars${
+            siteUrl.search
+              ? `${siteUrl.search}&page=${page}&perPage=12`
+              : `?page=${page}&perPage=12`
+          }`
+        );
         setCarsHome(data);
-        setCarsQuantity(data.count)
+        setCarsQuantity(data.count);
       })();
     } catch (err) {
       console.error(err);
@@ -186,14 +234,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       setSearchCar({} as iSearchCar);
       return;
     }
+
     const { fuel, value, year } = modelsAvaliable.filter(
       (element) => element.name === modelName
     )[0];
 
     const carData = {
       fuel: getFuel(fuel),
-      fipe: value,
-      year: year,
+      fipe: value.toString(),
+      year: year.toString(),
     };
 
     setSearchCar({ ...carData });
@@ -203,20 +252,21 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const getFuel = (index: number) => {
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
-    return fuelBase[index - 1];
+    return fuelBase[index - 1] || "Flex";
   };
 
   const convertFuelString = (fuel: string): number => {
-    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"]
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
-    const number: number | undefined = fuelBase.map((fuelBaseElement, index) => {
-      if(fuelBaseElement === fuel){
-        return index + 1
-      }
-    })[0]
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+    let number: number = 1;
 
-    return number || 1
-  }
+    fuelBase.forEach((fuelCar: string, index: number) => {
+      if (fuel === fuelCar) number = index + 1;
+    });
+
+    return number;
+  };
 
   const createCar = async (data: iRegisterCar) => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
@@ -245,7 +295,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       }
     });
 
-    const resp: iTeste = { ...data, photos: [...photos] };
+    const resp: iCarRequest = { ...data, photos: [...photos] };
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
     resp.fuel = fuelBase.indexOf(resp.fuel as string) + 1;
@@ -258,7 +308,75 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        getCarsUser();
+        toggleModalFormsCar();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getCarsUser = async () => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    await apiKmotorsService
+      .get(`users/profile`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => setListCarUser(res.data.cars))
+      .catch((err) => console.log(err));
+  };
+
+  const updateCar = async (data: iUpdaterCar) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const photos: iPhoto[] = [];
+
+    const dataKeys: string[] = Object.keys(data);
+
+    dataKeys.forEach((key: string) => {
+      if (key.includes("photo")) {
+        if (data[key as keyof iUpdaterCar]) {
+          const photoData = {
+            imageLink: data[key as keyof iUpdaterCar],
+            isCover: key.includes("Cape"),
+          };
+          console.log(photoData);
+
+          photos.push(photoData);
+        }
+
+        delete data[key as keyof iUpdaterCar];
+      }
+    });
+
+    const newData: any = { ...data, photos: [...photos] };
+    const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
+
+    newData.fuel = fuelBase.indexOf(newData.fuel as string) + 1;
+
+    const id = selectCar.id;
+    await apiKmotorsService
+      .put(`/cars/${id}`, newData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        setSelectCar(res.data);
+        toggleModal;
       })
       .catch((err) => console.log(err));
   };
@@ -276,6 +394,34 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .then((res) => {
         setSelectCar(res.data);
+        res.data.photos.map((photo: any) => {
+          setPhoto(photo);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const DeleteCar = async (id: string) => {
+    const token: string | null = localStorage.getItem("@kmotors-g28");
+
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    await apiKmotorsService
+      .delete(`/cars/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        setSelectCar(res.data);
+        setListCarUser(ListCarUser);
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
@@ -302,8 +448,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         selectCar,
         setSelectCar,
         carsHome,
+        getCarsUser,
+        updateCar,
+        setListCarUser,
+        ListCarUser,
         siteUrl,
-        convertFuelString
+        convertFuelString,
+        photo,
+        setPhoto,
+        DeleteCar,
       }}
     >
       {children}

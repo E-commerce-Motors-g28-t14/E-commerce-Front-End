@@ -15,7 +15,7 @@ interface iUserResponse {
   name: string;
   email: string;
   cpf: string;
-  color: string;
+  color: number;
   phone: string;
   birthdate: string;
   description: string;
@@ -61,6 +61,7 @@ const SellerCard = () => {
           height={"104"}
           name={user.name}
           fontSize={"36px"}
+          color={user.color}
         />
         <div className="container-seller-Name">
           <Name fontSize={"20px"} name={user.name} />

@@ -35,7 +35,7 @@ export interface IUserResponse {
   name: string;
   email: string;
   cpf: string;
-  color: string;
+  color: number;
   phone: string;
   birthdate: string;
   description: string;
@@ -58,4 +58,8 @@ export interface IAdresse {
   street: string;
   complement: string;
   number: string;
+}
+
+export interface ICommentRequest{
+  comment: string
 }

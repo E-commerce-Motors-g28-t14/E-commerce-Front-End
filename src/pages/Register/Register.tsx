@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
@@ -11,6 +11,7 @@ import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
 import { StyledButton } from "../../styles/buttons";
 import { useNavigate } from "react-router-dom";
+import { apiCepService } from "../../services";
 const Register = () => {
   const {
     CreateUser,
@@ -28,10 +29,31 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IUserRequest>({
     resolver: zodResolver(UserSchema),
   });
+
+  useEffect(() => {
+    const changeValuesCar = () => {
+      setValue("number", "");
+      setValue("complement", "");
+      if (Object.keys(adress).length === 0) {
+        setValue("district", "");
+        setValue("state", "");
+        setValue("city", "");
+        setValue("street", "");
+      } else {
+        setValue("district", adress.bairro);
+        setValue("state", adress.uf);
+        setValue("city", adress.localidade);
+        setValue("street", adress.logradouro);
+      }
+    };
+
+    changeValuesCar();
+  }, [adress]);
 
   return (
     <>
@@ -118,10 +140,8 @@ const Register = () => {
               id="zipCode"
               placeholder="Insira seu CEP"
               {...register("zipCode")}
-              onChange={(event) => {
-                event.target.value.length == 8
-                  ? GetAdressInZipCode(event.target.value)
-                  : event.target.value;
+              onBlur={(event) => {
+                GetAdressInZipCode(event.target.value);
               }}
             />
             {errors.zipCode && (
@@ -133,7 +153,6 @@ const Register = () => {
               id="district"
               placeholder="Bairro"
               {...register("district")}
-              value={adress?.bairro}
               readOnly
             />
             {errors.district && (
@@ -147,7 +166,6 @@ const Register = () => {
                   id="state"
                   placeholder="Estado"
                   {...register("state")}
-                  value={adress?.uf}
                   readOnly
                 />
               </label>
@@ -159,7 +177,6 @@ const Register = () => {
                   id="city"
                   placeholder="Cidade"
                   {...register("city")}
-                  value={adress.localidade}
                   readOnly
                 />
               </label>
@@ -172,7 +189,6 @@ const Register = () => {
               id="street"
               placeholder="Rua"
               {...register("street")}
-              value={adress.logradouro}
               readOnly
             />
             {errors.street && <p> className="error"{errors.street?.message}</p>}

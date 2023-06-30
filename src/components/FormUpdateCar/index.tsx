@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StyledMain } from "./style";
-import { iRegisterCar, registerCarSchema } from "./createCarSchema";
+import { iUpdaterCar, updateCarSchema } from "./updateCarSchema";
 import { useForm } from "react-hook-form";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
@@ -9,15 +9,36 @@ import { TextArea } from "../TextArea/TextArea";
 import { useEffect, useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
+import { ModalBody } from "../ModalBody";
+import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
 
-export const FormCreateCar = () => {
+export const FormUpdateCar = ({
+  id,
+  brand,
+  color,
+  fipePrice,
+  fuel,
+  km,
+  model,
+  photoCape,
+  price,
+  year,
+  description,
+
+  photo1,
+  photo2,
+  photo3,
+  photo4,
+  photo5,
+  photo6,
+}: iUpdaterCar) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<iRegisterCar>({
-    resolver: zodResolver(registerCarSchema),
+  } = useForm<iUpdaterCar>({
+    resolver: zodResolver(updateCarSchema),
   });
 
   const {
@@ -27,12 +48,15 @@ export const FormCreateCar = () => {
     findCar,
     searchCar,
     getFuel,
-    createCar,
+    updateCar,
+    selectCar,
+    DeleteCar,
   } = useCarsHook();
 
-  const { toggleModal, toggleModalFormsCar } = useModalHook();
+  const { toggleModal } = useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
+  const [isActive, setisActive] = useState(false);
 
   const newPhoto = () => {
     if (photoQuantity < 6) {
@@ -49,39 +73,49 @@ export const FormCreateCar = () => {
     const nameFormated = element.name.toUpperCase() + element.name.slice(1);
     return { name: nameFormated, value: element.name };
   });
+  const handleclick = (data: any) => {
+    DeleteCar(data);
+    console.log(data);
+  };
 
   useEffect(() => {
-    const changeValuesCar = () => {
-      if (Object.keys(searchCar).length === 0) {
-        setValue("model", "");
-        setValue("year", +"");
-        setValue("fuel", "");
-        setValue("fipePrice", "");
-      } else {
-        setValue("year", +searchCar.year);
-        setValue("fuel", searchCar.fuel);
-        setValue("fipePrice", searchCar.fipe);
-      }
+    const getValues = () => {
+      setValue("brand", brand);
+      setValue("color", color);
+      setValue("fipePrice", Number(searchCar?.fipe));
+      setValue("fuel", searchCar?.fuel);
+      setValue("id", id);
+      setValue("isActive", isActive);
+      setValue("km", km);
+      setValue("photoCape", photoCape);
+      setValue("price", price);
+      setValue("year", Number(searchCar?.year));
+      setValue("description", description);
+      setValue("photo1", photo1);
+      setValue("photo2", "");
+      setValue("photo3", "");
+      setValue("photo4", "");
+      setValue("photo5", "");
+      setValue("photo6", "");
     };
-
-    changeValuesCar();
-  }, [searchCar]);
+    getValues();
+  }, [searchCar, selectCar]);
 
   return (
     <StyledMain>
-      <h3>Criar anúncio</h3>
-      <form onSubmit={handleSubmit(createCar)} noValidate>
+      <h3>Editar anúncio</h3>
+      <form onSubmit={handleSubmit(updateCar)} noValidate>
         <p>Informações do veículo</p>
         <Select
-          register={register("brand")}
           label="Marca"
           placeholder={"Selecionar marca"}
           disabled={false}
           width="100%"
-          options={[...brandsForm]}
+          options={[...brandsForm] || brand}
           change={(event) => {
             searchCarsByBrand(event.target.value);
           }}
+          register={register("brand")}
         />
 
         <Select
@@ -90,7 +124,7 @@ export const FormCreateCar = () => {
           placeholder={"Selecionar modelo"}
           disabled={false}
           width="100%"
-          options={[...modelsForm]}
+          options={[...modelsForm] || model}
           change={(event) => {
             findCar(event.target.value);
           }}
@@ -105,6 +139,7 @@ export const FormCreateCar = () => {
             type="number"
             disabled={true}
             width="45%"
+            value={searchCar?.year || year}
           />
 
           <Input
@@ -115,6 +150,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={true}
             width="45%"
+            value={Number(searchCar?.fuel) || Number(fuel)}
           />
         </div>
         <div className="doubleInput">
@@ -123,9 +159,10 @@ export const FormCreateCar = () => {
             register={register("km")}
             label="Quilometragem"
             placeholder="Quilometragem"
-            type="number"
+            type="text"
             disabled={false}
             width="45%"
+            readOnly
           />
           <Input
             errors={errors.color}
@@ -134,6 +171,8 @@ export const FormCreateCar = () => {
             placeholder="Cor"
             type="text"
             disabled={false}
+            value={color}
+            readOnly
             width="45%"
           />
         </div>
@@ -143,9 +182,10 @@ export const FormCreateCar = () => {
             register={register("fipePrice")}
             label="Preço tabela FIPE"
             placeholder="Quilometragem"
-            type="text"
+            type="number"
             disabled={true}
             width="45%"
+            value={Number(searchCar?.fipe) || Number(fipePrice)}
           />
           <Input
             errors={errors.price}
@@ -154,7 +194,9 @@ export const FormCreateCar = () => {
             placeholder="Preço"
             type="number"
             disabled={false}
+            value={price}
             width="45%"
+            readOnly
           />
         </div>
         <TextArea
@@ -163,8 +205,29 @@ export const FormCreateCar = () => {
           label="Descrição"
           placeholder="Descrição"
           disabled={false}
+          value={description || ""}
           width="100%"
         />
+        <div className="buttons">
+          <StyledButton
+            className={!isActive ? "big brand1" : "big negative"}
+            onClick={() => {
+              setValue("isActive", false);
+              setisActive(false);
+            }}
+          >
+            Desativar
+          </StyledButton>
+          <StyledButton
+            className={!isActive ? "big negative" : "big brand1"}
+            onClick={() => {
+              setValue("isActive", true);
+              setisActive(true);
+            }}
+          >
+            Ativar
+          </StyledButton>
+        </div>
         <Input
           errors={errors.photoCape}
           register={register("photoCape")}
@@ -182,6 +245,7 @@ export const FormCreateCar = () => {
           type="text"
           disabled={false}
           width="100%"
+          value={photo1 || ""}
         />
         <Input
           errors={errors.photo2}
@@ -191,6 +255,7 @@ export const FormCreateCar = () => {
           type="text"
           disabled={false}
           width="100%"
+          value={photo2 || ""}
         />
         {photoQuantity >= 3 && (
           <Input
@@ -201,6 +266,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo3 || ""}
           />
         )}
         {photoQuantity >= 4 && (
@@ -212,6 +278,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo4 || ""}
           />
         )}
         {photoQuantity >= 5 && (
@@ -223,6 +290,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo5 || ""}
           />
         )}
         {photoQuantity === 6 && (
@@ -234,6 +302,7 @@ export const FormCreateCar = () => {
             type="text"
             disabled={false}
             width="100%"
+            value={photo6 || ""}
           />
         )}
         <div className="photo">
@@ -249,12 +318,19 @@ export const FormCreateCar = () => {
           <StyledButton
             className="big negative"
             type="button"
-            onClick={toggleModalFormsCar}
+            onClick={toggleModal}
           >
             Close
           </StyledButton>
+          <StyledButton
+            className="big brand1"
+            type="button"
+            onClick={() => handleclick(id)}
+          >
+            Deletar
+          </StyledButton>
           <StyledButton className="big brand1" type="submit">
-            Cadastrar
+            Atualizar
           </StyledButton>
         </div>
       </form>

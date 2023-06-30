@@ -2,14 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "../Input/Input";
 import { attUserAddressSchema, iAttUserAddress } from "./attUserAddressSchema";
-import { StyledDiv } from "./style";
+import { InputStyled, StyledDiv } from "./style";
 import { useModalHook, useUserHook } from "../../hooks";
 import { StyledButton } from "../../styles/buttons";
+import { apiCepService } from "../../services";
 
 export const FormAttUserAddress = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<iAttUserAddress>({
     resolver: zodResolver(attUserAddressSchema),
@@ -18,21 +20,46 @@ export const FormAttUserAddress = () => {
   const { user, attUserAddress } = useUserHook();
   const { toggleModalFormsUser } = useModalHook();
 
+  const GetAdressInZipCode = async (cep: string) => {
+    const formatedCep: string = cep.replace(/[^0-9]/g, "");
+    if (formatedCep.length === 8) {
+      await apiCepService
+        .get(`${cep}/json`)
+        .then((res) => {
+          setValue("district", res.data.bairro);
+          setValue("state", res.data.uf);
+          setValue("city", res.data.localidade);
+          setValue("street", res.data.logradouro);
+          setValue("number", "");
+          setValue("complement", "");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <StyledDiv>
       <h3>Editar endereço</h3>
       <form onSubmit={handleSubmit(attUserAddress)} noValidate>
         <h3>Informações de endereço</h3>
-        <Input
-          errors={errors.zipCode}
-          register={register("zipCode")}
-          label={"CEP"}
-          placeholder="Digite seu CEP"
-          type="text"
-          disabled={false}
-          width="100%"
-          value={user.address.zipCode}
-        />
+        <InputStyled>
+          <label htmlFor={"CEP"}>CEP</label>
+          <div>
+            <input
+              id="CEP"
+              type="string"
+              placeholder="Digite seu CEP"
+              {...register("zipCode")}
+              defaultValue={user.address.zipCode}
+              onBlur={(event) => {
+                GetAdressInZipCode(event.target.value);
+              }}
+            />
+            {errors.zipCode && <span>{errors.zipCode.message}</span>}
+          </div>
+        </InputStyled>
         <div className="doubleInput">
           <Input
             errors={errors.state}
