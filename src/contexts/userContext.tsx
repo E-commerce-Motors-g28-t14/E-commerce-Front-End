@@ -71,6 +71,7 @@ interface IUserProvider {
   attUserAddress: (data: iAttUserAddress) => void;
   deleteUser: () => void;
   createComment: (data: string) => void;
+  handleLogout: () => void
 }
 
 interface iUserWithCars {
@@ -107,6 +108,25 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
 
   const route = useNavigate();
   const { toggleModal, toggleModalFormsUser } = useModalHook();
+
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("@kmotors-g28:userId");
+  
+    if (storedUserId) {        
+      setUserLogado(storedUserId);
+    }
+  }, []);
+  
+  const setUserLogado = async (userId : string) => {
+    try {   
+      apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${tokenUser}`;  
+      const response = await apiKmotorsService.get(`/users/${userId}`);
+      setUser(response.data);     
+    } catch (error) {
+      console.error("Erro ao buscar o usuário", error);
+    }
+  };
 
   const CreateUser = async (data: IUserRequest) => {
     const maxColor = 12;
@@ -166,6 +186,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
 
   const LoginUser = async (data: IUserLoginRequest) => {
     const token = await apiKmotorsService
+    
       .post(`/login`, data, {
         headers: {
           "Content-Type": "application/json",
@@ -173,12 +194,21 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       })
       .then((res) => {
         localStorage.setItem("@kmotors-g28", JSON.stringify(res.data.token));
+        localStorage.setItem("@kmotors-g28:userId", res.data.user.id);
         setTokenUser(JSON.stringify(res.data.token));
         setIsLogin(true);
-        setUser(res.data.user);
+        // setUser(res.data.user);
         route(`/`);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleLogout = () => { 
+    console.log("entrou no logou") 
+    localStorage.removeItem("@kmotors-g28:userId");
+    localStorage.removeItem("@kmotors-g28");
+    setIsLogin(false); 
+    route(`/`);     
   };
 
   const SendEmailRecover = async (data: iEmail) => {
@@ -337,6 +367,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         attUserAddress,
         deleteUser,
         createComment,
+        handleLogout
       }}
     >
       {children}
