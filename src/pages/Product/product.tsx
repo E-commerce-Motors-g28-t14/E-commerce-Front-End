@@ -20,7 +20,7 @@ function Product() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      const mobileWidth = 800;
+      const mobileWidth = 500;
       setIsMobile(window.innerWidth < mobileWidth);
     };
 

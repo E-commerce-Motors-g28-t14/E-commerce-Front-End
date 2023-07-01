@@ -34,14 +34,12 @@ const SellerCard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("@kmotors-g28");
-
     const getUserInfo = async () => {
       const { data } = await apiKmotorsService.get("/users/profile", {
         headers: {
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       });
-
       setUser(data);
       setIsLoading(false);
     };

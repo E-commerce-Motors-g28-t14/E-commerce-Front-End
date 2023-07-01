@@ -48,11 +48,11 @@ export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
     left: 0px;
     top: 0px;
     border-radius: 4px;
-    padding: 27px 7px 27px 7px;
+    /* padding: 27px 7px 27px 7px; */
     margin-top: 2em;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
   }
 
   .image-wrapper {
@@ -61,11 +61,14 @@ export const ContainerPhotoGalery = styled.div<IContainerPhotoGaleryProps>`
     align-items: center;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .image-wrapper img {
-    max-width: 100%;
-    max-height: 100%;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   ${({ isMobile }) =>

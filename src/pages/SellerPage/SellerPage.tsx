@@ -17,7 +17,6 @@ const SellerPage = () => {
           <FormCreateCar />
         </ModalBody>
       )}
-
       <ContainerPageSeller>
         <Header />
         <MainContainer>

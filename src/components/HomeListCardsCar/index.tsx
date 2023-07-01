@@ -177,13 +177,13 @@ export const HomeListCardsCar = (): JSX.Element | null => {
               <Name fontSize="14" name={car.user.name} />
             </div>
             <div>
-              <div>
-                <span>{car.km} KM</span>
-                <span>{car.year}</span>
-              </div>
-              <div>
-                <span>R$ {(+car.price).toFixed(2)}</span>
-              </div>
+                    <div className="info-car-tags">
+                      <span>{car.km} KM</span>
+                      <span>{car.year}</span>
+                    </div>
+                    <div>
+                      <span>R$ {(+car.price).toFixed(2)}</span>
+                    </div>
               {car.isPromo && (
                 <div className="promo">
                   <span>$</span>

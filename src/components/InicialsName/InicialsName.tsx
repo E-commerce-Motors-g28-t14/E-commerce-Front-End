@@ -45,7 +45,7 @@ const InitialsName = ({
 
   const userLetter = getUsernameLetters(name);
   const randomBackground = getRandomColor(randomColor);
-  console.log(color);
+ 
   return (
     <ContainerInitial
       style={{

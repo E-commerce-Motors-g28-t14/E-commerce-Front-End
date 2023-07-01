@@ -1,11 +1,7 @@
 import { ListCar, ListCarContainer } from "./style";
-import InitialsName from "../InicialsName/InicialsName";
-import Name from "../Name/Name";
-import carSportage from "../../assets/banco de exemplos/CARRO1 (1).png";
 import { UserContext } from "../../contexts/userContext";
 import { useContext, useEffect, useState } from "react";
-import { CarsContext } from "../../contexts/carsContext";
-import { useNavigate } from "react-router-dom";
+import { CarsContext } from "../../contexts/carsContext"; 
 import { StyledButton } from "../../styles/buttons";
 import { ModalBody } from "../ModalBody";
 import { FormUpdateCar } from "../FormUpdateCar";
@@ -20,9 +16,9 @@ const SellerListCar = () => {
   const [selectCarID, setSelectCarID] = useState();
 
   const handleClick = (carID: any) => {
-    // setSelectCarID(carID);
+ 
     getCarById(carID);
-    // console.log(carID);
+ 
     toggleModal();
   };
 
@@ -34,7 +30,7 @@ const SellerListCar = () => {
     <ListCarContainer>
       {ListCarUser && ListCarUser.length > 0 ? (
         ListCarUser.map((car, key) => {
-          console.log(ListCarUser);
+         
           const photoCape = car.photos.find((photo) => photo.isCover === true);
           return (
             <ListCar key={key}>

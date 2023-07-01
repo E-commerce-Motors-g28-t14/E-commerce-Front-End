@@ -24,7 +24,7 @@ const Header = () => {
       setIsLogin(true);
     }
     const checkIsMobile = () => {
-      const mobileWidth = 768;
+      const mobileWidth = 550;
       setIsMobile(window.innerWidth < mobileWidth);
     };
 

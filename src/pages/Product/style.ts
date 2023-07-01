@@ -12,7 +12,7 @@ export const StyledMain = styled.main`
   );
   justify-content: center;
 
-  @media (max-width: 800px) {
+  @media (min-width: 100px) and (max-width: 500px) {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -29,11 +29,11 @@ export const StyledMain = styled.main`
     max-width: 752px;
     width: 100%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 20px;
 
-    @media (max-width: 800px) {
+    @media (min-width: 100px) and (max-width: 500px) {
       max-width: none;
       width: 100%;
       display: flex;
@@ -50,7 +50,7 @@ export const StyledMain = styled.main`
     justify-content: flex-start;
     align-items: center;
 
-    @media (max-width: 800px) {
+    @media (min-width: 100px) and (max-width: 500px) {
       max-width: none;
       width: 100%;
       gap: 20px;
@@ -76,7 +76,7 @@ export const StyledModalDiv = styled.div`
     overflow: hidden;
 
     img {
-      width: 100%;
+      width: 100%;      
       object-fit: contain;
     }
   }

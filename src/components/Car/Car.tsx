@@ -21,7 +21,7 @@ const Car = () => {
 
   useEffect(() => {
     getCarsUser();
-    console.log(ListCarUser);
+    
   }, []);
 
   return (

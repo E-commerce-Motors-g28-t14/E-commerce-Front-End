@@ -10,7 +10,7 @@ import { CarsContext } from "../../contexts/carsContext";
 const GeneralSellerPage = () => {
   const { selectedUserSeller } = useContext(UserContext);
   const { showSelectCarPage } = useContext(CarsContext);
-  console.log(showSelectCarPage, selectedUserSeller);
+ 
   return (
     <>
       <ContainerPageSeller>
