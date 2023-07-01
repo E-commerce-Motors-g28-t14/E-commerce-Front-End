@@ -15,7 +15,7 @@ const SellerListCar = () => {
 
   const [selectCarID, setSelectCarID] = useState();
 
-  const handleClick = (carID: any) => {
+  const handleClick = (carID: string) => {
  
     getCarById(carID);
  
@@ -29,9 +29,9 @@ const SellerListCar = () => {
   return (
     <ListCarContainer>
       {ListCarUser && ListCarUser.length > 0 ? (
-        ListCarUser.map((car, key) => {
-         
-          const photoCape = car.photos.find((photo) => photo.isCover === true);
+        ListCarUser.map((car, key) => {         
+          const photoCape = car.photos && car.photos.find((photo) => photo.isCover === true);
+          
           return (
             <ListCar key={key}>
               <div>
@@ -84,9 +84,10 @@ const SellerListCar = () => {
           );
         })
       ) : (
-        <h4 className="info-message">Você não possui nenhum anúncio.</h4>
+        <div className="info-message"> <h4>Você não possui nenhum anúncio.</h4> </div>
+      
       )}
-      <>
+      {/* <>
         {isOpenModal ? (
           <ModalBody close={toggleModal}>
             <FormUpdateCar
@@ -111,7 +112,7 @@ const SellerListCar = () => {
             />
           </ModalBody>
         ) : null}
-      </>
+      </> */}
     </ListCarContainer>
   );
 };

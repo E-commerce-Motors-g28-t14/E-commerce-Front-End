@@ -116,13 +116,13 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (storedUserId) {        
       setUserLogado(storedUserId);
     }
-  }, []);
+  }, [isLogin]);
   
   const setUserLogado = async (userId : string) => {
     try {   
       apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${tokenUser}`;  
       const response = await apiKmotorsService.get(`/users/${userId}`);
-      setUser(response.data);     
+      setUser(response.data);   
     } catch (error) {
       console.error("Erro ao buscar o usuário", error);
     }
@@ -205,6 +205,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     localStorage.removeItem("@kmotors-g28:userId");
     localStorage.removeItem("@kmotors-g28");
     setIsLogin(false); 
+    setUser({} as IUserResponse)
     route(`/`);     
   };
 

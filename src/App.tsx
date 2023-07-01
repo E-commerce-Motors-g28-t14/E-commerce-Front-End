@@ -1,14 +1,14 @@
-import { StyledGlobal } from "./styles";
+import { StyledGlobal  } from "./styles";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Product from "./pages/Product/product";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import SellerPage from "./pages/SellerPage/SellerPage";
-import Login from "./pages/Login/Login";
-import { useContext } from "react";
-import { UserContext } from "./contexts/userContext";
+import Login from "./pages/Login/Login"; 
 import Recovery from "./pages/Recovery/Recovery";
 import GeneralSellerPage from "./pages/GeneralSellerPage/GeneralSellerPage";
+
+
 
 const App = () => {
   // const { tokenUser } = useContext(UserContext);

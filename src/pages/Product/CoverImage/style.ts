@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledCoverImage = styled.div`
   display: flex;
-  width: 100%;
+  width: 100%; 
   justify-content: center;
   align-items: center;
   border-radius: 4px;

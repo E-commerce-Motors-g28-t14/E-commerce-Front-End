@@ -39,7 +39,7 @@ export const UnloggedStyled = styled.div`
     &>button:nth-child(4){
         display: none;
         background: none;
-        border: none;
+        border: none;       
 
         svg{
             width: 2.5rem;
@@ -59,10 +59,11 @@ export const UnloggedStyled = styled.div`
     }
 
     &>div:nth-child(5){
-        display: none;
+        display: flex;
         flex-direction: column;
         gap: 3rem;
         position: absolute;
+        width: 100%;
         top: 103%;
         left: 0;
         width: 100%;
@@ -117,4 +118,24 @@ export const UnloggedStyled = styled.div`
             }
         }
     }
+
+    .drop-down-unlogged {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      
+      padding: 21px 22px;
+
+      z-index: 1;
+
+      border-radius: var(--radius-2);
+      background-color: var(--color-white-fixed);
+      box-shadow: -1px 18px 9px -7px rgba(0,0,0,0.08);
+-webkit-box-shadow: -1px 18px 9px -7px rgba(0,0,0,0.08);
+-moz-box-shadow: -1px 18px 9px -7px rgba(0,0,0,0.08);
+    
+    }
+
+   
 `

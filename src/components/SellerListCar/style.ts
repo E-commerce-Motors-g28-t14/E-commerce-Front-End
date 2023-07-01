@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
 export const ListCarContainer = styled.ul`
-  display: flex;
+ display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 100%;  
+  height: auto;
   overflow-x: scroll;
   gap: 28px;
-  margin-top: 2em;
+  margin-top: 2em; 
+ 
 
   ::-webkit-scrollbar {
     height: 0.6em;
@@ -22,26 +24,37 @@ export const ListCarContainer = styled.ul`
   ::-webkit-scrollbar-thumb {
     background-color: var(--color-grey-5);
     border-radius: 20px;
+
+
   }
 
-  @media (min-width: 720px) {
+
+  @media (max-width: 721px){
+     height : 440px;      
+  }
+ 
+
+  @media (min-width: 721px) {    
     display: grid;
     grid-template-columns: repeat(1, 100%);
     gap: 0;
     row-gap: 8rem;
     overflow-x: hidden;
+     
   }
+
   @media (max-width: 1050px) {
-    grid-template-columns: repeat(2, 50%);
-  }
+  grid-template-columns: repeat(2, 50%);
+}
 
   @media (min-width: 1050px) {
     grid-template-columns: repeat(2, 50%);
   }
 
-  @media (min-width: 1380px) {
+  @media (min-width: 1300px) {
     grid-template-columns: repeat(3, 33%);
-  }
+  } 
+
 
   .info-message {
     margin-top: 2em;
@@ -50,31 +63,49 @@ export const ListCarContainer = styled.ul`
 `;
 
 export const ListCar = styled.li`
-  margin: 0 auto;
+   margin: 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
+
   width: clamp(26rem, 100%, 30rem);
   height: 350px;
   gap: 1rem;
-  justify-content: space-evenly;
+
+  
+
 
   > div:first-child {
     display: flex;
     justify-content: center;
 
+    overflow: hidden;
+
     height: 152px;
-    width: 100%;
-    padding: 0 25px;
+    width: 100%;   
+  
+
     background-color: var(--color-grey-7);
 
     > img {
-      width: 320px;
+      width: 100%;
       height: 100%;
 
       align-self: center;
-      object-fit: scale-down;
+      object-fit: cover;
     }
+
+    @media (max-width: 720px) {
+    
+    width: 250px;
+
+    > img{
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+    }
+   
+  }
   }
 
   > div:nth-child(0n + 2) {
@@ -129,28 +160,59 @@ export const ListCar = styled.li`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+
+    @media (max-width: 720px) {
+          justify-content: space-between;
+          flex-wrap: wrap;
+          align-items: flex-start;
+    }
   }
 
   .info-car-tags {
     display: flex;
     gap: 10px;
+
+    @media (max-width: 720px){
+      height: 40px;     
+      width: 100%;
+      flex-wrap: wrap;
+      align-content: flex-start; 
+      justify-content: flex-start;   
+    }
   }
 
-  .tag-car-info {
-    font-size: var(--font-size-8);
-    font-weight: 500;
-    line-height: 24px;
-    color: var(--color-brand-1);
-    background-color: var(--color-brand-4);
-    padding: 4px 8px;
-  }
+  .info-car-tags span{
+        font-size: var(--font-size-8);
+        font-weight: 500;
+        line-height: 24px;
 
-  .tag-car-info.price {
-    font-size: var(--font-size-7);
-    line-height: 20px;
-    font-weight: 500;
-    color: var(--color-grey-1);
-    background-color: transparent;
+        width: max-content;
+        height: 32px;
+
+        color: var(--color-brand-1);
+        background-color: var(--color-brand-4);
+
+        padding: 4px 8px;       
+        
+        @media (max-width: 720px){                   
+          flex-wrap: wrap;
+          align-content: flex-start;    
+    }
+      
+      }
+
+      .tag-car-info.price{
+      font-size: var(--font-size-7);     
+      font-weight: 500;     
+      color: var(--color-grey-1);
+      background-color: transparent;
+      width: max-content;
+
+      @media (max-width: 720px) {
+      margin-bottom:  1em;
+      margin-top: 0.5em;   
+   
+    } 
   }
 
   .isActive {
@@ -182,47 +244,32 @@ export const ListCar = styled.li`
       width: max-content;
     }
   }
+ 
+  @media (max-width: 400px) {  
 
-  /* .btn-update-ad button{
-    border: 2px solid var(--color-grey-1);
-    color: var(--color-grey-1); 
-    border-radius: 4px;
-    height: 38px;
-    padding: 12px 20px 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;  
-    width: fit-content;  
-    margin-top: 1em;
-   
-  }   */
+.btn-update-ad {
+  flex-direction: column;
+  width: 100%;
+  margin-top: 2em;
+  gap: 0;
+}
 
-  @media (max-width: 320px) {
-    .btn-update-ad {
-      flex-direction: column;
-      width: 100%;
-      margin-top: 2em;
-    }
+}
 
-    /* .btn-update-ad button {
-      margin-bottom: 0;
-      width: fit-content;
-      margin-top: 0;
-    } */
-  }
-
-  @media (max-width: 400px) {
-    height: 400px;
-    background-color: red;
-    justify-content: space-evenly;
+  @media (max-width: 720px) { 
+    height: 440px;   
+    justify-content: space-evenly; 
 
     .tag-car-info.price {
-      margin-bottom: 2em;
-      height: 9.5%;
+      margin-bottom: 2em;   
     }
-
-    /* .btn-update-ad button {
-      margin-top: 1em;
-    } */
+   
+    .btn-update-ad button {
+      margin-top: 1em;   
+      
+    }
   }
+
+ 
+
 `;

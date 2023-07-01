@@ -26,7 +26,7 @@ export const MainContainer = styled.div`
 
     @media (min-width: 501px) and (max-width: 1300px)  {
       display: flex;
-      /* flex-wrap: wrap; */
+      
       align-items: center;
       background: linear-gradient(
         180deg,
@@ -36,7 +36,7 @@ export const MainContainer = styled.div`
       )};
        @media (min-width: 100px) and (max-width: 500px) {
       display: flex;
-      /* flex-wrap: wrap; */
+     
       align-items: center;
       background: linear-gradient(
         180deg,

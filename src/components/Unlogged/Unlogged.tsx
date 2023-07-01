@@ -10,7 +10,8 @@ export const Unlogged = () => {
 
     return (
         <UnloggedStyled>
-            <div></div>
+            <div>                
+            </div>
             <button onClick={() => navigate("/login")}>Fazer login</button>
             <button onClick={() => navigate("/register")}>Cadastrar</button>
             {isOpenMenu ? (
@@ -22,8 +23,8 @@ export const Unlogged = () => {
                 </button>
             )}
             {isOpenMenu && (
-                <div>
-                    <button onClick={() => navigate("/login")}>Fazer login</button>
+                <div className="drop-down-unlogged">
+                    <button onClick={() => navigate("/login")} className="login-btn">Fazer login</button>
                     <button onClick={() => navigate("/register")}>Cadastrar</button>
                 </div>
             )}

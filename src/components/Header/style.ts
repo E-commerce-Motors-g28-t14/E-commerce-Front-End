@@ -9,13 +9,16 @@ export const ContainerHeader = styled.div`
   justify-content: center;
   background-color: var(--color-white-fixed);
   border-bottom: solid 2px var(--color-grey-6);
+  
 
   .container-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
     height: 100%;
+    padding-left: 3em;
+    padding-right: 3em;
   }
 
   .container-user {
@@ -78,6 +81,7 @@ export const ContainerHeader = styled.div`
     border-bottom: none;
     .container-header {
       position: relative;
+      width: 100%;
     }
 
     .container-list-menu {
@@ -102,4 +106,7 @@ export const ContainerHeader = styled.div`
       }
     }
   }
+
+  
+   
 `;

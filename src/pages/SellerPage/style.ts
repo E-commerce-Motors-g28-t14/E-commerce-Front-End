@@ -1,10 +1,20 @@
 import styled from "styled-components";
 
+
+export const ContainerPageSeller = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+height: 100%;
+justify-content: space-between;
+
+`
+
 export const MainContainer = styled.div`
     display: flex;
     padding: 20px;
-    gap: 20px;
-    height: 100%;
+    gap: 20px; 
+   
     align-items: center;
     background: linear-gradient(
       180deg,
@@ -15,9 +25,9 @@ export const MainContainer = styled.div`
     justify-content: center;
     flex-direction: column;
 
-    @media (max-width: 1080px) {
+    @media (min-width: 501px) and (max-width: 1300px)  {
       display: flex;
-      flex-wrap: wrap;
+      
       align-items: center;
       background: linear-gradient(
         180deg,
@@ -25,9 +35,9 @@ export const MainContainer = styled.div`
         #f1f3f5 0.26%,
         #f1f3f5 100%
       )};
-       @media (max-width: 400px) {
+      @media (min-width: 100px) and (max-width: 500px) {
       display: flex;
-      flex-wrap: wrap;
+   
       align-items: center;
       background: linear-gradient(
         180deg,
@@ -43,13 +53,7 @@ export const MainContainer = styled.div`
   `
 
 
-export const ContainerPageSeller = styled.div`
-display: flex;
-flex-direction: column;
-width: 100vw;
-height: 100vh;
-justify-content: space-between;
-`
+
 
 export const SectionSellerPage = styled.section`
 
@@ -73,6 +77,12 @@ h2{
 
 .container-lista-car-seller{
   width: 100%;
-  height: 90%; 
+  height: 90%;   
+
 }
+
+
+
+
+
 `

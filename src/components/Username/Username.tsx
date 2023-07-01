@@ -8,12 +8,12 @@ interface IUserNameProps {
 }
 
 const Username = ({
-  name = "G28 Motors",
+  name = "Carregando...",
   color = 5,
 }: IUserNameProps) => {
 
   return (
-    <ContainerUsername>
+    <ContainerUsername>    
       <InitialsName
         width={"32"}
         height={"32"}
