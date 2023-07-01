@@ -12,6 +12,10 @@ export const ContainerCardCar = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
+  @media (max-width: 400px) {
+    height: 300px;
+  }
+
   .container-car-name,
   .container-btn-buy,
   .container-car-info {
@@ -60,13 +64,16 @@ export const ContainerCardCar = styled.div`
     flex-direction: row;
     display: flex;
     gap: 10px;
+    flex-wrap:wrap;
+
   }
+
+ 
 
   .car-tag span {
     height: 32px;
-    width: 51px;
-    left: 62px;
-    top: 89.392578125px;
+    width: max-content; 
+
     border-radius: 4px;
     padding: 4px 8px 4px 8px;
 
@@ -77,10 +84,8 @@ export const ContainerCardCar = styled.div`
     justify-content: center;
 
     font-size: 14px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: center;
+    font-weight: 500; 
+
     color: var(--color-brand-1);
   }
 

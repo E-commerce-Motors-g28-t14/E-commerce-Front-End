@@ -52,14 +52,20 @@ export const StyledContainerComments = styled.section`
       flex-direction: column;    
       gap: 14px;
       width: 100%;
+
+      
       
 
       > div:nth-child(1) {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
 
         width: 100%;
-        height: 32px;
+        /* height: 32px;   */
+        height: clamp(32px, 50%, 100px);   
+
+      
 
         > div > h2 {
           font-size: 14px;
@@ -84,6 +90,13 @@ export const StyledContainerComments = styled.section`
 
           margin-left: 12px;
         }
+
+          /* @media (max-width: 250px) {
+              margin-top: 3em;
+              height: 100px;
+              background-color: pink;
+          } */
+         
       }
 
       > div:nth-child(2) > p {

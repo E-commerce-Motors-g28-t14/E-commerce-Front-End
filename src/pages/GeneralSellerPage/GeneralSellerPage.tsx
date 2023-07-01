@@ -65,8 +65,8 @@ const GeneralSellerPage = () => {
                       </div>
                       <div className="info-car">
                         <div className="info-car-tags">
-                          <span className="tag-car-info">{car.km} KM</span>
-                          <span className="tag-car-info">{car.year}</span>
+                          <span>{car.km} KM</span>
+                          <span>{car.year}</span>
                         </div>
 
                         <span className="tag-car-info price">

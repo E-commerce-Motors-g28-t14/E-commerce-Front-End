@@ -27,6 +27,7 @@ export const ContainerHeader = styled.div`
     padding-left: 2em;
     position: relative;
     width: 320px;
+    height: 100%;
     cursor: default;
 
     div {

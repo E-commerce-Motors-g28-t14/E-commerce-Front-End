@@ -142,7 +142,6 @@ h2{
  
 }
 
-
 .container-lista-car-seller{
   width: 100%;
   height: 90%; 
@@ -187,7 +186,7 @@ ul{
     grid-template-columns: repeat(2, 50%);
   }
 
-  @media (min-width: 1380px) {
+  @media (min-width: 1300px) {
     grid-template-columns: repeat(3, 33%);
   }
 
@@ -209,52 +208,57 @@ li{
   height: 350px;
   gap: 1rem;
   justify-content: space-evenly;
+  background-color: var(--color-grey-8);
 
-
+  @media (max-width: 720px) {
+    width: 250px
+  }
  
   > div:first-child {
     display: flex;
     justify-content: center;
 
+    overflow: hidden;
+
     height: 152px;
-    width: 100%;
-    padding: 0 25px;
+    width: 100%;   
+
     background-color: var(--color-grey-7);
 
-    > img {
-      width: 320px;
-      height: 100%;
-
+    > img {     
+      width: 100%;
       align-self: center;
-      object-fit: scale-down;
+      object-fit: contain;
     }
+  
   }
 
  
 
-  > div:nth-child(0n + 2) {
-    height: 32px;
-
+  > div:nth-child(0n + 2) { 
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    display: flex;
+    display: flex;    
+
 
     > span {
       font-size: 16px;
+      height: 32px;
       font-weight: 600;
-      line-height: 20px;
-      color: var(--color-grey-1);
+      line-height: 20px;     
     }
   }
 
-  > div:nth-child(0n + 3) {
-    height: 48px;
+  > div:nth-child(0n + 3) {    
     width: 100%;
+    height: 48px;  
+    margin-bottom: 1em;
 
     > p {
       text-overflow: ellipsis;
       overflow: hidden;
+     
 
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -283,23 +287,30 @@ li{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
+    
+  
   
 
-    .info-car-tags{
-    display: flex;
-    gap: 10px;
-    height: 32px;
-    width: fit-content;
-    }
+        .info-car-tags{
+        display: flex;
+        gap: 1em;
+        height: 32px;
+        width: max-content;   
+             
+        }
   
 
-  .tag-car-info{
+  .info-car-tags span{
         font-size: var(--font-size-8);
         font-weight: 500;
         line-height: 24px;
+        width: max-content;
+        height: 32px;
         color: var(--color-brand-1);
         background-color: var(--color-brand-4);
-        padding: 4px 8px;
+        padding: 4px 8px;       
+      
       }
 
     .tag-car-info.price{
@@ -308,15 +319,23 @@ li{
       font-weight: 500;
       color: var(--color-grey-1);
       background-color: transparent;
+      width: max-content;
     }
 
-    @media (max-width: 400px) {
-    height: 400px;  
+    @media (max-width: 400px) { 
+   
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: flex-start; 
+ 
 
-
+    .info-car-tags{
+      height: 80px;     
+      width: 100%;
+      flex-wrap: wrap;
+          align-content: flex-start;    
+    }
+    
     .tag-car-info.price{
       margin-bottom: 2em;
       height: 9.5%;
@@ -324,7 +343,11 @@ li{
 
     
   }
+
+  
   }
+
+
 
   
 

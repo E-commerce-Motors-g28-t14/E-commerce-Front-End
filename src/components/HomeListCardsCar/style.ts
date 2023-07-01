@@ -10,6 +10,19 @@ export const StyledListCardsCar = styled.ul`
   overflow-x: scroll;
   gap: 28px;
 
+  ::-webkit-scrollbar {
+    height: 0.6em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-grey-8);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-grey-5);
+    border-radius: 20px;
+  }
+
   @media (min-width: 720px) {
     display: grid;
     grid-template-columns: repeat(1, 100%);
@@ -42,18 +55,17 @@ export const StyledHomeCardCar = styled.li`
     display: flex;
     justify-content: center;
 
+    overflow: hidden;
+
     height: 152px;
-    width: 100%;
-    padding: 0 25px;
+    width: 100%;   
 
     background-color: var(--color-grey-7);
 
-    > img {
-      width: 320px;
-      height: 100%;
-
+    > img {     
+      width: 100%;
       align-self: center;
-      object-fit: scale-down;
+      object-fit: contain;
     }
   }
 
@@ -160,5 +172,6 @@ export const StyledHomeCardCar = styled.li`
 
       color: var(--color-white-fixed);
     }
+ 
   }
 `;

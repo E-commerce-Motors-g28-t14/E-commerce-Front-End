@@ -46,8 +46,8 @@ export const MainContainer = styled.div`
 export const ContainerPageSeller = styled.div`
 display: flex;
 flex-direction: column;
-width: 100%;
-height: 100%;
+width: 100vw;
+height: 100vh;
 justify-content: space-between;
 `
 
@@ -60,7 +60,6 @@ align-items: flex-start;
 width: 95%;
 
 h2{
- 
  
   font-size: 24px;
   font-weight: 600;
