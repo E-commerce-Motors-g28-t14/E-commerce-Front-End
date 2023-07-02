@@ -8,6 +8,7 @@ export const StyledMain = styled.main`
   > .container-section {
     display: flex;
     flex-direction: column;
+    
   }
 
   .big {

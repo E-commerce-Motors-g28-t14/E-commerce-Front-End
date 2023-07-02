@@ -116,13 +116,13 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (storedUserId) {        
       setUserLogado(storedUserId);
     }
-  }, []);
+  }, [isLogin]);
   
   const setUserLogado = async (userId : string) => {
     try {   
       apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${tokenUser}`;  
       const response = await apiKmotorsService.get(`/users/${userId}`);
-      setUser(response.data);     
+      setUser(response.data);   
     } catch (error) {
       console.error("Erro ao buscar o usuário", error);
     }
@@ -170,8 +170,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (formatedCep.length === 8) {
       await apiCepService
         .get(`${cep}/json`)
-        .then((res) => {
-          console.log(res.data);
+        .then((res) => {       
           setAdress(res.data);
           setCep("");
           return;
@@ -196,18 +195,17 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         localStorage.setItem("@kmotors-g28", JSON.stringify(res.data.token));
         localStorage.setItem("@kmotors-g28:userId", res.data.user.id);
         setTokenUser(JSON.stringify(res.data.token));
-        setIsLogin(true);
-        // setUser(res.data.user);
+        setIsLogin(true);      
         route(`/`);
       })
       .catch((err) => console.log(err));
   };
 
-  const handleLogout = () => { 
-    console.log("entrou no logou") 
+  const handleLogout = () => {    
     localStorage.removeItem("@kmotors-g28:userId");
     localStorage.removeItem("@kmotors-g28");
     setIsLogin(false); 
+    setUser({} as IUserResponse)
     route(`/`);     
   };
 

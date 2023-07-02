@@ -9,6 +9,7 @@ import { ModalContext } from "../../contexts/modalContext";
 import { CarPagination } from "../../components/CarPagination/CarPagination";
 import { HomeFilters } from "../../components/HomeFilters/HomeFilters";
 import { ModalBody } from "../../components/ModalBody";
+import { Loading } from "../../components/Loading/Looading";
 
 const Home = () => {
   const { isOpenModalFilter, toggleModalFilter } = useContext(ModalContext);
@@ -35,9 +36,11 @@ const Home = () => {
         </ModalBody>
       )}
       <Header />
+     
       <Banner />
       <StyledMain>
         <section className="container-section">
+       
           <HomeFilters />
           <HomeListCardsCar />
           <StyledButton className="brand1 big" onClick={toggleModalFilter}>

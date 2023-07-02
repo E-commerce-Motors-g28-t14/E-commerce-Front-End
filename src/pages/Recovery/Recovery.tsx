@@ -30,9 +30,8 @@ const Recovery = () => {
     ChangePassword(data);
   };
 
-  useEffect(() => {
-    console.log(id);
-    GetUserById(id);
+  useEffect(() => {   
+    GetUserById(user.id);
   }, []);
 
   return (

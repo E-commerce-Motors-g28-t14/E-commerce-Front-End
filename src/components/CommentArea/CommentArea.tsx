@@ -12,8 +12,7 @@ const CommentArea = () => {
   const { createComment } = useContext(UserContext);
 
   useEffect(() => {
-    (async () => {
-      console.log("teste");
+    (async () => {    
       isSend ? createComment(inputValue) : null;
       setIsSend(false);
     })();

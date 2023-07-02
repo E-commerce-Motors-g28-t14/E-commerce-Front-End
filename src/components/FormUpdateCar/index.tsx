@@ -11,6 +11,7 @@ import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
 import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
+import { iCarReturn } from "../../contexts/carsContext";
 
 export const FormUpdateCar = ({
   id,
@@ -74,8 +75,7 @@ export const FormUpdateCar = ({
     return { name: nameFormated, value: element.name };
   });
   const handleclick = (data: any) => {
-    DeleteCar(data);
-    console.log(data);
+    DeleteCar(data); 
   };
 
   useEffect(() => {

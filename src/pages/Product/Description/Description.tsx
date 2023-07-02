@@ -1,6 +1,5 @@
  
 import { StyledCoverDescription } from "./style";
-import { ICar } from "../../../interfaces/carInterface";
 import { iCarReturn } from "../../../contexts/carsContext";
 
 

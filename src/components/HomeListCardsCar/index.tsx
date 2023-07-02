@@ -11,6 +11,7 @@ import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useState } from "react";
+import { Loading } from "../Loading/Looading";
 
 export interface imockListCars {
   id: string;
@@ -144,55 +145,62 @@ export const HomeListCardsCar = (): JSX.Element | null => {
   }
 
   return (
-    <StyledListCardsCar>
-      {carsHome.data.map((car) => {
-        const photoCape = car.photos.find((photo) => photo.isCover === true);
-        return (
-          <StyledHomeCardCar
-            key={car.id}
-            onClick={() => showSelectCarPage(car.id)}
-          >
-            <div>
-              <img
-                src={photoCape?.imageLink?.toString()}
-                alt={`Foto do carro ${car.model}`}
-              />
-            </div>
-            <div>
-              <span>{car.brand}</span>
-              <span>-</span>
-              <span>{car.model}</span>
-            </div>
-            <div>
-              <p>{car.description}</p>
-            </div>
-            <div>
-              <InitialsName
-                name={car.user.name}
-                fontSize="16px"
-                height="32"
-                width="32"
-                color={car.user.color}
-              />
-              <Name fontSize="14" name={car.user.name} />
-            </div>
-            <div>
-              <div>
-                <span>{car.km} KM</span>
-                <span>{car.year}</span>
-              </div>
-              <div>
-                <span>R$ {(+car.price).toFixed(2)}</span>
-              </div>
-              {car.isPromo && (
-                <div className="promo">
-                  <span>$</span>
+    <>
+      {carsHome.data.length === 0 ? (
+        <p>Você não possui nenhum anúncio.</p>
+      ) : carsHome.data ? (
+        <StyledListCardsCar>
+          {carsHome.data.map((car) => {
+            const photoCape = car.photos.find((photo) => photo.isCover === true);
+            return (
+              <StyledHomeCardCar
+                key={car.id}
+                onClick={() => showSelectCarPage(car.id)}
+              >
+                <div>
+                  <img
+                    src={photoCape?.imageLink?.toString()}
+                    alt={`Foto do carro ${car.model}`}
+                  />
                 </div>
-              )}
-            </div>
-          </StyledHomeCardCar>
-        );
-      })}
-    </StyledListCardsCar>
-  );
-};
+                <div>
+                  <span>{car.brand}</span>
+                  <span>-</span>
+                  <span>{car.model}</span>
+                </div>
+                <div>
+                  <p>{car.description}</p>
+                </div>
+                <div>
+                  <InitialsName
+                    name={car.user.name}
+                    fontSize="16px"
+                    height="32"
+                    width="32"
+                    color={car.user.color}
+                  />
+                  <Name fontSize="14" name={car.user.name} />
+                </div>
+                <div>
+                  <div className="info-car-tags">
+                    <span>{car.km} KM</span>
+                    <span>{car.year}</span>
+                  </div>
+                  <div>
+                    <span>R$ {(+car.price).toFixed(2)}</span>
+                  </div>
+                  {car.isPromo && (
+                    <div className="promo">
+                      <span>$</span>
+                    </div>
+                  )}
+                </div>
+              </StyledHomeCardCar>
+            );
+          })}
+        </StyledListCardsCar>
+      ) : (
+        <Loading />
+      )}
+    </>
+  );}
