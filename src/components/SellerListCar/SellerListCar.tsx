@@ -58,7 +58,10 @@ const SellerListCar = () => {
                   </div>
   
                   <span className="tag-car-info price">
-                    R$ {parseInt(car.price).toFixed(2).replace(".", ",")}
+                  R$ {parseFloat(car.price).toLocaleString('pt-BR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                   </span>
   
                   <div
