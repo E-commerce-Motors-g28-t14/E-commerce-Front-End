@@ -11,7 +11,6 @@ import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
 import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
-import { iCarReturn } from "../../contexts/carsContext";
 
 export const FormUpdateCar = ({
   id,
@@ -37,6 +36,7 @@ export const FormUpdateCar = ({
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<iUpdaterCar>({
     resolver: zodResolver(updateCarSchema),
@@ -52,6 +52,9 @@ export const FormUpdateCar = ({
     updateCar,
     selectCar,
     DeleteCar,
+    ListCarUser,
+    setListCarUser,
+    getCarsUser,
   } = useCarsHook();
 
   const { toggleModal } = useModalHook();
@@ -75,12 +78,17 @@ export const FormUpdateCar = ({
     return { name: nameFormated, value: element.name };
   });
   const handleclick = (data: any) => {
-    DeleteCar(data); 
+    DeleteCar(data);
+    setListCarUser(ListCarUser);
+    console.log(data);
   };
 
   useEffect(() => {
+    getCarsUser();
+  }, [DeleteCar]);
+
+  useEffect(() => {
     const getValues = () => {
-      setValue("brand", brand);
       setValue("color", color);
       setValue("fipePrice", Number(searchCar?.fipe));
       setValue("fuel", searchCar?.fuel);
@@ -99,7 +107,8 @@ export const FormUpdateCar = ({
       setValue("photo6", "");
     };
     getValues();
-  }, [searchCar, selectCar]);
+    setListCarUser(ListCarUser);
+  }, [searchCar, selectCar, ListCarUser]);
 
   return (
     <StyledMain>
@@ -108,10 +117,10 @@ export const FormUpdateCar = ({
         <p>Informações do veículo</p>
         <Select
           label="Marca"
-          placeholder={"Selecionar marca"}
+          placeholder={brand}
           disabled={false}
           width="100%"
-          options={[...brandsForm] || brand}
+          options={[...brandsForm] || [{ name: brand, value: brand }]}
           change={(event) => {
             searchCarsByBrand(event.target.value);
           }}
@@ -121,7 +130,7 @@ export const FormUpdateCar = ({
         <Select
           register={register("model")}
           label="Modelo"
-          placeholder={"Selecionar modelo"}
+          placeholder={"Selecionar modelo" && model}
           disabled={false}
           width="100%"
           options={[...modelsForm] || model}
@@ -161,6 +170,7 @@ export const FormUpdateCar = ({
             placeholder="Quilometragem"
             type="text"
             disabled={false}
+            value={km}
             width="45%"
             readOnly
           />
@@ -323,7 +333,7 @@ export const FormUpdateCar = ({
             Close
           </StyledButton>
           <StyledButton
-            className="big brand1"
+            className="big alert"
             type="button"
             onClick={() => handleclick(id)}
           >
@@ -334,6 +344,7 @@ export const FormUpdateCar = ({
           </StyledButton>
         </div>
       </form>
+      {}
     </StyledMain>
   );
 };

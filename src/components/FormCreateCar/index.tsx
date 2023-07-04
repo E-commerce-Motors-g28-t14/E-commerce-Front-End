@@ -102,7 +102,7 @@ export const FormCreateCar = () => {
             register={register("year")}
             label="Ano"
             placeholder="Ano"
-            type="number"
+            type="text"
             disabled={true}
             width="45%"
           />

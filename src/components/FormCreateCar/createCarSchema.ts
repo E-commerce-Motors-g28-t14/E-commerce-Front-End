@@ -6,7 +6,7 @@ export const registerCarSchema = z.object({
   year: z
     .string()
     .or(z.number())
-    .transform((yearCar) => Number(yearCar)),
+    .transform((yearCar) => String(yearCar)),
   fuel: z.string().max(150),
   km: z.string().nonempty({ message: "KM obrigatória" }).transform(Number),
   color: z.string().max(150).nonempty({ message: "Cor obrigatória" }),
