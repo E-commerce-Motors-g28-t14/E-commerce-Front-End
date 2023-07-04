@@ -6,6 +6,7 @@ export const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  align-items: center;
 
   h3 {
     font-size: var(--font-size-7);
@@ -62,6 +63,18 @@ export const StyledMain = styled.main`
       button:nth-child(2) {
         width: 19rem;
       }
+    }
+  }
+
+  .divAlert {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    p {
+      font-size: 16px;
+    }
+    .divButtonDelete {
+      display: flex;
     }
   }
 `;

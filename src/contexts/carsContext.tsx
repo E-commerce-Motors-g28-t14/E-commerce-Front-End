@@ -423,6 +423,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .then((res) => {
         setSelectCar(res.data);
         setListCarUser(ListCarUser);
+        getCarsUser();
         toggleModal();
       })
       .catch((err) => {

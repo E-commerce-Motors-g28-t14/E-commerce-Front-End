@@ -10,12 +10,14 @@ interface iModalProvider {
   isOpenModalFilter: boolean;
   isOpenModalFormsUser: boolean;
   isOpenModalFormsCar: boolean;
+  isOpenModalDeleteCar: boolean;
   photoLink: string;
   toggleModal: () => void;
   toggleModalPhoto: () => void;
   toggleModalFilter: () => void;
   toggleModalFormsUser: () => void;
   toggleModalFormsCar: () => void;
+  toggleModalDeleteCar: () => void;
   modalWithPhoto: (data: string) => void;
 }
 
@@ -27,6 +29,7 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [isOpenModalFilter, setIsOpenModalFilter] = useState(false);
   const [isOpenModalFormsUser, setIsOpenModalFormsUser] = useState(false);
   const [isOpenModalFormsCar, setIsOpenModalFormsCar] = useState(false);
+  const [isOpenModalDeleteCar, setIsOpenModalDeleteCar] = useState(false);
   const [photoLink, setPhotoLink] = useState("");
 
   const toggleModal = () => {
@@ -53,6 +56,10 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
     setIsOpenModalPhoto(true);
   };
 
+  const toggleModalDeleteCar = () => {
+    setIsOpenModalDeleteCar(!isOpenModalDeleteCar);
+  };
+
   return (
     <ModalContext.Provider
       value={{
@@ -68,6 +75,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         toggleModalFormsUser,
         toggleModalFormsCar,
         modalWithPhoto,
+        isOpenModalDeleteCar,
+        toggleModalDeleteCar,
       }}
     >
       {children}
