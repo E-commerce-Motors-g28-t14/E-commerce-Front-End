@@ -1,4 +1,6 @@
-import { UserContext } from "../../contexts/userContext";
+import { CarsContext } from '../../contexts/carsContext';
+import { UserContext, ICommentRequest } from "../../contexts/userContext";
+// import { ICommentRequest } from '../../interfaces/userIterface';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { ContainerCommentArea } from "./style";
@@ -8,23 +10,24 @@ const CommentArea = () => {
   const [commentText, setCommentText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
-  const [isSend, setIsSend] = useState(false);
   const { createComment } = useContext(UserContext);
+  const { selectCar } = useContext(CarsContext)
 
-  useEffect(() => {
-    (async () => {    
-      isSend ? createComment(inputValue) : null;
-      setIsSend(false);
-    })();
-  }, []);
+  const handleCommentButtonClick = async () => {
 
-  const handleCommentButtonClick = () => {
     setInputValue(commentText);
+
+    const infosToCreateComment: ICommentRequest = {
+      car: selectCar.id,
+      comment: commentText
+    }
+  
+    createComment(infosToCreateComment, selectCar.id)
   };
 
   const handleCommentBtnClick = (text: string) => {
     setCommentText((prevCommentText) => prevCommentText + text);
-    setIsSend(true);
+    // setIsSend(true);
   };
 
   useEffect(() => {

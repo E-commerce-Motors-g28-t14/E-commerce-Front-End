@@ -1,39 +1,18 @@
+import { useContext, useEffect } from 'react';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { StyledContainerComments } from "./style";
 import { BsDot } from "react-icons/bs";
-
-interface IMockClients {
-  comment: string;
-  username: string;
-  color: number;
-  createdAt: string;
-}
+import { CarsContext } from '../../contexts/carsContext';
+import { UserContext, ICommentResponse } from '../../contexts/userContext';
 
 export const CommentCard = (): JSX.Element => {
-  const mockClients: IMockClients[] = [
-    {
-      comment:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      username: "Júlia Lima",
-      color: 2,
-      createdAt: "2021-05-01T15:34:56.789Z",
-    },
-    {
-      comment:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      username: "Marcos Antônio",
-      color: 2,
-      createdAt: "2023-02-22T18:09:21.789Z",
-    },
-    {
-      comment:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      username: "Marcos Antônio",
-      color: 2,
-      createdAt: "2023-02-22T18:09:21.789Z",
-    },
-  ];
+  const { selectCar } = useContext(CarsContext)
+  const { getCommentsById, listComments } = useContext(UserContext)
+
+  useEffect(() => {
+    getCommentsById(selectCar.id)
+  }, [])
 
   const relativeDate = (timestamp: string): string => {
     const msDateComment: Date = new Date(timestamp);
@@ -75,7 +54,7 @@ export const CommentCard = (): JSX.Element => {
       </div>
 
       <ul>
-        {mockClients.map((client, key) => {
+        {listComments.reverse().map((comment: ICommentResponse, key: number) => {
           return (
             <li key={key}>
               <div>
@@ -83,18 +62,24 @@ export const CommentCard = (): JSX.Element => {
                   fontSize="14"
                   height="32"
                   width="32"
-                  name={client.username}
-                  color={client.color}
+                  name={comment.username}
+                  // Adicionar no retorno da rota comments/cars/:id a chave color do usuário
+                  color={1}
                 />
-                <Name fontSize="14" name={client.username} />
+                <Name fontSize="14" name={comment.username} />
                 <BsDot />
 
                 <div>
-                  <span>{relativeDate(client.createdAt)}</span>
+                  {/* <span>{relativeDate(comment.createdAt)}</span> */}
+                  {comment.createdAt !== comment.updatedAt ? (
+                    <span>{relativeDate(comment.updatedAt)}</span>
+                  ):(
+                    <span>{relativeDate(comment.createdAt)}</span>
+                  )}
                 </div>
               </div>
               <div>
-                <p>{client.comment}</p>
+                <p>{comment.comment}</p>
               </div>
             </li>
           );
