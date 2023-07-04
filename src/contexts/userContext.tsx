@@ -1,9 +1,7 @@
 import {
-  Context,
   Dispatch,
   SetStateAction,
   createContext,
-  Provider,
   useState,
   useEffect,
 } from "react";
@@ -22,6 +20,19 @@ import { iAttUserAddress } from "../components/FormAttUserAddress/attUserAddress
 import { ICar } from "../interfaces/carInterface";
 interface IUserProviderChildren {
   children: React.ReactNode;
+}
+
+export interface ICommentRequest{
+  car: string,
+  comment: string
+}
+
+export interface ICommentResponse {
+  id: string,
+  comment: string,
+  createdAt: string,
+  updatedAt: string,
+  username: string,
 }
 
 interface CepResponse {
@@ -70,8 +81,11 @@ interface IUserProvider {
   attUserInfo: (data: iAttUser) => void;
   attUserAddress: (data: iAttUserAddress) => void;
   deleteUser: () => void;
-  createComment: (data: string) => void;
-  handleLogout: () => void
+  createComment: (data: ICommentRequest, carId: string) => void;
+  handleLogout: () => void,
+  getCommentsById: (idComment: string) => void;
+  listComments: ICommentResponse[];
+  setListComments: Dispatch<SetStateAction<ICommentResponse[]>>;
 }
 
 interface iUserWithCars {
@@ -94,6 +108,7 @@ export const UserContext = createContext({} as IUserProvider);
 export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [user, setUser] = useState<IUserResponse>({} as IUserResponse);
   const [isSeller, setSeller] = useState<boolean>(false);
+  const [listComments, setListComments] = useState<ICommentResponse[]>([])
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -312,8 +327,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       });
   };
 
-  const createComment = async (data: string): Promise<void> => {
+  const createComment = async (data: ICommentRequest, carId: string): Promise<void> => {
+
     const token: string | null = localStorage.getItem("@kmotors-g28");
+
     await apiKmotorsService
       .post(`/comments`, data, {
         headers: {
@@ -322,12 +339,21 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => res.data)
+      .then(() => getCommentsById(carId))
       .catch((err) => {
         console.log(err);
       });
   };
 
-
+  const getCommentsById = async (idCar: string) => {
+    try{
+      const request = await apiKmotorsService.get(`/comments/cars/${idCar}`)
+      setListComments(request.data)
+      return request.data
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   return (
     <UserContext.Provider
@@ -365,7 +391,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         attUserAddress,
         deleteUser,
         createComment,
-        handleLogout
+        handleLogout,
+        getCommentsById,
+        listComments,
+        setListComments
       }}
     >
       {children}
