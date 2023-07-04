@@ -8,6 +8,7 @@ import {
 } from "react";
 import { apiKmotorsService } from "../services";
 import { CarsContext } from "./carsContext";
+import SellerCard from "../components/SellerCard/SellerCard";
 
 export interface IGetCommentResponse {
   id: string;
@@ -52,6 +53,8 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
   const [selectedCommentId, setSelectedCommentId] = useState<string>("");
   const [commentslist, setCommentsList] = useState<IGetCommentResponse[]>([]);
 
+  const { selectCarID } = useContext(CarsContext);
+
  
 
   const getCommentByCarId = async (id: string) => {
@@ -69,14 +72,12 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     
   };
 
-  const updateComment = async (id: string, data: string) => {
-    try {      
-      const response =await apiKmotorsService.patch(`/comments/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(tokenUser!)}`,
-        },
-      }); 
-      console.log(response.data)
+  const updateComment = async (id: string, data: string) => {  
+    const update = {comment : data}
+    try { 
+      apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(tokenUser!)}`;     
+      const response =await apiKmotorsService.patch(`/comments/${id}`, update,)       
+      getCommentByCarId(selectCarID)
     
     } catch (err) {
       console.log(err);
@@ -85,10 +86,9 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
 
   const deleteComment = async (id: string) => {
     try {
-      apiKmotorsService.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${tokenUser}`;
+      apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(tokenUser!)}`;
       await apiKmotorsService.delete(`/comments/${id}`);
+      getCommentByCarId(selectCarID)
     } catch (err) {
       console.log(err);
     }

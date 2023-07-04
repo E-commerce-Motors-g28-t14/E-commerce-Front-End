@@ -33,11 +33,12 @@ export const CommentCard = (): JSX.Element => {
 
 
   useEffect(() => {
+
    if(selectCarID  && selectCarID.length > 0){   
     getCommentByCarId(selectCarID)
    }
     
-  }, [selectCarID, commentslist]);
+  }, []);
 
 
   
