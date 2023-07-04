@@ -21,7 +21,6 @@ const Car = () => {
 
   useEffect(() => {
     getCarsUser();
-    
   }, []);
 
   return (
@@ -35,7 +34,14 @@ const Car = () => {
         <span>
           <p>{car.year}</p>
           <p>{car.km}</p>
-          <p>{car.price}</p>
+          <p>
+            {" "}
+            R${" "}
+            {parseFloat(car.price).toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}{" "}
+          </p>
         </span>
       </div>
       <button>Editar Anuncio</button>

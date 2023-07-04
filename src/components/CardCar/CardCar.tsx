@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { iCarReturn } from "../../contexts/carsContext";
 import { ICar } from "../../interfaces/carInterface";
 import { ContainerCardCar } from "./style";
 
-const CardCar = ({car}:{ car: iCarReturn }) => {
+const CardCar = ({ car }: { car: iCarReturn }) => {
+
+  const token = localStorage.getItem("@kmotors-g28");
+  const navigate = useNavigate();
+
   return (
     <ContainerCardCar>
       <div className="container-car-name">
@@ -12,19 +17,32 @@ const CardCar = ({car}:{ car: iCarReturn }) => {
         <ul className="container-car-info">
           <li key={car.id}>
             <div className="car-tag">
-            <span>{car.year}</span>
-            <span>{car.km} KM</span>
+              <span>{car.year}</span>
+              <span>{car.km} KM</span>
             </div>
-            
-            <h3>R$ {parseInt(car.price).toFixed(2).replace('.', ',')}</h3>
-          </li>      
+
+            <h3>
+              R${" "}
+              {parseFloat(car.price).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </h3>
+          </li>
         </ul>
       </div>
-      <div className="container-btn-buy">
 
-        <button className="btn-buy">
-            Comprar
+     
+      <div className="container-btn-buy">
+        {
+          token ? <button className="btn-buy"  onClick={() => window.open(`https://wa.me/55${car.user.phone}?text=Olá estou interessado(a) em comprar o ${car.brand} ${car.model} ano ${car.year} `, "_blank")}>Comprar</button> :<button
+          className="btn-buy"
+          onClick={() => navigate('/login')}
+        >
+          Comprar
         </button>
+        }
+        
       </div>
     </ContainerCardCar>
   );
