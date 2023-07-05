@@ -23,8 +23,8 @@ export const StyledListCardsCar = styled.ul`
     border-radius: 20px;
   }
 
-  @media (max-width: 721px){
-     height : 440px;      
+  @media (max-width: 721px) {
+    height: 440px;
   }
 
   @media (min-width: 720px) {
@@ -33,7 +33,7 @@ export const StyledListCardsCar = styled.ul`
     gap: 0;
     align-items: flex-start;
     row-gap: 8rem;
-    overflow-x: hidden;    
+    overflow-x: hidden;
   }
 
   @media (min-width: 1050px) {
@@ -50,7 +50,6 @@ export const StyledHomeCardCar = styled.li`
   display: flex;
   flex-direction: column;
   position: relative;
-  
 
   width: clamp(26rem, 100%, 30rem);
   height: 350px;
@@ -67,11 +66,11 @@ export const StyledHomeCardCar = styled.li`
     overflow: hidden;
 
     height: 152px;
-    width: 100%;   
+    width: 100%;
 
     background-color: var(--color-grey-7);
 
-    > img {     
+    > img {
       width: 100%;
       height: 100%;
       align-self: center;
@@ -79,18 +78,18 @@ export const StyledHomeCardCar = styled.li`
     }
 
     @media (max-width: 720px) {
-     
       width: 250px;
 
-      > img{
-       width: 100%;
-       height: 100%;
-       object-fit: cover;
-      }}
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 
   > div:nth-child(0n + 2) {
-    height: 32px;    
+    height: 32px;
 
     display: flex;
     align-items: center;
@@ -143,15 +142,14 @@ export const StyledHomeCardCar = styled.li`
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
 
-        @media (max-width: 720px) {
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: flex-start; 
-      }  
-   
-  //info-car-tags
+    @media (max-width: 720px) {
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    //info-car-tags
     > div:first-child {
       display: flex;
       justify-content: space-between;
@@ -159,15 +157,14 @@ export const StyledHomeCardCar = styled.li`
       height: 32px;
       width: max-content;
 
-      @media (max-width: 720px){
-      height: 40px;     
-      width: 100%;
-      flex-wrap: wrap;
-      align-content: flex-start; 
-      justify-content: flex-start;   
-    }
-      
-      
+      @media (max-width: 720px) {
+        height: 40px;
+        width: 100%;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: flex-start;
+      }
+
       > span {
         font-size: var(--font-size-8);
         font-weight: 500;
@@ -181,11 +178,9 @@ export const StyledHomeCardCar = styled.li`
 
         padding: 4px 8px;
 
-          @media (max-width: 720px){
-            
-         
+        @media (max-width: 720px) {
           flex-wrap: wrap;
-          align-content: flex-start;    
+          align-content: flex-start;
         }
       }
     }
@@ -197,14 +192,27 @@ export const StyledHomeCardCar = styled.li`
       font-weight: 500;
       color: var(--color-grey-1);
       width: max-content;
-      background-color: transparent;     
+      background-color: transparent;
 
       @media (max-width: 720px) {
-        margin-bottom:  0.5em;
+        margin-bottom: 0.5em;
         margin-top: 0.5em;
-   
-    } 
-     
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        /* background-color: red; */
+
+        .info-car-tags {
+          height: 40px;
+          width: 100%;
+          flex-wrap: wrap;
+          align-content: flex-start;
+        }
+
+        .tag-car-info.price {
+          margin-bottom: 2em;
+        }
+      }
     }
   }
 
@@ -231,26 +239,5 @@ export const StyledHomeCardCar = styled.li`
 
       color: var(--color-white-fixed);
     }
-
-    @media (max-width: 720px) { 
-   
-   justify-content: space-between;
-   flex-wrap: wrap;
-   align-items: flex-start; 
-   background-color: red;
-
-
-   .info-car-tags{
-     height: 40px;     
-     width: 100%;
-     flex-wrap: wrap;
-     align-content: flex-start;    
-   }
-   
-   .tag-car-info.price{
-     margin-bottom: 2em;
-  
-   } 
- 
-  }}
+  }
 `;

@@ -1,4 +1,5 @@
-import { CarsContext } from '../../contexts/carsContext';
+import { CarsContext } from "../../contexts/carsContext";
+import { CommentContext } from "../../contexts/commentsContext";
 import { UserContext, ICommentRequest } from "../../contexts/userContext";
 // import { ICommentRequest } from '../../interfaces/userIterface';
 import InitialsName from "../InicialsName/InicialsName";
@@ -10,19 +11,18 @@ const CommentArea = () => {
   const [commentText, setCommentText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
-  const { createComment } = useContext(UserContext);
-  const { selectCar } = useContext(CarsContext)
+  const { createComment } = useContext(CommentContext);
+  const { selectCar } = useContext(CarsContext);
 
   const handleCommentButtonClick = async () => {
-
     setInputValue(commentText);
 
     const infosToCreateComment: ICommentRequest = {
       car: selectCar.id,
-      comment: commentText
-    }
-  
-    createComment(infosToCreateComment, selectCar.id)
+      comment: commentText,
+    };
+
+    createComment(infosToCreateComment, selectCar.id);
   };
 
   const handleCommentBtnClick = (text: string) => {
@@ -78,6 +78,7 @@ const CommentArea = () => {
             <textarea
               value={commentText}
               onChange={(event) => setCommentText(event.target.value)}
+              maxLength={250}
             ></textarea>
             <div className="container-btn-comment-send">
               <button

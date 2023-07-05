@@ -17,9 +17,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <UserProvider>
           <CarsProvider>
             <CommentProvider>
-            <FilterProvider>
-              <App />
-            </FilterProvider>
+              <FilterProvider>
+                <App />
+              </FilterProvider>
             </CommentProvider>
           </CarsProvider>
         </UserProvider>

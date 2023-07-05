@@ -11,7 +11,7 @@ import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useState } from "react";
-import { Loading } from "../Loading/Looading";
+import { Loading } from "../loading/Looading";
 
 export interface imockListCars {
   id: string;
@@ -138,7 +138,7 @@ export const mockListCars = [
 ];
 
 export const HomeListCardsCar = (): JSX.Element | null => {
-  const { carsHome, showSelectCarPage , setSelectCarID} = useCarsHook();
+  const { carsHome, showSelectCarPage, setSelectCarID } = useCarsHook();
 
   if (Object.keys(carsHome).length === 0) {
     return null;
@@ -160,7 +160,6 @@ export const HomeListCardsCar = (): JSX.Element | null => {
                 onClick={() => {
                   showSelectCarPage(car.id);
                   setSelectCarID(car.id);
-                  
                 }}
               >
                 <div>

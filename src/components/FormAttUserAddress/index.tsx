@@ -20,6 +20,7 @@ export const FormAttUserAddress = () => {
   const { user, attUserAddress } = useUserHook();
   const { toggleModalFormsUser } = useModalHook();
 
+  console.log(user);
   const GetAdressInZipCode = async (cep: string) => {
     const formatedCep: string = cep.replace(/[^0-9]/g, "");
     if (formatedCep.length === 8) {
