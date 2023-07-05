@@ -4,10 +4,12 @@ export const StyledDiv = styled.div`
   width: 100vw;
   height: 100vh;
   padding: 4rem 1.2rem 0 1.2rem;
+  left: 0;
   position: fixed;
   top: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #00000050;
   z-index: 1;
 

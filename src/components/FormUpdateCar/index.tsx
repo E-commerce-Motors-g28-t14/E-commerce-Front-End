@@ -57,7 +57,8 @@ export const FormUpdateCar = ({
     getCarsUser,
   } = useCarsHook();
 
-  const { toggleModal } = useModalHook();
+  const { toggleModal, toggleModalDeleteCar, isOpenModalDeleteCar } =
+    useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
   const [isActive, setisActive] = useState(false);
@@ -79,13 +80,15 @@ export const FormUpdateCar = ({
   });
   const handleclick = (data: any) => {
     DeleteCar(data);
-    setListCarUser(ListCarUser);
+    toggleModal;
+    toggleModalDeleteCar;
+    //setListCarUser(ListCarUser);
     console.log(data);
   };
 
-  useEffect(() => {
-    getCarsUser();
-  }, [DeleteCar]);
+  /*  useEffect(() => {
+    //getCarsUser();
+  }, []); */
 
   useEffect(() => {
     const getValues = () => {
@@ -108,7 +111,7 @@ export const FormUpdateCar = ({
     };
     getValues();
     setListCarUser(ListCarUser);
-  }, [searchCar, selectCar, ListCarUser]);
+  }, [searchCar, selectCar]);
 
   return (
     <StyledMain>
@@ -335,16 +338,40 @@ export const FormUpdateCar = ({
           <StyledButton
             className="big alert"
             type="button"
-            onClick={() => handleclick(id)}
+            onClick={toggleModalDeleteCar}
           >
             Deletar
           </StyledButton>
+
           <StyledButton className="big brand1" type="submit">
             Atualizar
           </StyledButton>
         </div>
       </form>
-      {}
+      {isOpenModalDeleteCar ? (
+        <ModalBody
+          close={toggleModalDeleteCar}
+          children={
+            <div className="divAlert">
+              <p>Tem certeza que deseja deletar este anùncio?</p>
+              <div className="divButtonDelete">
+                <StyledButton
+                  className="medium brand1"
+                  onClick={() => handleclick(id)}
+                >
+                  Sim
+                </StyledButton>
+                <StyledButton
+                  className="medium alert"
+                  onClick={toggleModalDeleteCar}
+                >
+                  Não
+                </StyledButton>
+              </div>
+            </div>
+          }
+        />
+      ) : null}
     </StyledMain>
   );
 };
