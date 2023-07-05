@@ -30,42 +30,74 @@ export const StyledContainerComments = styled.section`
     color: var(--color-grey-1); 
   }
 
+  .header-comment-card{
+    display: flex;
+    flex-direction: row;  
+    justify-content: space-between;
+    width: 100%;  
+
+    > div:nth-child(1) {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        width: 100%;       
+        height: clamp(32px, 50%, 100px); }
+
+        .container-btns{        
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 1em;
+        }
+
+
+
+       .btn-edit-delete, .btn-save-cancel{
+        border: none;
+        display: flex;
+        background-color: transparent;
+        color: var(--color-grey-4);
+        cursor:pointer;
+       }
+
+       .btn-save-cancel{
+        font-size: 10px;
+       }
+
+       .btn-edit-delete:hover, .btn-save-cancel{
+        color: var(--color-grey-3);
+        transform: scale(1.1);
+       }
+    
+  }
+
+ 
+
   ul {
     display: flex;
     flex-direction: column;
-
+    width: 95%;
     gap: 44px;
-
     @media (max-width: 1080px) {
       gap: 20px;
-    }
-
-    > h2 {      
-      font-size: 20px;
-      line-height: 25px;
-      color: var(--color-grey-1);    
-      text-align: left;
-    }
+    }  
 
     li {
       display: flex;
       flex-direction: column;    
       gap: 14px;
-      width: 100%;
-
-      
+      width: 100%;        
       
 
-      > div:nth-child(1) {
+      > div:nth-child(2) {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
 
-        width: 100%;
-        /* height: 32px;   */
-        height: clamp(32px, 50%, 100px);   
-
-      
+        width: 100%;     
+        height: clamp(32px, 50%, 100px);  
 
         > div > h2 {
           font-size: 14px;
@@ -91,20 +123,35 @@ export const StyledContainerComments = styled.section`
           margin-left: 12px;
         }
 
-          /* @media (max-width: 250px) {
+          @media (max-width: 250px) {
               margin-top: 3em;
-              height: 100px;
-              background-color: pink;
-          } */
+              height: 100px;             
+          }
          
       }
 
-      > div:nth-child(2) > p {
+      > div:nth-child(3) > p {
         font-size: 16px;
         line-height: 28px;
 
         color: var(--color-grey-2);
       }
     }
+  }
+
+  .container-no-comment{
+    display: flex;
+    width: 100%;     
+  }
+  .container-no-comment h3{
+    font-weight: 400;
+  }
+
+  input{
+    width: 100%;
+    border: 1px solid var(--color-grey-5);
+    padding: 1em;
+    outline: 1px solid var(--color-grey-5);
+  
   }
 `;
