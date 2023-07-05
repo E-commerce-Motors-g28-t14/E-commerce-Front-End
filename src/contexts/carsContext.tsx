@@ -378,7 +378,9 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         },
       })
       .then((res) => {
-        setSelectCar(res.data);
+        setSelectCar(res.data.cars);
+        setListCarUser(res.data.cars);
+        getCarsUser();
         toggleModal;
       })
       .catch((err) => console.log(err));

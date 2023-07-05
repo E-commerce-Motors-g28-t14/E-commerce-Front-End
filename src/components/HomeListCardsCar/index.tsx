@@ -151,7 +151,9 @@ export const HomeListCardsCar = (): JSX.Element | null => {
       ) : carsHome.data && carsHome.data.length > 0 ? (
         <StyledListCardsCar>
           {carsHome.data.map((car) => {
-            const photoCape = car.photos.find((photo) => photo.isCover === true);
+            const photoCape = car.photos.find(
+              (photo) => photo.isCover === true
+            );
             return (
               <StyledHomeCardCar
                 key={car.id}
@@ -191,7 +193,13 @@ export const HomeListCardsCar = (): JSX.Element | null => {
                     <span>{car.year}</span>
                   </div>
                   <div>
-                    <span>R$ {(+car.price).toFixed(2)}</span>
+                    <span>
+                      R${" "}
+                      {parseFloat(car.price).toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>
                   </div>
                   {car.isPromo && (
                     <div className="promo">
@@ -207,4 +215,5 @@ export const HomeListCardsCar = (): JSX.Element | null => {
         <Loading />
       )}
     </>
-  );}
+  );
+};

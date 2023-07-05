@@ -11,7 +11,6 @@ import GeneralSellerPage from "./pages/GeneralSellerPage/GeneralSellerPage";
 
 
 const App = () => {
-  
   const ProtectedRoutes = () => {
     const tokenUser = localStorage.getItem("@kmotors-g28");
     return tokenUser ? <Outlet /> : <Navigate to={"/login"} replace />;
@@ -27,7 +26,7 @@ const App = () => {
         <Route path="/reset-password/:id" element={<Recovery />} />
         <Route path="/seller/:name" element={<GeneralSellerPage />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/seller" element={<SellerPage />} />
+          <Route path="/seller" element={<SellerPage />} />         
         </Route>
       </Routes>
       <StyledGlobal />

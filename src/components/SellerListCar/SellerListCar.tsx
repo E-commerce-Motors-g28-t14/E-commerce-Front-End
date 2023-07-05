@@ -1,7 +1,7 @@
 import { ListCar, ListCarContainer } from "./style";
 import { UserContext } from "../../contexts/userContext";
 import { useContext, useEffect, useState } from "react";
-import { CarsContext } from "../../contexts/carsContext"; 
+import { CarsContext } from "../../contexts/carsContext";
 import { StyledButton } from "../../styles/buttons";
 import { ModalBody } from "../ModalBody";
 import { FormUpdateCar } from "../FormUpdateCar";
@@ -11,15 +11,14 @@ import { Loading } from "../Loading/Looading";
 const SellerListCar = () => {
   const { user } = useContext(UserContext);
   const { toggleModal, isOpenModal } = useModalHook();
-  const { ListCarUser, getCarsUser, getCarById, selectCar, photo } =
+  const { ListCarUser, getCarsUser, getCarById, selectCar, photo, DeleteCar } =
     useContext(CarsContext);
 
   const [selectCarID, setSelectCarID] = useState();
 
   const handleClick = (carID: string) => {
- 
     getCarById(carID);
- 
+
     toggleModal();
   };
 
@@ -34,7 +33,7 @@ const SellerListCar = () => {
           ListCarUser.map((car, key) => {
             const photoCape =
               car.photos && car.photos.find((photo) => photo.isCover === true);
-  
+
             return (
               <ListCar key={key}>
                 <div>
@@ -56,11 +55,14 @@ const SellerListCar = () => {
                     <span className="tag-car-info">{car.km} KM</span>
                     <span className="tag-car-info">{car.year}</span>
                   </div>
-  
+
                   <span className="tag-car-info price">
-                    R$ {parseInt(car.price).toFixed(2).replace(".", ",")}
+                  R$ {parseFloat(car.price).toLocaleString('pt-BR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                   </span>
-  
+
                   <div
                     className="isActive"
                     style={{

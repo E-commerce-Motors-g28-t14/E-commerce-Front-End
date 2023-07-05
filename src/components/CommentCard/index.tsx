@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { StyledContainerComments } from "./style";
@@ -7,6 +8,7 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { CommentContext } from "../../contexts/commentsContext";
 import { CarsContext } from "../../contexts/carsContext";
+import { UserContext, ICommentResponse } from '../../contexts/userContext';
 
 interface IMockClients {
   comment: string;
@@ -17,6 +19,13 @@ interface IMockClients {
 }
 
 export const CommentCard = (): JSX.Element => {
+  const { selectCar } = useContext(CarsContext)
+  const { getCommentsById, listComments } = useContext(UserContext)
+
+  useEffect(() => {
+    getCommentsById(selectCar.id)
+  }, [])
+  
   const storedUserId = localStorage.getItem("@kmotors-g28:userId");
   const { selectCarID } = useContext(CarsContext);
 
@@ -40,9 +49,7 @@ export const CommentCard = (): JSX.Element => {
     
   }, []);
 
-
-  
-    const relativeDate = (timestamp: string): string => {
+  const relativeDate = (timestamp: string): string => {
     const msDateComment: Date = new Date(timestamp);
     const msDateNow: Date = new Date();
     const msDiff: number = msDateNow.getTime() - msDateComment.getTime();
@@ -113,7 +120,6 @@ export const CommentCard = (): JSX.Element => {
                     />
                     <Name fontSize="14" name={comment.user.name} />
                     <BsDot />
-
                     <div>
                       <span>{relativeDate(comment.createdAt)}</span>
                     </div>
@@ -176,6 +182,38 @@ export const CommentCard = (): JSX.Element => {
           <h3>Seja o primeiro a comentar....</h3>
         </div>
       )}
+      <ul>
+        {listComments.reverse().map((comment: ICommentResponse, key: number) => {
+          return (
+            <li key={key}>
+              <div>
+                <InitialsName
+                  fontSize="14"
+                  height="32"
+                  width="32"
+                  name={comment.username}
+                  // Adicionar no retorno da rota comments/cars/:id a chave color do usuário
+                  color={1}
+                />
+                <Name fontSize="14" name={comment.username} />
+                <BsDot />
+
+                <div>
+                  {/* <span>{relativeDate(comment.createdAt)}</span> */}
+                  {comment.createdAt !== comment.updatedAt ? (
+                    <span>{relativeDate(comment.updatedAt)}</span>
+                  ):(
+                    <span>{relativeDate(comment.createdAt)}</span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <p>{comment.comment}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </StyledContainerComments>
   );
 };
