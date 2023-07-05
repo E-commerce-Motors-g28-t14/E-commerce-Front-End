@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
 import { StyledContainerComments } from "./style";
@@ -9,25 +8,48 @@ import { useContext, useEffect, useState } from "react";
 import { CommentContext } from "../../contexts/commentsContext";
 import { CarsContext } from "../../contexts/carsContext";
 import { UserContext, ICommentResponse } from '../../contexts/userContext';
+import { ModalCommentDelete } from "./ModalCommentDelete";
+import { boolean } from "zod";
 
-interface IMockClients {
-  comment: string;
-  username: string;
-  color: number;
-  createdAt: string;
-  id: string;
-}
+const relativeDate = (timestamp: string): string => {
+  const msDateComment: Date = new Date(timestamp);
+  const msDateNow: Date = new Date();
+  const msDiff: number = msDateNow.getTime() - msDateComment.getTime();
 
-export const CommentCard = (): JSX.Element => {
-  const { selectCar } = useContext(CarsContext)
-  const { getCommentsById, listComments } = useContext(UserContext)
+  const seconds: number = Math.floor(msDiff / 1000);
+  const minutes: number = Math.floor(seconds / 60);
+  const hours: number = Math.floor(minutes / 60);
+  const days: number = Math.floor(hours / 24);
+  const months: number = Math.floor(days / 30);
+  const years: number = Math.floor(months / 12);
 
-  useEffect(() => {
-    getCommentsById(selectCar.id)
-  }, [])
-  
+  let commentedAt = "";
+
+  years > 1
+    ? (commentedAt = `há ${years} anos`)
+    : months > 0 && months < 12
+    ? (commentedAt = `há ${months} meses`)
+    : days > 0
+    ? (commentedAt = `há ${days} dias`)
+    : hours > 0
+    ? (commentedAt = `há ${hours} horas`)
+    : minutes > 0
+    ? (commentedAt = `há ${minutes} minutos`)
+    : (commentedAt = `há ${seconds} segundos`);
+
+  if (days === 7) commentedAt = "há 7 dias";
+  if (months === 1) commentedAt = "há 1 mês";
+  if (years === 1) commentedAt = "há 1 ano";
+
+  return commentedAt;
+};
+
+
+export const CommentCard = (): JSX.Element => {   
+
   const storedUserId = localStorage.getItem("@kmotors-g28:userId");
   const { selectCarID } = useContext(CarsContext);
+ 
 
   const {    
     getCommentByCarId,
@@ -36,52 +58,21 @@ export const CommentCard = (): JSX.Element => {
     setNewCommentValue,
     selectedCommentId,
     setSelectedCommentId,
-    updateComment,
-    deleteComment,
+    updateComment,  
+    setDeleteCommentId,
+    openModalCancel, setOpenModalCancel
   } = useContext(CommentContext)
 
 
   useEffect(() => {
 
-   if(selectCarID  && selectCarID.length > 0){   
+   if(selectCarID  && selectCarID.length > 0){ 
+    console.log("entrou no ueseeffect " + "esse é o id do carro " +  selectCarID)  
     getCommentByCarId(selectCarID)
+    console.log(commentslist)
    }
     
   }, []);
-
-  const relativeDate = (timestamp: string): string => {
-    const msDateComment: Date = new Date(timestamp);
-    const msDateNow: Date = new Date();
-    const msDiff: number = msDateNow.getTime() - msDateComment.getTime();
-
-    const seconds: number = Math.floor(msDiff / 1000);
-    const minutes: number = Math.floor(seconds / 60);
-    const hours: number = Math.floor(minutes / 60);
-    const days: number = Math.floor(hours / 24);
-    const months: number = Math.floor(days / 30);
-    const years: number = Math.floor(months / 12);
-
-    let commentedAt = "";
-
-    years > 1
-      ? (commentedAt = `há ${years} anos`)
-      : months > 0 && months < 12
-      ? (commentedAt = `há ${months} meses`)
-      : days > 0
-      ? (commentedAt = `há ${days} dias`)
-      : hours > 0
-      ? (commentedAt = `há ${hours} horas`)
-      : minutes > 0
-      ? (commentedAt = `há ${minutes} minutos`)
-      : (commentedAt = `há ${seconds} segundos`);
-
-    if (days === 7) commentedAt = "há 7 dias";
-    if (months === 1) commentedAt = "há 1 mês";
-    if (years === 1) commentedAt = "há 1 ano";
-
-    return commentedAt;
-  };
-
 
   const handleEditClick = (id: string, comment: string) => {
     setNewCommentValue(comment);
@@ -98,6 +89,12 @@ export const CommentCard = (): JSX.Element => {
    await updateComment(selectedCommentId, newCommentValue);
     setSelectedCommentId("");
   };
+
+  const handleOpenModal = (id: string) => {
+    setOpenModalCancel(true)
+    setDeleteCommentId(id)
+    
+  }
 
   return (
     <StyledContainerComments>
@@ -125,9 +122,11 @@ export const CommentCard = (): JSX.Element => {
                     </div>
                   </div>
                   {storedUserId && storedUserId === comment.user.id && (
+                    
                     <div className="container-btns">
+
                       {selectedCommentId === comment.id ? (
-                        <>
+                        <>                           
                           <button
                             className="btn-save-cancel"
                             onClick={handleUpdateClick}
@@ -152,8 +151,8 @@ export const CommentCard = (): JSX.Element => {
                             <MdOutlineModeEditOutline />
                           </button>
                           <button
-                            className="btn-edit-delete"
-                            onClick={() => deleteComment(comment.id)}
+                            className="btn-edit-delete"                    
+                            onClick={() => handleOpenModal(comment.id)}
                           >
                             <AiFillDelete />
                           </button>
@@ -174,7 +173,9 @@ export const CommentCard = (): JSX.Element => {
                   )}
                 </div>
               </li>
+              
             );
+         
           })}
         </ul>
       ) : (
@@ -182,7 +183,7 @@ export const CommentCard = (): JSX.Element => {
           <h3>Seja o primeiro a comentar....</h3>
         </div>
       )}
-      <ul>
+      {/* <ul>
         {listComments.reverse().map((comment: ICommentResponse, key: number) => {
           return (
             <li key={key}>
@@ -191,15 +192,13 @@ export const CommentCard = (): JSX.Element => {
                   fontSize="14"
                   height="32"
                   width="32"
-                  name={comment.username}
-                  // Adicionar no retorno da rota comments/cars/:id a chave color do usuário
+                  name={comment.user.name}               
                   color={1}
                 />
-                <Name fontSize="14" name={comment.username} />
+                <Name fontSize="14" name={comment.user.name} />
                 <BsDot />
 
-                <div>
-                  {/* <span>{relativeDate(comment.createdAt)}</span> */}
+                <div>             
                   {comment.createdAt !== comment.updatedAt ? (
                     <span>{relativeDate(comment.updatedAt)}</span>
                   ):(
@@ -213,7 +212,13 @@ export const CommentCard = (): JSX.Element => {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+      { openModalCancel ? (
+              <ModalCommentDelete />
+        ) : ( <></>)
+  
+        }
+  
     </StyledContainerComments>
   );
 };

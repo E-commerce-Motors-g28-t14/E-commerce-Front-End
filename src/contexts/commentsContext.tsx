@@ -3,12 +3,11 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { apiKmotorsService } from "../services";
 import { CarsContext } from "./carsContext";
-import SellerCard from "../components/SellerCard/SellerCard";
+
 
 export interface IGetCommentResponse {
   id: string;
@@ -34,13 +33,15 @@ interface iCommentProvider {
   setNewCommentValue: Dispatch<SetStateAction<string>>;
   selectedCommentId: string;
   setSelectedCommentId: Dispatch<SetStateAction<string>>;
+  deleteCommentId: string;
+  setDeleteCommentId:Dispatch<SetStateAction<string>>;
   updateComment: (id: string, data: string) => void;
   deleteComment: (id: string) => void;
-
   getCommentByCarId: (id: string) => void;
-
   commentslist: IGetCommentResponse[];
   setCommentsList: Dispatch<SetStateAction<IGetCommentResponse[]>>;
+  openModalCancel: boolean
+  setOpenModalCancel:Dispatch<SetStateAction<boolean>>;
 }
 
 export const CommentContext = createContext({} as iCommentProvider);
@@ -51,20 +52,22 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
 
   const [newCommentValue, setNewCommentValue] = useState<string>("");
   const [selectedCommentId, setSelectedCommentId] = useState<string>("");
+  const [deleteCommentId, setDeleteCommentId] = useState<string>("");
   const [commentslist, setCommentsList] = useState<IGetCommentResponse[]>([]);
+  const [openModalCancel, setOpenModalCancel] = useState<boolean>(false)
 
   const { selectCarID } = useContext(CarsContext);
 
  
 
   const getCommentByCarId = async (id: string) => {
+    console.log("getCommentByCarId")
     await apiKmotorsService
     .get(`/comments/cars/${id}`, {
       headers: {},
     })
     .then((res) => {
-      setCommentsList(res.data);    
-    
+      setCommentsList(res.data);     
     })
     .catch((err) => {
       console.log(err);
@@ -76,7 +79,7 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     const update = {comment : data}
     try { 
       apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(tokenUser!)}`;     
-      const response =await apiKmotorsService.patch(`/comments/${id}`, update,)       
+      const response = await apiKmotorsService.patch(`/comments/${id}`, update,)       
       getCommentByCarId(selectCarID)
     
     } catch (err) {
@@ -106,6 +109,7 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
         setSelectedCommentId,
         updateComment,
         deleteComment,
+        openModalCancel, setOpenModalCancel, deleteCommentId, setDeleteCommentId,
       }}
     >
       {children}

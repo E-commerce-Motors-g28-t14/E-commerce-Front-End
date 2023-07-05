@@ -1,48 +1,37 @@
-import { useEffect, useRef, useState } from "react";
-import { useModalHook } from "../../hooks";
+import { useContext, useEffect, useRef, useState } from "react";
 import { StyledDiv } from "./style";
+import { CommentContext } from "../../../contexts/commentsContext";
 
 
 
 export const ModalCommentDelete = () => {
-  const ref = useRef<HTMLElement>(null);
+  const {openModalCancel, setOpenModalCancel, selectedCommentId, deleteComment, deleteCommentId, setDeleteCommentId,} = useContext(CommentContext)
 
-  useEffect(() => {
-    const handleKeydown = (event: any) => {
-      if (event.key === "Escape") {
-        close();
-      }
-    };
+  const handleClose = () =>{
+    setOpenModalCancel(false)
+  }
 
-    window.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleOutclick = (event: any) => {
-      if (!ref.current?.contains(event.target)) {
-        close();
-      }
-    };
-
-    window.addEventListener("mousedown", handleOutclick);
-
-    return () => {
-      window.removeEventListener("mousedown", handleOutclick);
-    };
-  }, []);
+  const handleDelete = () =>{    
+    deleteComment(deleteCommentId)
+    setOpenModalCancel(false)
+    setDeleteCommentId("")
+  }
 
   return (
     <StyledDiv>
-      <main ref={ref}>
-        <button onClick={close} className="close">
+      <main>
+        <button onClick={handleClose} className="close">
           X
         </button>
-       <div>
-        <p>Tem certeza que deseja cancelar o comentario</p>
+       <div className="container-info-cancel">
+        <h4>Tem certeza que deseja remover este anúncio?</h4>
+        <p>Essa ação não pode ser desfeita. Isso excluirá permanentemente seu comentário.
+</p>
+        <div className="container-btn-cancel">
+        <button  className="disable" onClick={handleClose}>Cancelar</button>
+        <button className="alert" onClick={handleDelete}>Sim, quero excluir o comentário</button>
+         
+        </div>
        </div>
       </main>
     </StyledDiv>
