@@ -4,6 +4,7 @@ import {
   createContext,
   useState,
   useEffect,
+  useContext,
 } from "react";
 import {
   IUserLoginRequest,
@@ -18,22 +19,23 @@ import { iEmail } from "../pages/Login/RecoveryModal/RecoveryModal";
 import { iAttUser } from "../components/FormAttUser/attUserSchema";
 import { iAttUserAddress } from "../components/FormAttUserAddress/attUserAddressSchema";
 import { ICar } from "../interfaces/carInterface";
+import { CommentContext } from "./commentsContext";
 import { toast } from "react-toastify";
 interface IUserProviderChildren {
   children: React.ReactNode;
 }
 
-export interface ICommentRequest{
-  car: string,
-  comment: string
+export interface ICommentRequest {
+  car: string;
+  comment: string;
 }
 
 export interface ICommentResponse {
-  id: string,
-  comment: string,
-  createdAt: string,
-  updatedAt: string,
-  username: string,
+  id: string;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  username: string;
 }
 
 interface CepResponse {
@@ -83,7 +85,7 @@ interface IUserProvider {
   attUserAddress: (data: iAttUserAddress) => void;
   deleteUser: () => void;
   createComment: (data: ICommentRequest, carId: string) => void;
-  handleLogout: () => void,
+  handleLogout: () => void;
   getCommentsById: (idComment: string) => void;
   listComments: ICommentResponse[];
   setListComments: Dispatch<SetStateAction<ICommentResponse[]>>;
@@ -109,7 +111,7 @@ export const UserContext = createContext({} as IUserProvider);
 export const UserProvider = ({ children }: IUserProviderChildren) => {
   const [user, setUser] = useState<IUserResponse>({} as IUserResponse);
   const [isSeller, setSeller] = useState<boolean>(false);
-  const [listComments, setListComments] = useState<ICommentResponse[]>([])
+  const [listComments, setListComments] = useState<ICommentResponse[]>([]);
   const [adress, setAdress] = useState<CepResponse>({} as CepResponse);
   const [cep, setCep] = useState("");
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -124,21 +126,23 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
 
   const route = useNavigate();
   const { toggleModal, toggleModalFormsUser } = useModalHook();
-
+  const { setCommentsList } = useContext(CommentContext);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("@kmotors-g28:userId");
-  
-    if (storedUserId) {        
+
+    if (storedUserId) {
       setUserLogado(storedUserId);
     }
   }, [isLogin]);
-  
-  const setUserLogado = async (userId : string) => {
-    try {   
-      apiKmotorsService.defaults.headers.common["Authorization"] = `Bearer ${tokenUser}`;  
+
+  const setUserLogado = async (userId: string) => {
+    try {
+      apiKmotorsService.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${tokenUser}`;
       const response = await apiKmotorsService.get(`/users/${userId}`);
-      setUser(response.data);   
+      setUser(response.data);
     } catch (error) {
       route("/login")
       toast("Logue novamente no site", {
@@ -199,7 +203,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (formatedCep.length === 8) {
       await apiCepService
         .get(`${cep}/json`)
-        .then((res) => {       
+        .then((res) => {
           setAdress(res.data);
           setCep("");
           return;
@@ -216,7 +220,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
 
   const LoginUser = async (data: IUserLoginRequest) => {
     const token = await apiKmotorsService
-    
+
       .post(`/login`, data, {
         headers: {
           "Content-Type": "application/json",
@@ -226,7 +230,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         localStorage.setItem("@kmotors-g28", JSON.stringify(res.data.token));
         localStorage.setItem("@kmotors-g28:userId", res.data.user.id);
         setTokenUser(JSON.stringify(res.data.token));
-        setIsLogin(true);      
+        setIsLogin(true);
         route(`/`);
         toast.success("Login efetuado com sucesso!")
       })
@@ -240,7 +244,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       });
   };
 
-  const handleLogout = () => {    
+  const handleLogout = () => {
     localStorage.removeItem("@kmotors-g28:userId");
     localStorage.removeItem("@kmotors-g28");
     setIsLogin(false); 
@@ -369,8 +373,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       });
   };
 
-  const createComment = async (data: ICommentRequest, carId: string): Promise<void> => {
-
+  const createComment = async (
+    data: ICommentRequest,
+    carId: string
+  ): Promise<void> => {
     const token: string | null = localStorage.getItem("@kmotors-g28");
 
     await apiKmotorsService
@@ -384,7 +390,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         toast.success("Comentário criado com sucesso.")
         return res.data
       })
-      .then(() => getCommentsById(carId))
+      .then(async (res) => await getCommentsById(carId))
       .catch((err) => {
         toast.error("Provavelmente o carro foi deletado, atualize a página antes de tentar comentar novamente.")
         console.log(err);
@@ -392,14 +398,14 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const getCommentsById = async (idCar: string) => {
-    try{
-      const request = await apiKmotorsService.get(`/comments/cars/${idCar}`)
-      setListComments(request.data)
-      return request.data
-    }catch(error){
-      console.log(error)
+    try {
+      const request = await apiKmotorsService.get(`/comments/cars/${idCar}`);
+      setCommentsList(request.data);
+      return request.data;
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   return (
     <UserContext.Provider
@@ -440,7 +446,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         handleLogout,
         getCommentsById,
         listComments,
-        setListComments
+        setListComments,
       }}
     >
       {children}

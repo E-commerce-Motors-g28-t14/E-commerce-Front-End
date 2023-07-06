@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
- 
   const ProtectedRoutes = () => {
     const tokenUser = localStorage.getItem("@kmotors-g28");
     if(tokenUser) return <Outlet />

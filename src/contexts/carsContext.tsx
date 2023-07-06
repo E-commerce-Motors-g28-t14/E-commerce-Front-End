@@ -15,7 +15,7 @@ import { IUserResponse } from "../interfaces/userIterface";
 import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
 import { useCarsHook } from "../hooks/carsHook";
 import { toast } from "react-toastify";
-
+import { IGetCommentResponse } from "./commentsContext";
 interface iCarsProviderChildren {
   children: React.ReactNode;
 }
@@ -118,8 +118,10 @@ export interface iCarReturn {
   updatedAt: string;
   photos: iPhotoResponse[];
   user: IUserResponse;
-  comments: Comment[];
+  comments: IGetCommentResponse[];
 }
+
+
 
 interface iCarsHome {
   previousPage: string;
@@ -407,9 +409,10 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   };
 
   const showSelectCarPage = async (carID: string) => {
-    setSelectCarID(carID);
-    await getCarById(carID);
+    setSelectCarID(carID);    
+    await getCarById(carID);     
     navigate("/product");
+    
   };
 
   const getCarById = async (id: string) => {
@@ -418,7 +421,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         headers: {},
       })
       .then((res) => {
-        setSelectCar(res.data);
+        setSelectCar(res.data);      
         res.data.photos.map((photo: any) => {
           setPhoto(photo);
         });
@@ -447,6 +450,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .then((res) => {
         setSelectCar(res.data);
         setListCarUser(ListCarUser);
+        getCarsUser();
         toggleModal();
         toast.success("Carro deletado com sucesso!");
       })

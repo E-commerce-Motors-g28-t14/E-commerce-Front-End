@@ -7,6 +7,7 @@ import { ModalProvider } from "./contexts";
 import { CarsProvider } from "./contexts/carsContext.tsx";
 import { UserProvider } from "./contexts/userContext.tsx";
 import { FilterProvider } from "./contexts/filterContext.tsx";
+import { CommentProvider } from "./contexts/commentsContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
@@ -15,9 +16,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <ModalProvider>
         <UserProvider>
           <CarsProvider>
-            <FilterProvider>
-              <App />
-            </FilterProvider>
+            <CommentProvider>
+              <FilterProvider>
+                <App />
+              </FilterProvider>
+            </CommentProvider>
           </CarsProvider>
         </UserProvider>
       </ModalProvider>

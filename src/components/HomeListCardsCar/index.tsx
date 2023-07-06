@@ -11,7 +11,7 @@ import carCamaro from "../../assets/banco de exemplos/CARRO1 (8).png";
 import carFusca from "../../assets/banco de exemplos/fusca.png";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useState } from "react";
-import { Loading } from "../Loading/Looading";
+import { Loading } from "../loading/Looading";
 
 export interface imockListCars {
   id: string;
@@ -138,7 +138,7 @@ export const mockListCars = [
 ];
 
 export const HomeListCardsCar = (): JSX.Element | null => {
-  const { carsHome, showSelectCarPage } = useCarsHook();
+  const { carsHome, showSelectCarPage, setSelectCarID } = useCarsHook();
 
   if (Object.keys(carsHome).length === 0) {
     return null;
@@ -147,8 +147,8 @@ export const HomeListCardsCar = (): JSX.Element | null => {
   return (
     <>
       {carsHome.data.length === 0 ? (
-        <p>Você não possui nenhum anúncio.</p>
-      ) : carsHome.data ? (
+        <h3>Nenhum anúncio foi encontrado.</h3>
+      ) : carsHome.data && carsHome.data.length > 0 ? (
         <StyledListCardsCar>
           {carsHome.data.map((car) => {
             const photoCape = car.photos.find(
@@ -157,7 +157,10 @@ export const HomeListCardsCar = (): JSX.Element | null => {
             return (
               <StyledHomeCardCar
                 key={car.id}
-                onClick={() => showSelectCarPage(car.id)}
+                onClick={() => {
+                  showSelectCarPage(car.id);
+                  setSelectCarID(car.id);
+                }}
               >
                 <div>
                   <img

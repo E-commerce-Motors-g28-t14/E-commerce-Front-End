@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerCardCar = styled.div`
-  height: 240px;
+  min-height: 240px;
   width: 100%;
   left: 1px;
   top: 371px;
@@ -11,10 +11,6 @@ export const ContainerCardCar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  @media (max-width: 400px) {
-    height: 300px;
-  }
 
   .container-car-name,
   .container-btn-buy,
@@ -36,7 +32,6 @@ export const ContainerCardCar = styled.div`
   .container-car-info ul {
     list-style: none;
     width: 100%;
-
   }
 
   .container-car-info ul li {
@@ -45,34 +40,32 @@ export const ContainerCardCar = styled.div`
     width: 100%;
     justify-content: space-between;
 
-    @media(max-width: 1080px){
+    @media (max-width: 1080px) {
       width: 100%;
       justify-content: flex-start;
       flex-direction: column;
       gap: 2rem;
 
-      > div, h3{
+      > div,
+      h3 {
         width: 100%;
       }
     }
   }
 
-  .container-btn-buy{
+  .container-btn-buy {
     align-items: flex-end;
   }
   .car-tag {
     flex-direction: row;
     display: flex;
     gap: 10px;
-    flex-wrap:wrap;
-
+    flex-wrap: wrap;
   }
-
- 
 
   .car-tag span {
     height: 32px;
-    width: max-content; 
+    width: max-content;
 
     border-radius: 4px;
     padding: 4px 8px 4px 8px;
@@ -84,7 +77,7 @@ export const ContainerCardCar = styled.div`
     justify-content: center;
 
     font-size: 14px;
-    font-weight: 500; 
+    font-weight: 500;
 
     color: var(--color-brand-1);
   }
@@ -106,6 +99,5 @@ export const ContainerCardCar = styled.div`
     border: none;
     background-color: var(--color-brand-1);
     color: var(--color-white-fixed);
-    
   }
 `;

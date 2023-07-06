@@ -23,7 +23,7 @@ export const ContainerCommentArea = styled.div`
   }
 
   .container-input-comment {
-    height: 44.29%;
+    height: 16rem;
     width: 100%;
     left: 44px;
     top: 83px;
@@ -82,7 +82,8 @@ export const ContainerCommentArea = styled.div`
     margin: 2em 2em 0em 2em;
   }
 
-  .container-btn-comment-send > button, .container-btn-comment-send-mobile > button {
+  .container-btn-comment-send > button,
+  .container-btn-comment-send-mobile > button {
     height: 38px;
     width: 108px;
     /* left: 597px;
@@ -102,7 +103,7 @@ export const ContainerCommentArea = styled.div`
     flex-wrap: nowrap;
     gap: 10px;
     margin-top: 1em;
-    @media(max-width: 1080px){
+    @media (max-width: 1080px) {
       flex-wrap: wrap;
     }
   }

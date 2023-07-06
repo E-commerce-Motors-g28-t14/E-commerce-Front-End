@@ -4,7 +4,6 @@ import { ICar } from "../../interfaces/carInterface";
 import { ContainerCardCar } from "./style";
 
 const CardCar = ({ car }: { car: iCarReturn }) => {
-
   const token = localStorage.getItem("@kmotors-g28");
   const navigate = useNavigate();
 
@@ -14,7 +13,7 @@ const CardCar = ({ car }: { car: iCarReturn }) => {
         <h1>{`${car.brand} ${car.model} `}</h1>
       </div>
       <div className="container-car-info">
-        <ul className="container-car-info">
+        <ul>
           <li key={car.id}>
             <div className="car-tag">
               <span>{car.year}</span>
@@ -32,17 +31,24 @@ const CardCar = ({ car }: { car: iCarReturn }) => {
         </ul>
       </div>
 
-     
       <div className="container-btn-buy">
-        {
-          token ? <button className="btn-buy"  onClick={() => window.open(`https://wa.me/55${car.user.phone}?text=Olá estou interessado(a) em comprar o ${car.brand} ${car.model} ano ${car.year} `, "_blank")}>Comprar</button> :<button
-          className="btn-buy"
-          onClick={() => navigate('/login')}
-        >
-          Comprar
-        </button>
-        }
-        
+        {token ? (
+          <button
+            className="btn-buy"
+            onClick={() =>
+              window.open(
+                `https://wa.me/55${car.user.phone}?text=Olá estou interessado(a) em comprar o ${car.brand} ${car.model} ano ${car.year} `,
+                "_blank"
+              )
+            }
+          >
+            Comprar
+          </button>
+        ) : (
+          <button className="btn-buy" onClick={() => navigate("/login")}>
+            Comprar
+          </button>
+        )}
       </div>
     </ContainerCardCar>
   );
