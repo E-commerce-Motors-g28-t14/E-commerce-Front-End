@@ -23,7 +23,7 @@ export const StyledDiv = styled.div`
     flex-direction: column;
   }
 
-  .container-info-cancel{
+  .container-info-cancel {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -31,13 +31,13 @@ export const StyledDiv = styled.div`
     justify-content: space-between;
   }
 
-  h4{
-    font-size: 14px;   
+  h4 {
+    font-size: 14px;
     font-weight: 600;
   }
 
-  p{
-    font-size: 12px;    
+  p {
+    font-size: 12px;
   }
   button.close {
     width: 2.4rem;
@@ -53,17 +53,17 @@ export const StyledDiv = styled.div`
     z-index: 1;
   }
 
-  .container-btn-cancel{
+  .container-btn-cancel {
     width: 100%;
     display: flex;
-    flex-direction: row;  
- 
+    flex-direction: row;
+
     border-radius: var(--radius-2);
     gap: 10px;
     justify-content: flex-end;
   }
 
-  .alert{
+  .alert {
     min-height: 3.8rem;
     padding: 0 2rem;
     background-color: var(--color-alert-3);

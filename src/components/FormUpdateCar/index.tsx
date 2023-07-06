@@ -11,6 +11,7 @@ import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
 import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
+import { StyledDiv } from "../CommentCard/ModalCommentDelete/style";
 
 export const FormUpdateCar = ({
   id,
@@ -352,23 +353,31 @@ export const FormUpdateCar = ({
         <ModalBody
           close={toggleModalDeleteCar}
           children={
-            <div className="divAlert">
-              <p>Tem certeza que deseja deletar este anùncio?</p>
-              <div className="divButtonDelete">
-                <StyledButton
-                  className="medium brand1"
-                  onClick={() => handleclick(id)}
-                >
-                  Sim
-                </StyledButton>
-                <StyledButton
-                  className="medium alert"
-                  onClick={toggleModalDeleteCar}
-                >
-                  Não
-                </StyledButton>
-              </div>
-            </div>
+            <StyledDiv>
+              <main>
+                <div className="container-info-cancel">
+                  <h4> Tem certeza que deseja deletar este anùncio? </h4>
+                  <p>
+                    Essa ação não pode ser desfeita. Isso excluirá
+                    permanentemente seu anùncio.
+                  </p>
+                  <div className="container-btn-cancel">
+                    <StyledButton
+                      className="medium alert"
+                      onClick={() => handleclick(id)}
+                    >
+                      Sim, quero excluir o anúncio
+                    </StyledButton>
+                    <StyledButton
+                      className="medium disable"
+                      onClick={toggleModalDeleteCar}
+                    >
+                      Cancelar
+                    </StyledButton>
+                  </div>
+                </div>
+              </main>
+            </StyledDiv>
           }
         />
       ) : null}
