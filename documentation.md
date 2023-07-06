@@ -182,7 +182,7 @@ To set up the front-end development environment and start the application locall
 </ol>
 
 ## Deployment 
-Deploy the front-end application to a suitable hosting platform vercel for production use. 
+Deploy the front-end application to a suitable hosting platform vercel for production use. Check the link -> https://g28-motors.vercel.app
 
 ## Additional Resources
 
