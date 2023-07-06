@@ -1,8 +1,5 @@
- 
-import { StyledCoverDescription } from "./style";
+ import { StyledCoverDescription } from "./style";
 import { iCarReturn } from "../../../contexts/carsContext";
-
-
 
 const Description = ({car}:{ car: iCarReturn }) => {
   return (

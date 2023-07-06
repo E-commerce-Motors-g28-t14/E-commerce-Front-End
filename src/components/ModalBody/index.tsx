@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useModalHook } from "../../hooks";
+import { useEffect, useRef } from "react";
 import { StyledDiv } from "./style";
 
 interface IModalBody {
@@ -11,7 +10,8 @@ export const ModalBody = ({ children, close }: IModalBody) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleKeydown = (event: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         close();
       }
@@ -22,9 +22,11 @@ export const ModalBody = ({ children, close }: IModalBody) => {
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleOutclick = (event: any) => {
       if (!ref.current?.contains(event.target)) {
         close();
@@ -36,6 +38,7 @@ export const ModalBody = ({ children, close }: IModalBody) => {
     return () => {
       window.removeEventListener("mousedown", handleOutclick);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

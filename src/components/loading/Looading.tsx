@@ -1,6 +1,4 @@
-import foto from "../../assets/loading.svg";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { motion, transform } from "framer-motion";
+import { motion } from "framer-motion";
 import { LoagindContainer } from "./style";
 import loading from "../../assets/loading.png";
 

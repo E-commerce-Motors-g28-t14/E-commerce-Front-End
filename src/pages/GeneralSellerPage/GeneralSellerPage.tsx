@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import InitialsName from "../../components/InicialsName/InicialsName";
@@ -6,7 +6,7 @@ import Name from "../../components/Name/Name";
 import { MainContainer, ContainerPageSeller, SectionSellerPage } from "./style";
 import { UserContext } from "../../contexts/userContext";
 import { CarsContext } from "../../contexts/carsContext";
-import { Loading } from "../../components/Loading/Looading";
+import { Loading } from "../../components/loading/Looading";
 
 const GeneralSellerPage = () => {
   const { selectedUserSeller } = useContext(UserContext);

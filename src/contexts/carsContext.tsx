@@ -8,12 +8,10 @@ import {
 import { apiFipeService, apiKmotorsService } from "../services";
 import { AxiosResponse } from "axios";
 import { iRegisterCar } from "../components/FormCreateCar/createCarSchema";
-import { ICar } from "../interfaces/carInterface";
-import { useModalHook, useUserHook } from "../hooks";
+import { useModalHook } from "../hooks";
 import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
 import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
-import { useCarsHook } from "../hooks/carsHook";
 import { toast } from "react-toastify";
 import { IGetCommentResponse } from "./commentsContext";
 interface iCarsProviderChildren {
@@ -76,20 +74,20 @@ interface iCarRequest {
   photos: iPhoto[];
 }
 
-interface iUpdate {
-  brand: string;
-  model: string;
-  year: number | string;
-  fuel: string | number;
-  km: number;
-  color: string;
-  fipePrice: string;
-  price: string;
-  photos: iPhoto[];
-  isActive: boolean;
-  id: string;
-  description: string;
-}
+// interface iUpdate {
+//   brand: string;
+//   model: string;
+//   year: number | string;
+//   fuel: string | number;
+//   km: number;
+//   color: string;
+//   fipePrice: string;
+//   price: string;
+//   photos: iPhoto[];
+//   isActive: boolean;
+//   id: string;
+//   description: string;
+// }
 
 interface iPhoto {
   imageLink: string | number | null | undefined | boolean;
@@ -103,6 +101,7 @@ export interface iPhotoResponse {
 }
 
 export interface iCarReturn {
+  fipePrice: number;
   id: string;
   brand: string;
   model: string;
@@ -130,12 +129,12 @@ interface iCarsHome {
   data: iCarReturn[];
 }
 
-interface iCarForFipeSearch {
-  brand: string;
-  model: string;
-  year: string;
-  fuel: number;
-}
+// interface iCarForFipeSearch {
+//   brand: string;
+//   model: string;
+//   year: string;
+//   fuel: number;
+// }
 
 export const CarsContext = createContext({} as iCarsProvider);
 
@@ -151,7 +150,6 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [carsHome, setCarsHome] = useState({} as iCarsHome);
   const [ListCarUser, setListCarUser] = useState<iCarReturn[]>([]);
   const [photo, setPhoto] = useState<iPhotoResponse>({} as iPhotoResponse);
-  const { tokenUser } = useUserHook();
   const { isOpenModal, toggleModal, toggleModalFormsCar } = useModalHook();
 
   const navigate = useNavigate();
@@ -197,7 +195,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         );
         const payload = await res.data;
 
-        payload.forEach((car: iCarInfos, index: number, array: []) => {
+        payload.forEach((_car: iCarInfos, index: number, array: []) => {
           array[index] !== undefined ? listCars.push(array[index]) : listCars;
         });
       }
@@ -216,9 +214,9 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     clearModels();
   }, [isOpenModal]);
 
-  const searchCarsByName = (carName: string): iCarInfos[] | [] => {
-    return cars?.filter((car) => car.name.includes(carName));
-  };
+  // const searchCarsByName = (carName: string): iCarInfos[] | [] => {
+  //   return cars?.filter((car) => car.name.includes(carName));
+  // };
 
   const searchCarsByBrand = (brandCar: string): void => {
     setSearchCar({} as iSearchCar);
@@ -307,7 +305,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         getCarsUser();
         toggleModalFormsCar();
         toast.success("Anúncio criado com sucesso!");
@@ -375,6 +373,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       }
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newData: any = { ...data, photos: [...photos] };
     const fuelBase: string[] = ["Flex", "Híbrido", "Elétrico"];
 
@@ -422,6 +421,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .then((res) => {
         setSelectCar(res.data);      
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         res.data.photos.map((photo: any) => {
           setPhoto(photo);
         });

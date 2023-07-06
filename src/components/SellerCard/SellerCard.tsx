@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/userContext";
+import { useEffect, useState } from "react";
 import { useModalHook } from "../../hooks";
 import { StyledButton } from "../../styles/buttons";
 //import { mockUser } from "../CardAdvertiser";
@@ -42,6 +41,7 @@ const SellerCard = () => {
       try {
         const { data } = await apiKmotorsService.get("/users/profile", {
           headers: {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             Authorization: `Bearer ${JSON.parse(token!)}`,
           },
         });
@@ -56,6 +56,7 @@ const SellerCard = () => {
     };
 
     getUserInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {

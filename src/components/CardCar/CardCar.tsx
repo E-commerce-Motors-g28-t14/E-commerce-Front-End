@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { iCarReturn } from "../../contexts/carsContext";
-import { ICar } from "../../interfaces/carInterface";
 import { ContainerCardCar } from "./style";
 
 const CardCar = ({ car }: { car: iCarReturn }) => {

@@ -11,12 +11,11 @@ import { useModalHook } from "../../hooks";
 import { ModalBody } from "../../components/ModalBody";
 import { StyledButton } from "../../styles/buttons";
 import { useNavigate } from "react-router-dom";
-import { apiCepService } from "../../services";
 const Register = () => {
   const {
     CreateUser,
     isSeller,
-    setIsPassword,
+    // setIsPassword,
     adress,
     setSeller,
     GetAdressInZipCode,
@@ -53,6 +52,7 @@ const Register = () => {
     };
 
     changeValuesCar();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adress]);
 
   return (

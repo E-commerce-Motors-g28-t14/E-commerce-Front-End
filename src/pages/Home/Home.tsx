@@ -9,7 +9,6 @@ import { ModalContext } from "../../contexts/modalContext";
 import { CarPagination } from "../../components/CarPagination/CarPagination";
 import { HomeFilters } from "../../components/HomeFilters/HomeFilters";
 import { ModalBody } from "../../components/ModalBody";
-import { Loading } from "../../components/loading/Looading";
 
 const Home = () => {
   const { isOpenModalFilter, toggleModalFilter } = useContext(ModalContext);

@@ -1,5 +1,4 @@
 import { ContainerPhotoGalery } from "./style";
-import fusca from "../../assets/banco de exemplos/fusca.png";
 import { useEffect, useState } from "react";
 import { useModalHook } from "../../hooks";
 import { ICarPhotos } from "../../interfaces/carInterface";
@@ -22,7 +21,7 @@ const PhotoGalery = ({ gallery }: { gallery: ICarPhotos[] }) => {
         <h2>Fotos</h2>
       </div>
       <ul className="container-geral-photos">
-        {gallery.map((imagem, index) => (
+        {gallery.map((imagem) => (
           <li
             className="container-photos"
             key={imagem.id}

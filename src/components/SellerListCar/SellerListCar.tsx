@@ -1,18 +1,17 @@
 import { ListCar, ListCarContainer } from "./style";
-import { UserContext } from "../../contexts/userContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CarsContext } from "../../contexts/carsContext";
 import { StyledButton } from "../../styles/buttons";
 import { ModalBody } from "../ModalBody";
 import { FormUpdateCar } from "../FormUpdateCar";
 import { useModalHook } from "../../hooks";
-import { Loading } from "../Loading/Looading";
 import { StyledMain } from "../FormCreateCar/style";
+import { Loading } from "../loading/Looading";
 
 const SellerListCar = () => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const { toggleModal, isOpenModal } = useModalHook();
-  const { ListCarUser, getCarsUser, getCarById, selectCar, photo, DeleteCar } =
+  const { ListCarUser, getCarsUser, getCarById, selectCar, photo, getFuel } =
     useContext(CarsContext);
 
   const handleClick = (carID: string) => {
@@ -23,6 +22,7 @@ const SellerListCar = () => {
 
   useEffect(() => {
     getCarsUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -100,7 +100,7 @@ const SellerListCar = () => {
             brand={selectCar.brand}
             color={selectCar.color}
             fipePrice={selectCar.fipePrice}
-            fuel={selectCar.fuel}
+            fuel={getFuel(selectCar.fuel)}
             id={selectCar.id}
             isActive={selectCar.isActive}
             km={selectCar.km}

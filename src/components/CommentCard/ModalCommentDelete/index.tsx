@@ -1,12 +1,10 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
 import { StyledDiv } from "./style";
 import { CommentContext } from "../../../contexts/commentsContext";
 
 export const ModalCommentDelete = () => {
   const {
-    openModalCancel,
     setOpenModalCancel,
-    selectedCommentId,
     deleteComment,
     deleteCommentId,
     setDeleteCommentId,

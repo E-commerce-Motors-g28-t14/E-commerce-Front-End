@@ -1,7 +1,6 @@
 import { createContext, useEffect } from "react";
 import { useState } from "react";
-import { apiFipeService, apiKmotorsService } from "../services";
-import { AxiosResponse } from "axios";
+import { apiKmotorsService } from "../services";
 import { ICarsResponse } from "../interfaces/carInterface";
 import { useCarsHook } from "../hooks/carsHook";
 
@@ -39,7 +38,7 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
   const [years, setYears] = useState([] as Array<number>);
   const [fuelTypes, setFuelTypes] = useState([] as Array<string>);
 
-  const [actualFilter, setActualFilter] = useState({} as IActualFilter);
+  const [actualFilter,] = useState({} as IActualFilter);
 
   const { getFuel } = useCarsHook()
 
@@ -89,6 +88,7 @@ export const FilterProvider = ({ children }: IFilterProviderProps) => {
       try {
         const api = await apiKmotorsService.get("/cars/infos");
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cars: ICarsResponse[] = Object.entries(api.data).map((data: any[]) => data[1]).flat()
         
         const colorsCars: string[] = []

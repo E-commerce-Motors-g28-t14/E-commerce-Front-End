@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledFooter } from "./style";
 import logo from "../../assets/Motors shop.png";
 import {} from "react-icons";

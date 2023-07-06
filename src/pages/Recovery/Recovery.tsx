@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { ModalBody } from "../../components/ModalBody";
@@ -16,9 +16,9 @@ export interface iRecoveryPassword {
 }
 
 const Recovery = () => {
-  const { SendEmailRecover, message, GetUserById, user, ChangePassword } =
+  const { GetUserById, user, ChangePassword } =
     useContext(UserContext);
-  const [showLoading, setShowLoading] = useState(false);
+  // const [showLoading, setShowLoading] = useState(false);
   const { toggleModal } = useModalHook();
   const { id } = useParams();
   const {
@@ -32,6 +32,7 @@ const Recovery = () => {
 
   useEffect(() => {   
     GetUserById(user.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

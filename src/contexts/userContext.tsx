@@ -134,6 +134,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (storedUserId) {
       setUserLogado(storedUserId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   const setUserLogado = async (userId: string) => {
@@ -155,7 +156,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     const color: number =
       Math.floor(Math.random() * (maxColor - minColor + 1)) + minColor;
     const form = { ...data, isSeller: isSeller, color: color };
-    const newUser = await apiKmotorsService
+    await apiKmotorsService
       .post(`/users`, form, {
         headers: {
           "Content-Type": "application/json",
@@ -217,7 +218,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
   };
 
   const LoginUser = async (data: IUserLoginRequest) => {
-    const token = await apiKmotorsService
+    await apiKmotorsService
 
       .post(`/login`, data, {
         headers: {
@@ -301,6 +302,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .patch(`/users/${user.id}`, data, {
         headers: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
@@ -333,6 +335,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .patch(`/users/${user.id}/address`, data, {
         headers: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
@@ -357,10 +360,11 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     await apiKmotorsService
       .delete(`/users/${user.id}`, {
         headers: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         localStorage.removeItem("@kmotors-g28");
         route("/login");
         toast.success("Usuário deletado com sucesso!")
@@ -381,6 +385,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .post(`/comments`, data, {
         headers: {
           "Content-Type": "application/json",
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
@@ -388,7 +393,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         toast.success("Comentário criado com sucesso.")
         return res.data
       })
-      .then(async (res) => await getCommentsById(carId))
+      .then(async () => await getCommentsById(carId))
       .catch((err) => {
         toast.error("Provavelmente o carro foi deletado, atualize a página antes de tentar comentar novamente.")
         console.log(err);

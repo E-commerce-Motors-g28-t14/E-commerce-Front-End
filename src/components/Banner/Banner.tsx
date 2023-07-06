@@ -7,7 +7,7 @@ import carro5 from "../../assets/banner/CARRO1 (5).png";
 import carro6 from "../../assets/banner/CARRO1 (6).png";
 import carro7 from "../../assets/banner/CARRO1 (7).png";
 import carro8 from "../../assets/banner/CARRO1 (8).png";
-import { motion, AnimatePresence  } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const Banner = () => {

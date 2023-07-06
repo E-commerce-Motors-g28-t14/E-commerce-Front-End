@@ -1,6 +1,6 @@
 import { CarsContext } from "../../contexts/carsContext";
 import { CommentContext } from "../../contexts/commentsContext";
-import { UserContext, ICommentRequest } from "../../contexts/userContext";
+import { ICommentRequest } from "../../contexts/userContext";
 // import { ICommentRequest } from '../../interfaces/userIterface';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from "react";
 
 const CommentArea = () => {
   const [commentText, setCommentText] = useState("");
-  const [inputValue, setInputValue] = useState("");
+  const [, setInputValue] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const { createComment } = useContext(CommentContext);
   const { selectCar } = useContext(CarsContext);

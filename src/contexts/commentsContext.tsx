@@ -83,11 +83,12 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
       .post(`/comments`, data, {
         headers: {
           "Content-Type": "application/json",
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           Authorization: `Bearer ${JSON.parse(token!)}`,
         },
       })
       .then((res) => res.data)
-      .then(async (res) => await getCommentByCarId(carId))
+      .then(async () => await getCommentByCarId(carId))
       .catch((err) => {
         console.log(err);
       });
@@ -98,8 +99,9 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     try {
       apiKmotorsService.defaults.headers.common[
         "Authorization"
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ] = `Bearer ${JSON.parse(tokenUser!)}`;
-      const response = await apiKmotorsService.patch(`/comments/${id}`, update);
+      await apiKmotorsService.patch(`/comments/${id}`, update);
       getCommentByCarId(selectCarID);
     } catch (err) {
       console.log(err);
@@ -110,6 +112,7 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     try {
       apiKmotorsService.defaults.headers.common[
         "Authorization"
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ] = `Bearer ${JSON.parse(tokenUser!)}`;
       await apiKmotorsService.delete(`/comments/${id}`);
       getCommentByCarId(selectCarID);

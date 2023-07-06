@@ -1,5 +1,3 @@
-import { ICar } from "./carInterface";
-
 export interface IUserRequest {
   name: string;
   email: string;

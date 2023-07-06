@@ -13,7 +13,6 @@ import { FormAttUserAddress } from "../FormAttUserAddress";
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [isOpenMenuMobile, setIsOpenMenuMobile] = useState(false);
   const { isLogin, setIsLogin, user, handleLogout } = useUserHook();
   const { isOpenModalFormsUser, toggleModalFormsUser } = useModalHook();
   const [isAddress, setIsAddress] = useState(false);
@@ -33,6 +32,7 @@ const Header = () => {
     checkIsMobile();
 
     return () => window.removeEventListener('resize', checkIsMobile);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const toggleAddressForm = () => {

@@ -6,8 +6,7 @@ export const updateCarSchema = z.object({
   model: z.string().max(150).nonempty({ message: "Modelo obrigatório" }),
   year: z.number(),
   fuel: z.string().max(150),
-  km: z.string().nonempty({ message: "KM obrigatória" }),
-
+  km: z.string().nonempty({ message: "KM obrigatória" }).transform(Number),
   color: z.string().max(150).nonempty({ message: "Cor obrigatória" }),
   fipePrice: z.number(),
   price: z.string().max(150).nonempty({ message: "Preço obrigatório" }),

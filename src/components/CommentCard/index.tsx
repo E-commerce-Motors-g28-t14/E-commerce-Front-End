@@ -4,12 +4,10 @@ import { StyledContainerComments } from "./style";
 import { BsDot } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CommentContext } from "../../contexts/commentsContext";
 import { CarsContext } from "../../contexts/carsContext";
-import { UserContext, ICommentResponse } from '../../contexts/userContext';
 import { ModalCommentDelete } from "./ModalCommentDelete";
-import { boolean } from "zod";
 
 const relativeDate = (timestamp: string): string => {
   const msDateComment: Date = new Date(timestamp);

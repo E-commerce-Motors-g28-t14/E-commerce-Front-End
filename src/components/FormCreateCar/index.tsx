@@ -26,11 +26,10 @@ export const FormCreateCar = () => {
     searchCarsByBrand,
     findCar,
     searchCar,
-    getFuel,
     createCar,
   } = useCarsHook();
 
-  const { toggleModal, toggleModalFormsCar } = useModalHook();
+  const { toggleModalFormsCar } = useModalHook();
 
   const [photoQuantity, setPhotoQuantity] = useState(2);
 
@@ -54,17 +53,18 @@ export const FormCreateCar = () => {
     const changeValuesCar = () => {
       if (Object.keys(searchCar).length === 0) {
         setValue("model", "");
-        setValue("year", +"");
+        setValue("year", "");
         setValue("fuel", "");
         setValue("fipePrice", "");
       } else {
-        setValue("year", +searchCar.year);
+        setValue("year", searchCar.year);
         setValue("fuel", searchCar.fuel);
         setValue("fipePrice", searchCar.fipe);
       }
     };
 
     changeValuesCar();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchCar]);
 
   return (
@@ -123,7 +123,7 @@ export const FormCreateCar = () => {
             register={register("km")}
             label="Quilometragem"
             placeholder="Quilometragem"
-            type="number"
+            type="text"
             disabled={false}
             width="45%"
           />

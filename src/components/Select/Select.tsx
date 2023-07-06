@@ -1,8 +1,6 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 import { SelectStyled } from "./style";
 import arrowDown from "../../assets/arrowDown.svg";
-import { useState } from "react";
-import { boolean } from "zod";
 
 interface iSelectProps {
   register: UseFormRegisterReturn;
@@ -11,6 +9,7 @@ interface iSelectProps {
   disabled: boolean;
   width?: string;
   options: iOptions[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   change?: (data: any) => any;
 }
 

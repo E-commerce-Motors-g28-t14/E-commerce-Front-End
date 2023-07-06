@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
-import { ModalBody } from "../../../components/ModalBody";
 import { useForm } from "react-hook-form";
-import { Input } from "../../../components/Input/Input";
 import { StyledModal } from "./style";
 import { StyledButton } from "../../../styles/buttons";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -12,12 +10,11 @@ export interface iEmail {
 }
 
 export const ModalRecovery = () => {
-  const { SendEmailRecover, showModal, setShowModal, message, setMessage } =
+  const { SendEmailRecover, setShowModal, message, setMessage } =
     useContext(UserContext);
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<iEmail>();
 
   const handleEmail = (email: iEmail) => {

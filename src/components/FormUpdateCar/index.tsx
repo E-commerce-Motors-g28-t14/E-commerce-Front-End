@@ -6,11 +6,10 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { StyledButton } from "../../styles/buttons";
 import { TextArea } from "../TextArea/TextArea";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCarsHook } from "../../hooks/carsHook";
 import { useModalHook } from "../../hooks";
 import { ModalBody } from "../ModalBody";
-import { ICarPhotos, ICarsResponse } from "../../interfaces/carInterface";
 import { StyledDiv } from "../CommentCard/ModalCommentDelete/style";
 
 export const FormUpdateCar = ({
@@ -37,7 +36,6 @@ export const FormUpdateCar = ({
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<iUpdaterCar>({
     resolver: zodResolver(updateCarSchema),
@@ -49,13 +47,11 @@ export const FormUpdateCar = ({
     searchCarsByBrand,
     findCar,
     searchCar,
-    getFuel,
     updateCar,
     selectCar,
     DeleteCar,
     ListCarUser,
     setListCarUser,
-    getCarsUser,
   } = useCarsHook();
 
   const { toggleModal, toggleModalDeleteCar, isOpenModalDeleteCar } =
@@ -79,6 +75,7 @@ export const FormUpdateCar = ({
     const nameFormated = element.name.toUpperCase() + element.name.slice(1);
     return { name: nameFormated, value: element.name };
   });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleclick = (data: any) => {
     DeleteCar(data);
     toggleModal;
@@ -112,6 +109,7 @@ export const FormUpdateCar = ({
     };
     getValues();
     setListCarUser(ListCarUser);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchCar, selectCar]);
 
   return (
@@ -125,7 +123,7 @@ export const FormUpdateCar = ({
           disabled={false}
           width="100%"
           options={[...brandsForm] || [{ name: brand, value: brand }]}
-          change={(event) => {
+          change={(event: React.ChangeEvent<HTMLInputElement>) => {
             searchCarsByBrand(event.target.value);
           }}
           register={register("brand")}

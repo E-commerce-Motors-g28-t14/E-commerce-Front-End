@@ -1,15 +1,13 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSchema, UserSchemaLogin } from "../../schemas/user.Schemas";
+import { UserSchemaLogin } from "../../schemas/user.Schemas";
 import { StyledMain } from "./style";
 import { IUserLoginRequest, IUserRequest } from "../../interfaces/userIterface";
 import { UserContext } from "../../contexts/userContext";
-import { StyledButton } from "../../styles/buttons";
 import { Link } from "react-router-dom";
-import { ModalBody } from "../../components/ModalBody";
 import { ModalRecovery } from "./RecoveryModal/RecoveryModal";
 
 const Login = () => {

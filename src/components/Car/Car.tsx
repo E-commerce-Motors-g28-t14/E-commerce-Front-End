@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import carro from "../../assets/banco de exemplos/fusca.png";
 import { StyleLi } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 
 const Car = () => {
-  const { getCarsUser, ListCarUser } = useContext(CarsContext);
+  const { getCarsUser } = useContext(CarsContext);
   const car = {
     cover: { carro },
     brand: "Mercedes Benz",
