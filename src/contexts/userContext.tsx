@@ -145,9 +145,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       setUser(response.data);
     } catch (error) {
       route("/login")
-      toast("Logue novamente no site", {
-        type: "warning"
-      })
+      toast.warning("Logue novamente no site.")
     }
   };
 
