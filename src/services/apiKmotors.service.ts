@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const apiKmotorsService = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://kmotors-g28.onrender.com",
   timeout: 30000,
 });
