@@ -21,13 +21,11 @@ const Home = () => {
       const mobileWidth = 720;
       setIsMobile(window.innerWidth < mobileWidth);
     };
-
     window.addEventListener("resize", checkIsMobile);
     checkIsMobile();
 
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
-
   return (
     <>
       {isMobile && isOpenModalFilter && (

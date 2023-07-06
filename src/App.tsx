@@ -7,18 +7,22 @@ import SellerPage from "./pages/SellerPage/SellerPage";
 import Login from "./pages/Login/Login"; 
 import Recovery from "./pages/Recovery/Recovery";
 import GeneralSellerPage from "./pages/GeneralSellerPage/GeneralSellerPage";
-
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
  
   const ProtectedRoutes = () => {
     const tokenUser = localStorage.getItem("@kmotors-g28");
-    return tokenUser ? <Outlet /> : <Navigate to={"/login"} replace />;
+    if(tokenUser) return <Outlet />
+    toast.warning("Logue novamente na página");
+    return <Navigate to={"/login"} replace />;
   };
 
   return (
     <div className="App">
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
