@@ -14,8 +14,8 @@ import { Location, useLocation, useNavigate } from "react-router-dom";
 import { IUserResponse } from "../interfaces/userIterface";
 import { iUpdaterCar } from "../components/FormUpdateCar/updateCarSchema";
 import { useCarsHook } from "../hooks/carsHook";
+import { toast } from "react-toastify";
 import { IGetCommentResponse } from "./commentsContext";
-
 interface iCarsProviderChildren {
   children: React.ReactNode;
 }
@@ -155,10 +155,6 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const { isOpenModal, toggleModal, toggleModalFormsCar } = useModalHook();
 
   const navigate = useNavigate();
-  // quem for mexer com o get de carros, setar a quantidade total que tem no banco de dados
-  // de acordo com os filtros passados, ex: tem 1000 carros na api, mas tá com filtro de
-  // somente carro civic, e só tem 43 desse tipo, setar a quantidade para 43 ao invés de 1000
-
   const siteUrl = useLocation();
 
   useEffect(() => {
@@ -186,6 +182,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         setCarsQuantity(data.count);
       })();
     } catch (err) {
+      toast.error("Ops, não conseguimos conectar com nosso banco de dados, atualize a página.")
       console.error(err);
     }
   }, [siteUrl.search, page]);
@@ -313,8 +310,19 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .then((res) => {
         getCarsUser();
         toggleModalFormsCar();
+        toast.success("Anúncio criado com sucesso!");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        const { response } = err;
+        
+        if(response.data.message === "user is not seller"){
+          toast.error("Apenas vendedores podem criar anúncio.");
+          return;
+        }
+
+        toast.error("Algo deu errado ao criar o carro, atualize a página e tente novamente!")
+        console.log(err);
+      });
   };
 
   const getCarsUser = async () => {
@@ -333,7 +341,10 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         },
       })
       .then((res) => setListCarUser(res.data.cars))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error("Ops, ocorreu um erro ao tentar obter os anúncios desse vendedor, atualize a página e tente novamente")
+        console.log(err)
+      });
   };
 
   const updateCar = async (data: iUpdaterCar) => {
@@ -382,8 +393,19 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         setListCarUser(res.data.cars);
         getCarsUser();
         toggleModal;
+        toast.success("Informações do carro atualizadas com sucesso!");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        const { response } = err;
+        
+        if(response.data.message === "user is not seller"){
+          toast.error("Apenas vendedores podem atualizar o anúncio.");
+          return;
+        }
+
+        toast.error("Ocorreu algum erro ao tentar atualizar o carro, atualize a página e tente novamente.")
+        console.log(err)
+      });
   };
 
   const showSelectCarPage = async (carID: string) => {
@@ -405,6 +427,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         });
       })
       .catch((err) => {
+        toast.error("Esse carro foi deletado ou ocorreu algum erro ao obter em nosso banco de dados, atualize a página e tente novamente.")
         console.log(err);
       });
   };
@@ -429,8 +452,16 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         setListCarUser(ListCarUser);
         getCarsUser();
         toggleModal();
+        toast.success("Carro deletado com sucesso!");
       })
       .catch((err) => {
+        const { response } = err;
+        
+        if(response.data.message === "user is not seller"){
+          toast.error("Apenas vendedores podem atualizar o anúncio.");
+          return;
+        }
+        toast.error("Ocorreu algum erro ao deletar o anúncio, atualize a página e tente novamente.")
         console.log(err);
       });
   };

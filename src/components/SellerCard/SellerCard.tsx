@@ -9,6 +9,8 @@ import { ContainerSellerCard } from "./style";
 import { apiKmotorsService } from "../../services";
 import { iAdress } from "../../interfaces/userIterface";
 import { ICar } from "../../interfaces/carInterface";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface iUserResponse {
   id: string;
@@ -32,16 +34,25 @@ const SellerCard = () => {
   const [user, setUser] = useState({} as iUserResponse);
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     const token = localStorage.getItem("@kmotors-g28");
     const getUserInfo = async () => {
-      const { data } = await apiKmotorsService.get("/users/profile", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token!)}`,
-        },
-      });
-      setUser(data);
-      setIsLoading(false);
+      try {
+        const { data } = await apiKmotorsService.get("/users/profile", {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(token!)}`,
+          },
+        });
+        setUser(data);
+      } catch (err) {
+        toast.error("Ocorreu algum erro ao recuperar os dados do usuário, tente logar novamente.");
+        navigate("/login");
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getUserInfo();
