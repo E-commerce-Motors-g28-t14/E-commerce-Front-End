@@ -10,7 +10,6 @@ export const ModalBody = ({ children, close }: IModalBody) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         close();

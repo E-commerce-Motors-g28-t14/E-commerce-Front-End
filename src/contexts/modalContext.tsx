@@ -19,6 +19,8 @@ interface iModalProvider {
   toggleModalFormsCar: () => void;
   toggleModalDeleteCar: () => void;
   modalWithPhoto: (data: string) => void;
+  toggleModalAnnouceConfirm: () => void;
+  isOpenModalAnnounceConfirm: boolean;
 }
 
 export const ModalContext = createContext({} as iModalProvider);
@@ -31,6 +33,11 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
   const [isOpenModalFormsCar, setIsOpenModalFormsCar] = useState(false);
   const [isOpenModalDeleteCar, setIsOpenModalDeleteCar] = useState(false);
   const [photoLink, setPhotoLink] = useState("");
+  const [isOpenModalAnnounceConfirm, setIsOpenModalAnnounceConfirm] = useState<boolean>(false);
+
+  const toggleModalAnnouceConfirm = (): void => {
+    setIsOpenModalAnnounceConfirm(!isOpenModalAnnounceConfirm)
+  }
 
   const toggleModal = () => {
     setIsOpenModal(!isOpenModal);
@@ -77,6 +84,8 @@ export const ModalProvider = ({ children }: iModalProviderProps) => {
         modalWithPhoto,
         isOpenModalDeleteCar,
         toggleModalDeleteCar,
+        toggleModalAnnouceConfirm,
+        isOpenModalAnnounceConfirm
       }}
     >
       {children}
