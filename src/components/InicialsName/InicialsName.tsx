@@ -23,29 +23,8 @@ const InitialsName = ({
     return `${firstLetter}${secondLetter}`;
   };
 
-  // const randomColor = [
-  //   "--color-random-1",
-  //   " --color-random-2",
-  //   "--color-random-3",
-  //   " --color-random-4",
-  //   " --color-random-5",
-  //   "--color-random-6",
-  //   " --color-random-7",
-  //   "--color-random-8",
-  //   " --color-random-9",
-  //   "--color-random-10",
-  //   "--color-random-11",
-  //   "--color-random-12",
-  // ];
-
-  // const getRandomColor = (colors: string[]) => {
-  //   const randomIndex = Math.floor(Math.random() * colors.length);
-  //   return colors[randomIndex];
-  // };
-
   const userLetter = getUsernameLetters(name);
-  // const randomBackground = getRandomColor(randomColor);
- 
+
   return (
     <ContainerInitial
       style={{

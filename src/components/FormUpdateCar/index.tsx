@@ -80,13 +80,7 @@ export const FormUpdateCar = ({
     DeleteCar(data);
     toggleModal;
     toggleModalDeleteCar;
-    //setListCarUser(ListCarUser);
-    console.log(data);
   };
-
-  /*  useEffect(() => {
-    //getCarsUser();
-  }, []); */
 
   useEffect(() => {
     const getValues = () => {
@@ -98,7 +92,7 @@ export const FormUpdateCar = ({
       setValue("km", km);
       setValue("photoCape", photoCape);
       setValue("price", price);
-      setValue("year", Number(searchCar?.year));
+      setValue("year", searchCar?.year);
       setValue("description", description);
       setValue("photo1", photo1);
       setValue("photo2", "");
@@ -109,7 +103,7 @@ export const FormUpdateCar = ({
     };
     getValues();
     setListCarUser(ListCarUser);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchCar, selectCar]);
 
   return (
@@ -147,7 +141,7 @@ export const FormUpdateCar = ({
             register={register("year")}
             label="Ano"
             placeholder="Ano"
-            type="number"
+            type="text"
             disabled={true}
             width="45%"
             value={searchCar?.year || year}
@@ -170,7 +164,7 @@ export const FormUpdateCar = ({
             register={register("km")}
             label="Quilometragem"
             placeholder="Quilometragem"
-            type="text"
+            type="number"
             disabled={false}
             value={km}
             width="45%"

@@ -16,9 +16,7 @@ export interface iRecoveryPassword {
 }
 
 const Recovery = () => {
-  const { GetUserById, user, ChangePassword } =
-    useContext(UserContext);
-  // const [showLoading, setShowLoading] = useState(false);
+  const { GetUserById, user, ChangePassword } = useContext(UserContext);
   const { toggleModal } = useModalHook();
   const { id } = useParams();
   const {
@@ -30,9 +28,9 @@ const Recovery = () => {
     ChangePassword(data);
   };
 
-  useEffect(() => {   
+  useEffect(() => {
     GetUserById(user.id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

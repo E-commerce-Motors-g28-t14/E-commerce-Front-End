@@ -59,8 +59,6 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
   const { selectCarID } = useContext(CarsContext);
 
   const getCommentByCarId = async (id: string) => {
-    console.log("getCommentByCarId");
-    console.log("entrou aqui agora teste");
     await apiKmotorsService
       .get(`/comments/cars/${id}`, {
         headers: {},
@@ -99,7 +97,7 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     try {
       apiKmotorsService.defaults.headers.common[
         "Authorization"
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ] = `Bearer ${JSON.parse(tokenUser!)}`;
       await apiKmotorsService.patch(`/comments/${id}`, update);
       getCommentByCarId(selectCarID);
@@ -112,7 +110,7 @@ export const CommentProvider = ({ children }: iCommentProviderChildren) => {
     try {
       apiKmotorsService.defaults.headers.common[
         "Authorization"
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ] = `Bearer ${JSON.parse(tokenUser!)}`;
       await apiKmotorsService.delete(`/comments/${id}`);
       getCommentByCarId(selectCarID);

@@ -74,21 +74,6 @@ interface iCarRequest {
   photos: iPhoto[];
 }
 
-// interface iUpdate {
-//   brand: string;
-//   model: string;
-//   year: number | string;
-//   fuel: string | number;
-//   km: number;
-//   color: string;
-//   fipePrice: string;
-//   price: string;
-//   photos: iPhoto[];
-//   isActive: boolean;
-//   id: string;
-//   description: string;
-// }
-
 interface iPhoto {
   imageLink: string | number | null | undefined | boolean;
   isCover: boolean;
@@ -120,21 +105,12 @@ export interface iCarReturn {
   comments: IGetCommentResponse[];
 }
 
-
-
 interface iCarsHome {
   previousPage: string;
   nextPage: string;
   count: number;
   data: iCarReturn[];
 }
-
-// interface iCarForFipeSearch {
-//   brand: string;
-//   model: string;
-//   year: string;
-//   fuel: number;
-// }
 
 export const CarsContext = createContext({} as iCarsProvider);
 
@@ -180,7 +156,9 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         setCarsQuantity(data.count);
       })();
     } catch (err) {
-      toast.error("Ops, não conseguimos conectar com nosso banco de dados, atualize a página.")
+      toast.error(
+        "Ops, não conseguimos conectar com nosso banco de dados, atualize a página."
+      );
       console.error(err);
     }
   }, [siteUrl.search, page]);
@@ -213,10 +191,6 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
     };
     clearModels();
   }, [isOpenModal]);
-
-  // const searchCarsByName = (carName: string): iCarInfos[] | [] => {
-  //   return cars?.filter((car) => car.name.includes(carName));
-  // };
 
   const searchCarsByBrand = (brandCar: string): void => {
     setSearchCar({} as iSearchCar);
@@ -312,13 +286,15 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .catch((err) => {
         const { response } = err;
-        
-        if(response.data.message === "user is not seller"){
+
+        if (response.data.message === "user is not seller") {
           toast.error("Apenas vendedores podem criar anúncio.");
           return;
         }
 
-        toast.error("Algo deu errado ao criar o carro, atualize a página e tente novamente!")
+        toast.error(
+          "Algo deu errado ao criar o carro, atualize a página e tente novamente!"
+        );
         console.log(err);
       });
   };
@@ -340,8 +316,10 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .then((res) => setListCarUser(res.data.cars))
       .catch((err) => {
-        toast.error("Ops, ocorreu um erro ao tentar obter os anúncios desse vendedor, atualize a página e tente novamente")
-        console.log(err)
+        toast.error(
+          "Ops, ocorreu um erro ao tentar obter os anúncios desse vendedor, atualize a página e tente novamente"
+        );
+        console.log(err);
       });
   };
 
@@ -396,22 +374,23 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .catch((err) => {
         const { response } = err;
-        
-        if(response.data.message === "user is not seller"){
+
+        if (response.data.message === "user is not seller") {
           toast.error("Apenas vendedores podem atualizar o anúncio.");
           return;
         }
 
-        toast.error("Ocorreu algum erro ao tentar atualizar o carro, atualize a página e tente novamente.")
-        console.log(err)
+        toast.error(
+          "Ocorreu algum erro ao tentar atualizar o carro, atualize a página e tente novamente."
+        );
+        console.log(err);
       });
   };
 
   const showSelectCarPage = async (carID: string) => {
-    setSelectCarID(carID);    
-    await getCarById(carID);     
+    setSelectCarID(carID);
+    await getCarById(carID);
     navigate("/product");
-    
   };
 
   const getCarById = async (id: string) => {
@@ -420,14 +399,16 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
         headers: {},
       })
       .then((res) => {
-        setSelectCar(res.data);      
+        setSelectCar(res.data);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         res.data.photos.map((photo: any) => {
           setPhoto(photo);
         });
       })
       .catch((err) => {
-        toast.error("Esse carro foi deletado ou ocorreu algum erro ao obter em nosso banco de dados, atualize a página e tente novamente.")
+        toast.error(
+          "Esse carro foi deletado ou ocorreu algum erro ao obter em nosso banco de dados, atualize a página e tente novamente."
+        );
         console.log(err);
       });
   };
@@ -456,12 +437,14 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       })
       .catch((err) => {
         const { response } = err;
-        
-        if(response.data.message === "user is not seller"){
+
+        if (response.data.message === "user is not seller") {
           toast.error("Apenas vendedores podem atualizar o anúncio.");
           return;
         }
-        toast.error("Ocorreu algum erro ao deletar o anúncio, atualize a página e tente novamente.")
+        toast.error(
+          "Ocorreu algum erro ao deletar o anúncio, atualize a página e tente novamente."
+        );
         console.log(err);
       });
   };

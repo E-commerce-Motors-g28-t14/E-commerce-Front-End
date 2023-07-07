@@ -9,10 +9,17 @@ import { StyledMain } from "../FormCreateCar/style";
 import { Loading } from "../loading/Looading";
 
 const SellerListCar = () => {
-  // const { user } = useContext(UserContext);
   const { toggleModal, isOpenModal } = useModalHook();
-  const { ListCarUser, getCarsUser, getCarById, selectCar, photo, getFuel } =
-    useContext(CarsContext);
+  const {
+    ListCarUser,
+    getCarsUser,
+    getCarById,
+    selectCar,
+    photo,
+    getFuel,
+    showSelectCarPage,
+    setSelectCarID,
+  } = useContext(CarsContext);
 
   const handleClick = (carID: string) => {
     getCarById(carID);
@@ -22,7 +29,7 @@ const SellerListCar = () => {
 
   useEffect(() => {
     getCarsUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -78,7 +85,13 @@ const SellerListCar = () => {
                     >
                       Editar
                     </StyledButton>
-                    <StyledButton className="medium outline1">
+                    <StyledButton
+                      className="medium outline1"
+                      onClick={() => {
+                        showSelectCarPage(car.id);
+                        setSelectCarID(car.id);
+                      }}
+                    >
                       Ver detalhes
                     </StyledButton>
                   </div>
@@ -107,7 +120,7 @@ const SellerListCar = () => {
             model={selectCar.model}
             photoCape={photo.imageLink}
             price={selectCar.price}
-            year={selectCar.year}
+            year={selectCar.year.toString()}
             description={selectCar.description}
             photo1={""}
             photo2={""}

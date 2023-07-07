@@ -42,34 +42,27 @@ const relativeDate = (timestamp: string): string => {
   return commentedAt;
 };
 
-
-export const CommentCard = (): JSX.Element => {   
-
+export const CommentCard = (): JSX.Element => {
   const storedUserId = localStorage.getItem("@kmotors-g28:userId");
   const { selectCarID } = useContext(CarsContext);
- 
 
-  const {    
+  const {
     getCommentByCarId,
     commentslist,
     newCommentValue,
     setNewCommentValue,
     selectedCommentId,
     setSelectedCommentId,
-    updateComment,  
+    updateComment,
     setDeleteCommentId,
-    openModalCancel, setOpenModalCancel
-  } = useContext(CommentContext)
-
+    openModalCancel,
+    setOpenModalCancel,
+  } = useContext(CommentContext);
 
   useEffect(() => {
-
-   if(selectCarID  && selectCarID.length > 0){ 
-    console.log("entrou no ueseeffect " + "esse é o id do carro " +  selectCarID)  
-    getCommentByCarId(selectCarID)
-    console.log(commentslist)
-   }
-    
+    if (selectCarID && selectCarID.length > 0) {
+      getCommentByCarId(selectCarID);
+    }
   }, []);
 
   const handleEditClick = (id: string, comment: string) => {
@@ -78,21 +71,18 @@ export const CommentCard = (): JSX.Element => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setNewCommentValue(e.target.value);
-   
   };
 
   const handleUpdateClick = async () => {
-   await updateComment(selectedCommentId, newCommentValue);
+    await updateComment(selectedCommentId, newCommentValue);
     setSelectedCommentId("");
   };
 
   const handleOpenModal = (id: string) => {
-    setOpenModalCancel(true)
-    setDeleteCommentId(id)
-    
-  }
+    setOpenModalCancel(true);
+    setDeleteCommentId(id);
+  };
 
   return (
     <StyledContainerComments>
@@ -120,11 +110,9 @@ export const CommentCard = (): JSX.Element => {
                     </div>
                   </div>
                   {storedUserId && storedUserId === comment.user.id && (
-                    
                     <div className="container-btns">
-
                       {selectedCommentId === comment.id ? (
-                        <>                           
+                        <>
                           <button
                             className="btn-save-cancel"
                             onClick={handleUpdateClick}
@@ -149,7 +137,7 @@ export const CommentCard = (): JSX.Element => {
                             <MdOutlineModeEditOutline />
                           </button>
                           <button
-                            className="btn-edit-delete"                    
+                            className="btn-edit-delete"
                             onClick={() => handleOpenModal(comment.id)}
                           >
                             <AiFillDelete />
@@ -171,9 +159,7 @@ export const CommentCard = (): JSX.Element => {
                   )}
                 </div>
               </li>
-              
             );
-         
           })}
         </ul>
       ) : (
@@ -181,42 +167,7 @@ export const CommentCard = (): JSX.Element => {
           <h3>Seja o primeiro a comentar....</h3>
         </div>
       )}
-      {/* <ul>
-        {listComments.reverse().map((comment: ICommentResponse, key: number) => {
-          return (
-            <li key={key}>
-              <div>
-                <InitialsName
-                  fontSize="14"
-                  height="32"
-                  width="32"
-                  name={comment.user.name}               
-                  color={1}
-                />
-                <Name fontSize="14" name={comment.user.name} />
-                <BsDot />
-
-                <div>             
-                  {comment.createdAt !== comment.updatedAt ? (
-                    <span>{relativeDate(comment.updatedAt)}</span>
-                  ):(
-                    <span>{relativeDate(comment.createdAt)}</span>
-                  )}
-                </div>
-              </div>
-              <div>
-                <p>{comment.comment}</p>
-              </div>
-            </li>
-          );
-        })}
-      </ul> */}
-      { openModalCancel ? (
-              <ModalCommentDelete />
-        ) : ( <></>)
-  
-        }
-  
+      {openModalCancel ? <ModalCommentDelete /> : <></>}
     </StyledContainerComments>
   );
 };

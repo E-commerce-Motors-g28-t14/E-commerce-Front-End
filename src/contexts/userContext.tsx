@@ -134,7 +134,7 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
     if (storedUserId) {
       setUserLogado(storedUserId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   const setUserLogado = async (userId: string) => {
@@ -145,8 +145,8 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       const response = await apiKmotorsService.get(`/users/${userId}`);
       setUser(response.data);
     } catch (error) {
-      route("/login")
-      toast.warning("Logue novamente no site.")
+      route("/login");
+      toast.warning("Logue novamente no site.");
     }
   };
 
@@ -167,13 +167,13 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         toggleModal();
       })
       .catch((err) => {
-        const { response } = err
+        const { response } = err;
 
-        if(response.data.message === "cpf already exists"){
+        if (response.data.message === "cpf already exists") {
           toast.error("Esse cpf já está cadastrado, tente outro!");
           return;
         }
-        if(response.data.message === "email already exists"){
+        if (response.data.message === "email already exists") {
           toast.error("Esse email já está cadastrado, tente outro!");
           return;
         }
@@ -208,8 +208,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
           return;
         })
         .catch((err) => {
-          toast.error("Ops, deu algum erro ao tentar pegar os dados do seu cep, por favor, tente digitar novamente")
-          setCep("")
+          toast.error(
+            "Ops, deu algum erro ao tentar pegar os dados do seu cep, por favor, tente digitar novamente"
+          );
+          setCep("");
           console.log(err);
         });
     } else {
@@ -231,29 +233,28 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         setTokenUser(JSON.stringify(res.data.token));
         setIsLogin(true);
         route(`/`);
-        toast.success("Login efetuado com sucesso!")
+        toast.success("Login efetuado com sucesso!");
       })
       .catch((err) => {
-        const { response } = err
+        const { response } = err;
 
-        if(response.data.message === "Invalid credentials"){
-          toast.error("Email ou senha inválidos.")
+        if (response.data.message === "Invalid credentials") {
+          toast.error("Email ou senha inválidos.");
         }
-        console.log(err)
+        console.log(err);
       });
   };
 
   const handleLogout = () => {
     localStorage.removeItem("@kmotors-g28:userId");
     localStorage.removeItem("@kmotors-g28");
-    setIsLogin(false); 
-    setUser({} as IUserResponse)
+    setIsLogin(false);
+    setUser({} as IUserResponse);
     route(`/`);
-    toast.success("Deslogado com sucesso!")
+    toast.success("Deslogado com sucesso!");
   };
 
   const SendEmailRecover = async (data: iEmail) => {
-    console.log(data);
     await apiKmotorsService
       .post(`/recovery`, data, {
         headers: {
@@ -278,10 +279,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then((res) => {
         setMessage(res.data);
         route("/login");
-        toast.success("Senha trocada com sucesso!")
+        toast.success("Senha trocada com sucesso!");
       })
       .catch((err) => {
-        toast.error("Ops, deu algum erro, tente novamente!")
+        toast.error("Ops, deu algum erro, tente novamente!");
         console.log(err);
       });
   };
@@ -309,16 +310,16 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then((res) => {
         setUser(res.data);
         toggleModalFormsUser();
-        toast.success("Informações do perfil atualizado com sucesso!")
+        toast.success("Informações do perfil atualizado com sucesso!");
       })
       .catch((err) => {
-        const { response } = err
+        const { response } = err;
 
-        if(response.data.message === "cpf already exists"){
+        if (response.data.message === "cpf already exists") {
           toast.error("Esse cpf já está cadastrado, tente outro!");
           return;
         }
-        if(response.data.message === "email already exists"){
+        if (response.data.message === "email already exists") {
           toast.error("Esse email já está cadastrado, tente outro!");
           return;
         }
@@ -342,10 +343,10 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then((res) => {
         setUser(res.data);
         toggleModalFormsUser();
-        toast.success("Informações de endereço atualizado com sucesso!")
+        toast.success("Informações de endereço atualizado com sucesso!");
       })
       .catch((err) => {
-        toast.error("Ops, deu algum erro! Tente novamente.")
+        toast.error("Ops, deu algum erro! Tente novamente.");
         console.log(err);
       });
   };
@@ -367,10 +368,12 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
       .then(() => {
         localStorage.removeItem("@kmotors-g28");
         route("/login");
-        toast.success("Usuário deletado com sucesso!")
+        toast.success("Usuário deletado com sucesso!");
       })
       .catch((err) => {
-        toast.error("Ops, ocorreu algum erro ao deletar o usuário, tente novamente.")
+        toast.error(
+          "Ops, ocorreu algum erro ao deletar o usuário, tente novamente."
+        );
         console.log(err);
       });
   };
@@ -390,12 +393,14 @@ export const UserProvider = ({ children }: IUserProviderChildren) => {
         },
       })
       .then((res) => {
-        toast.success("Comentário criado com sucesso.")
-        return res.data
+        toast.success("Comentário criado com sucesso.");
+        return res.data;
       })
       .then(async () => await getCommentsById(carId))
       .catch((err) => {
-        toast.error("Provavelmente o carro foi deletado, atualize a página antes de tentar comentar novamente.")
+        toast.error(
+          "Provavelmente o carro foi deletado, atualize a página antes de tentar comentar novamente."
+        );
         console.log(err);
       });
   };

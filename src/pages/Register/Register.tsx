@@ -12,14 +12,8 @@ import { ModalBody } from "../../components/ModalBody";
 import { StyledButton } from "../../styles/buttons";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
-  const {
-    CreateUser,
-    isSeller,
-    // setIsPassword,
-    adress,
-    setSeller,
-    GetAdressInZipCode,
-  } = useContext(UserContext);
+  const { CreateUser, isSeller, adress, setSeller, GetAdressInZipCode } =
+    useContext(UserContext);
 
   const { isOpenModal, toggleModal } = useModalHook();
 
@@ -52,7 +46,7 @@ const Register = () => {
     };
 
     changeValuesCar();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adress]);
 
   return (

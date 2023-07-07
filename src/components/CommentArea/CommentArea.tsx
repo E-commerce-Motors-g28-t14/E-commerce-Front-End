@@ -1,6 +1,7 @@
 import { CarsContext } from "../../contexts/carsContext";
 import { CommentContext } from "../../contexts/commentsContext";
 import { ICommentRequest } from "../../contexts/userContext";
+import { useUserHook } from "../../hooks";
 // import { ICommentRequest } from '../../interfaces/userIterface';
 import InitialsName from "../InicialsName/InicialsName";
 import Name from "../Name/Name";
@@ -13,6 +14,7 @@ const CommentArea = () => {
   const [isMobile, setIsMobile] = useState(false);
   const { createComment } = useContext(CommentContext);
   const { selectCar } = useContext(CarsContext);
+  const { user } = useUserHook();
 
   const handleCommentButtonClick = async () => {
     setInputValue(commentText);
@@ -27,7 +29,6 @@ const CommentArea = () => {
 
   const handleCommentBtnClick = (text: string) => {
     setCommentText((prevCommentText) => prevCommentText + text);
-    // setIsSend(true);
   };
 
   useEffect(() => {
@@ -48,11 +49,11 @@ const CommentArea = () => {
         <InitialsName
           width={"32"}
           height={"32"}
-          name={"Maria Batista"}
+          name={user.name}
           fontSize={"14px"}
-          color={1}
+          color={user.color}
         />
-        <Name fontSize={"14px"} name={"Maria Batista"} />
+        <Name fontSize={"14px"} name={user.name} />
       </div>
 
       {isMobile ? (

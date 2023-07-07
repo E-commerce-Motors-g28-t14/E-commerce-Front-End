@@ -20,7 +20,6 @@ export const FormAttUserAddress = () => {
   const { user, attUserAddress } = useUserHook();
   const { toggleModalFormsUser } = useModalHook();
 
-  console.log(user);
   const GetAdressInZipCode = async (cep: string) => {
     const formatedCep: string = cep.replace(/[^0-9]/g, "");
     if (formatedCep.length === 8) {
@@ -93,6 +92,16 @@ export const FormAttUserAddress = () => {
           disabled={true}
           width="100%"
           value={user.address.street}
+        />
+        <Input
+          errors={errors.district}
+          register={register("district")}
+          label={"Bairro"}
+          placeholder="Digite seu bairro"
+          type="text"
+          disabled={true}
+          width="100%"
+          value={user.address.district}
         />
         <div className="doubleInput">
           <Input
