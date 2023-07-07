@@ -14,7 +14,7 @@ export const HomeFilters = ({ className }: IHomeFilterProps) => {
   const navigate = useNavigate()
 
   const handleLinkQuery = (query: string): string => {
-    const queries: string = siteUrl.search.replace("%20", " ")
+    const queries: string = siteUrl.search.replace("%20", " ").replace("+", " ")
 
     if(!queries){
       return `?${query}`
