@@ -126,7 +126,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
   const [carsHome, setCarsHome] = useState({} as iCarsHome);
   const [ListCarUser, setListCarUser] = useState<iCarReturn[]>([]);
   const [photo, setPhoto] = useState<iPhotoResponse>({} as iPhotoResponse);
-  const { isOpenModal, toggleModal, toggleModalFormsCar } = useModalHook();
+  const { isOpenModal, toggleModal, toggleModalFormsCar, toggleModalAnnouceConfirm } = useModalHook();
 
   const navigate = useNavigate();
   const siteUrl = useLocation();
@@ -282,7 +282,7 @@ export const CarsProvider = ({ children }: iCarsProviderChildren) => {
       .then(() => {
         getCarsUser();
         toggleModalFormsCar();
-        toast.success("Anúncio criado com sucesso!");
+        toggleModalAnnouceConfirm()
       })
       .catch((err) => {
         const { response } = err;

@@ -1,3 +1,4 @@
+import { AnnounceConfirm } from "../../components/AnnounceConfirm/AnnounceConfirm";
 import Footer from "../../components/Footer/Footer";
 import { FormCreateCar } from "../../components/FormCreateCar";
 import Header from "../../components/Header/Header";
@@ -8,7 +9,7 @@ import { useModalHook } from "../../hooks";
 import { MainContainer, ContainerPageSeller, SectionSellerPage } from "./style";
 
 const SellerPage = () => {
-  const { isOpenModalFormsCar, toggleModalFormsCar } = useModalHook();
+  const { isOpenModalFormsCar, toggleModalFormsCar, toggleModalAnnouceConfirm, isOpenModalAnnounceConfirm } = useModalHook();
 
   return (
     <>
@@ -16,6 +17,12 @@ const SellerPage = () => {
         <ModalBody close={toggleModalFormsCar}>
           <FormCreateCar />
         </ModalBody>
+      )}
+      
+      { isOpenModalAnnounceConfirm && (
+      <ModalBody close={toggleModalAnnouceConfirm}>
+        <AnnounceConfirm />
+      </ModalBody>
       )}
       <ContainerPageSeller>
         <Header />
